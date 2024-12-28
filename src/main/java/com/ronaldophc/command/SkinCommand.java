@@ -1,0 +1,56 @@
+package com.ronaldophc.command;
+
+import com.ronaldophc.feature.SkinFix;
+import com.ronaldophc.helper.Logger;
+import com.ronaldophc.helper.MasterHelper;
+import com.ronaldophc.helper.Util;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+public class SkinCommand implements CommandExecutor {
+
+    @Override
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        if (command.getName().equalsIgnoreCase("skin")) {
+
+            if (commandSender == null) {
+                return true;
+            }
+
+            if (!(commandSender instanceof Player)) {
+                commandSender.sendMessage(Util.noConsole);
+                return true;
+            }
+
+            Player player = (Player) commandSender;
+            if (!commandSender.isOp() && !commandSender.hasPermission("legendhg.skin")) {
+                commandSender.sendMessage(Util.noPermission);
+                return true;
+            }
+
+            if (strings.length == 0) {
+                commandSender.sendMessage(Util.usage("/skin <nome>"));
+                return true;
+            }
+
+            if (strings.length == 1) {
+                String skin = strings[0];
+                try {
+                    if (SkinFix.changePlayerSkin(player, skin)) {
+                        MasterHelper.refreshPlayer(player);
+                        player.sendMessage(Util.success + "Sua skin foi alterada com sucesso.");
+                        return true;
+                    }
+                    player.sendMessage(Util.error + "Skin não encontrada");
+                } catch (Exception e) {
+                    player.sendMessage(Util.error + "Ocorreu um erro ao tentar alterar sua skin.");
+                    Logger.logError("Erro ao alterar skin: " + e.getMessage());
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+}

@@ -1,0 +1,34 @@
+# LegendHG
+#
+# Tempo para iniciar o HG após iniciar o servidor em segundos
+Countdown: 15
+#
+# Tempo de invencibilidade em segundos
+Invincibility: 15
+#
+# Tempo de jogo para spawnar o Feast em segungos
+Feast: 15
+#
+# Minimo de jogadores para iniciar o HG
+MinPlayers: 2
+#
+# Maximo de players no servidor
+MaxPlayers: 50
+#
+#
+# Database
+Database:
+  # Host: MySQL se for local por container(nome do container do MYSQL)
+  Host: localhost
+  Port: 3306
+  User: sqluser
+  Password: root
+  Database: legendhg
+#
+# Modo de jogo - 1 = 1 Kit, 2 = 2 Kits, 3 = aleatório para cada partida.
+Kits: 1
+#
+# Mensagens da lista de servidores
+Suffix: "    "
+Msg1: "§f§l >> §f§l1.7x 1.8x"
+Msg2: "§a§lEm desenvolvimento!"

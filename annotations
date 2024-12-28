@@ -1,0 +1,6 @@
+// NA WIKI
+SERVER BOUND = de mim para o servidor
+CLIENT BOUND = do servidor para mim
+// NO PacketType.Play
+SERVER = do servidor para mim
+CLIENT = de mim para o servidor

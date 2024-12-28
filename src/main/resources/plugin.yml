@@ -1,0 +1,109 @@
+name: legendhg
+main: com.ronaldophc.LegendHG
+version: 1.0-SNAPSHOT
+author: RonaldoPHC
+api-version: 1.8.8
+load: POSTWORLD
+softdepend: [ ProtocolLib ]
+commands:
+    gm:
+        description: Command to change gamemode
+        usage: /gm <0,1> <player>
+        aliases: [gamemode]
+    countdown:
+        description: Command to set time of countdown
+        usage: /countdown set <seconds>
+        aliases: [ctd]
+    invincibility:
+        description: Command to control state invincibility
+        usage: /invincibility <set:start> <seconds>
+        aliases: [invi]
+    test:
+        description: Command to test
+        usage: /test
+    invsee:
+        description: Command to see inventory of player
+        usage: /invsee <player>
+        aliases: [inv]
+    kick:
+        description: Command to kick player
+        usage: /kick <player> <motivo>
+    ping:
+        description: Command to see ping of player
+        usage: /ping <player>
+    report:
+        description: Command to report player
+        usage: /report <player>
+    reporthack:
+        description: Command to report hacker
+        usage: /reporthack <player>
+    reportbugs:
+        description: Command to report bug abuser
+        usage: /reportbugs <player>
+    reportfreekill:
+        description: Command to report freekill
+        usage: /reportfreekill <player>
+    reportchat:
+        description: Command to report chat abuser
+        usage: /reportchat <player>
+    reportother:
+        description: Command to report player for other reasons
+        usage: /reportother <player>
+    reports:
+        description: Command to see reports
+        usage: /reports
+    kit:
+        description: Command to set your kit
+        usage: /kit <kit>
+    kit2:
+        description: Command to set your kit 2
+        usage: /kit2 <kit>
+    pull:
+        description: Command to pull player
+        usage: /pull <player>
+    flyspeed:
+        description: Command to set fly speed
+        usage: /flyspeed <speed>
+    lfeast:
+        description: Command manage the feast
+        usage: /lfeast
+    feast:
+        description: Set compass to feast
+        usage: /feast
+    minifeast:
+        description: Create a minifeast
+        usage: /minifeast
+    register:
+        description: Register in the server
+        usage: /register <password>
+        aliases: [registrar, cadastrar]
+    login:
+        description: Login in the server
+        usage: /login <password>
+        aliases: [entrar]
+    playerson:
+        description: Command to see players online
+        usage: /playerson
+    scoreboard:
+        description: Command to change scoreboard
+        usage: /scoreboard
+        aliases: [sb, score]
+    skin:
+        description: Command to change skin
+        usage: /skin <skin>
+        aliases: [changeskin, cs]
+    crash:
+        description: Command to crash player
+        usage: /crash
+    fake:
+        description: Command to fake player
+        usage: /fake <player>
+    tag:
+        description: Command to set tag
+        usage: /tag <tag>
+    gameprofile:
+        description: Command to see game profile
+        usage: /gameprofile
+    ip:
+        description: Command to see ip of player
+        usage: /ip <player>

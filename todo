@@ -1,0 +1,85 @@
+// BUG
+
+VERIFICAR TODOS OS KITS O canUseKit, canTakeDamage
+
+/ ---------------------- /
+
+// A FAZER
+Documentar permissoes
+Mapa ao ganhar
+Renascer se tiver permissao
+arena final
+Sistema VIP
+Status de cada player
+Permissoes
+Logo
+StaffChat
+Tell
+Head
+Admin
+Auto complete dos comandos
+
+/ Kits /
+Kit Gladiator - Colocar limite de 3 minutos, ultimos 30 segundos dar reaper
+Kit 1v1
+Kit Monster - Spawnar mobs para ajudar o usuário
+Kit Fujitora - Spawna um meteoro do céu, ao cair causa uma explosao como a do creeper, deixa o chão pegando fogo
+Kit Ult do Phoenix(Phoenix) - Ao usar, fica uma bedrock no chao, onde quando o player morrer, ele voltará, isso irá durar 10s
+Kit Ult da Fade() - Ao usar, na direção que esta olhando irá uma 'onda' em que todos os players que passarem na onda, ganharam veneno do whiter
+Kit Berserker, Grappler, Surprise, Hulk, Chameleon, worm
+Kit Healer - Ganha um stick que ao clicar em um player, o cura
+Kit que cria uma area de fogo em volta?
+/ --- /
+
+Nao deixar logar minecraft pirata com nick de original
+Login/Register manual caso seja pirata e nao precisar de senha caso seja original, verificar se é possivel
+Melhorar sistema de login, nao verificar direto no banco de dados, criar um array de players logados
+Melhorar sistema de skin, salvar a skin original no banco de dados, e nao baixar toda vez que logar
+Fake
+Minigame antes de começar a partida - Switcher, Kangaroo e grandpa.
+Site
+Evento de meteoro como no PUBG
+Pensar em tempo, quanto tempo de invi, tempo para spawnar feast e minifeasts, tempo para remover kits, tempo para arena final, tempo para renascer
+
+/ ---------------------- /
+
+// FINALIZAR
+
+Bloquear comandos - bloquear alguns comandos mesmo logado
+Balancear Danos
+MiniFeast, aparecer coordenadas entre, e nao a coord exata
+Tags -> mudar o nome encima da cabeça para mais de 16 caracters para poder colocar cor
+
+/ ---------------------- /
+
+// REVISAR / TESTAR
+
+GetIp
+AntiCheater
+Kit Urgal, Cultivator, Pyro, Hermit, Titan, Timerlord
+Kit Tank - Seja imune a explosoes e crie explosao ao matar um jogador
+Kit Brand - ganha força ao estiver pegando fogo
+Kit IronMan - Ganha um iron por kill, após 5 kills, ganha 2 iron por kill
+Kit Magma - Ao bater, tem chance de colocar fogo no player e nao toma dano de fogo
+Kit Popai - Ganhará 3 cenouras, ao comer, ele ficara imune a efeitos como veneno, fogo, veneno do wither e regeneração por 60s
+
+/ ---------------------- /
+
+// FEITO - REVISADO
+
+Impedir certas combinações de kits
+Kit Cannibal, Grandpa
+O cara que tem op ver todos os players, até os mortos e specs
+
+/ ---------------------- /
+
+// BUGS RESOLVIDOS
+
+Nao pegar item ao ficar morto
+Nao bater em bixo enquanto estiver morto
+Spec pegar item de bau, antes de iniciar tbm
+Nao tomar dano de queda
+Scoreboard quando morrer
+Ao morrer e virar spec, esta precisando logar dnv
+
+/ ---------------------- /
