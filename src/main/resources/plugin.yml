@@ -107,3 +107,6 @@ commands:
     ip:
         description: Command to see ip of player
         usage: /ip <player>
+    prefs:
+        description: Command to see preferences
+        usage: /prefs
