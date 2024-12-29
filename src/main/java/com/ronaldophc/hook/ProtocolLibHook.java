@@ -60,7 +60,7 @@ public class ProtocolLibHook {
 
                         try {
                             Tags tag = Tag.getTag(player);
-                            String name = tag.getColor() + player.getCustomName();
+                            String name = player.getCustomName();
                             WrappedGameProfile wrappedProfile = new WrappedGameProfile(uniqueId, name);
 
                             if (gameProfile.getProperties().containsKey("textures")) {

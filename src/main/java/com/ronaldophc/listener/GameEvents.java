@@ -34,7 +34,7 @@ public class GameEvents implements Listener {
     }
 
     @EventHandler
-    public void Cama(PlayerBedEnterEvent e) {
+    public void onBed(PlayerBedEnterEvent e) {
         e.setCancelled(true);
     }
 

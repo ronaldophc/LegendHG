@@ -105,10 +105,13 @@ public class Board implements Runnable {
         String name = player.getCustomName();
         Team team = scoreboard.getTeam(name);
         Tags tag = Tag.getTag(player);
-
-        player.setPlayerListName(tag.getColor() + tag.name() + " " + Util.color1 + name + " " + Util.color2 + player.getName());
+        name = tag.getColor() + tag.name() + " §7" + name;
+//        player.setPlayerListName(tag.getColor() + tag.name() + " " + Util.color1 + name + " " + Util.color2 + player.getName());
+        player.setPlayerListName(name);
+        player.setCustomNameVisible(true);
         if (team == null) {
-            setPlayerNameTag(player, tag.getColor() + tag.name() + " ", " " + Util.color2 + player.getName(), scoreboard);
+//            setPlayerNameTag(player, tag.getColor() + tag.name() + " ", " " + Util.color2 + player.getName(), scoreboard);
+            setPlayerNameTag(player, tag.getColor() + tag.name() + " ", "", scoreboard);
         }
 
         Scores scoreType = playerScore.get(player.getUniqueId());

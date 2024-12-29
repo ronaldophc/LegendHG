@@ -110,3 +110,7 @@ commands:
     prefs:
         description: Command to see preferences
         usage: /prefs
+    staffchat:
+        description: Command to talk in staff chat
+        usage: /staffchat <message>
+        aliases: [sc]
