@@ -1,18 +1,21 @@
 package com.ronaldophc.feature.scoreboard;
 
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.constant.GameState;
 import com.ronaldophc.constant.Scores;
 import com.ronaldophc.constant.Tags;
 import com.ronaldophc.database.PlayerSQL;
-import com.ronaldophc.feature.Tag;
 import com.ronaldophc.helper.GameHelper;
-import com.ronaldophc.constant.GameState;
 import com.ronaldophc.helper.Logger;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.*;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -102,8 +105,7 @@ public class Board implements Runnable {
     }
 
     private void update(Player player) throws SQLException {
-        Scoreboard scoreboard = player.getScoreboard();
-        setPlayerNameTag(player, scoreboard);
+        setPlayerNameTag(player);
 
         Scores scoreType = playerScore.get(player.getUniqueId());
         switch (scoreType) {
@@ -153,11 +155,14 @@ public class Board implements Runnable {
         }
     }
 
-    private static void setPlayerNameTag(Player player, Scoreboard scoreboard) throws SQLException {
+    private static void setPlayerNameTag(Player player) throws SQLException {
         for (Player player1 : Bukkit.getOnlinePlayers()) {
             Scoreboard scoreboard1 = player1.getScoreboard();
+
+            Account account = AccountManager.getOrCreateAccount(player);
+
             String name = player.getName();
-            Tags tag = Tag.getTag(player);
+            Tags tag = account.getTag();
             Team team = scoreboard1.getTeam(name);
 
             if (team == null) {

@@ -1,6 +1,6 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.feature.SkinFix;
+import com.ronaldophc.feature.SkinManager;
 import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
 import org.bukkit.command.Command;
@@ -69,7 +69,7 @@ public class FakeCommand implements CommandExecutor {
     }
 
     private static void setFake(Player player, String name) throws Exception {
-        if (!SkinFix.changePlayerSkin(player, name)) {
+        if (!SkinManager.changePlayerSkin(player, name)) {
             player.sendMessage(Util.error + "Skin não encontrada para o fake");
         }
         setSettings(player, name);
@@ -78,7 +78,7 @@ public class FakeCommand implements CommandExecutor {
     }
 
     private static void resetFake(Player player) throws Exception {
-        if (!SkinFix.fixPlayerSkin(player)) {
+        if (!SkinManager.fixPlayerSkin(player)) {
             player.sendMessage(Util.error + "Erro ao resetar a skin");
         }
         setSettings(player, player.getName());

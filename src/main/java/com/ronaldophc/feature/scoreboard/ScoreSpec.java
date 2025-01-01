@@ -27,10 +27,6 @@ public class ScoreSpec extends Board {
     public static void updateScoreboard(Player player) throws SQLException {
         Scoreboard scoreboard = player.getScoreboard();
 
-        Team team = scoreboard.getTeam(player.getName());
-        team.setSuffix(ChatColor.GREEN + " [Suffix]");
-        team.setPrefix(ChatColor.RED + "[Prefix] ");
-
         Team team1 = scoreboard.getTeam("team1");
         team1.setSuffix(Util.color1 + CurrentGameSQL.getCurrentGameKills(player, LegendHG.getGameId()));
 

@@ -3,7 +3,8 @@ package com.ronaldophc.kits.manager.guis;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.constant.Kits;
+import com.ronaldophc.kits.Kit;
+import com.ronaldophc.kits.manager.KitManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,12 +21,13 @@ public class KitGui {
 
         Inventory inv = Bukkit.createInventory(null, 9 * 6, Util.title + " " + Util.color2 + "Kit " + whoKit);
 
-        Kits[] kits = Kits.values();
+        KitManager kitManager = LegendHG.getKitManager();
+        Kit[] kits = kitManager.getKits();
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, kits.length);
 
         for (int i = startIndex; i < endIndex; i++) {
-            Kits kit = kits[i];
+            Kit kit = kits[i];
             if (player.hasPermission(kit.getPermission())) {
                 inv.addItem(kit.getKitIcon());
             }
@@ -48,7 +50,8 @@ public class KitGui {
     }
 
     public static int getNumberOfPages() {
-        int totalKits = Kits.values().length;
+        KitManager kitManager = LegendHG.getKitManager();
+        int totalKits = kitManager.getKits().length;
         return (int) Math.ceil((double) totalKits / ITEMS_PER_PAGE);
     }
 

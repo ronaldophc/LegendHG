@@ -129,4 +129,13 @@ public class ItemManager {
         return this;
     }
 
+    public ItemManager setSkullOwner(String owner) {
+        if (item.getType() == Material.SKULL_ITEM && item.getDurability() == 3) {
+            SkullMeta skullMeta = (SkullMeta) itemMeta;
+            skullMeta.setOwner(owner);
+            item.setItemMeta(skullMeta);
+        }
+        return this;
+    }
+
 }

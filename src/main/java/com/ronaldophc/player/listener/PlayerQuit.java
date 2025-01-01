@@ -2,6 +2,9 @@ package com.ronaldophc.player.listener;
 
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.Logger;
+import com.ronaldophc.kits.registry.gladiator.GladiatorController;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,6 +43,11 @@ public class PlayerQuit implements Listener {
             return;
         }
 
+        if (GladiatorController.getInstance().isPlayerInFight(player)) {
+            removePlayer(player);
+            event.setQuitMessage(Util.color3 + "O jogador " + Util.color1 + player.getName() + Util.color3 + " saiu da partida durante um duelo no Gladiator!");
+        }
+
         Bukkit.getScheduler().scheduleSyncDelayedTask(LegendHG.getInstance(), () -> removePlayer(player), 20L * 60);
     }
 
@@ -50,6 +58,8 @@ public class PlayerQuit implements Listener {
     }
 
     private void quitPlayer(Player player) {
+        Account account = AccountManager.getOrCreateAccount(player);
+        account.setLoggedIn(false);
         PlayerAliveManager.getInstance().removePlayer(player);
         try {
             PlayerSQL.logoutPlayer(player);

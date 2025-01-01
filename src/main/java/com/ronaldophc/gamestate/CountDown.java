@@ -1,7 +1,6 @@
 package com.ronaldophc.gamestate;
 
-import com.ronaldophc.feature.Feast;
-import com.ronaldophc.feature.MiniFeast;
+import com.ronaldophc.feature.MiniFeastManager;
 import org.bukkit.Bukkit;
 
 import com.ronaldophc.LegendHG;
@@ -87,7 +86,7 @@ public class CountDown implements Runnable {
             case 1260:
             case 1080:
             case 600:
-                new MiniFeast();
+                new MiniFeastManager();
         }
         countdownRemaining++;
     }

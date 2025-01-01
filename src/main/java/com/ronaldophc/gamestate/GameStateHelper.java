@@ -1,7 +1,6 @@
 package com.ronaldophc.gamestate;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.constant.Kits;
 import com.ronaldophc.database.GamesSQL;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.feature.auth.AuthManager;
@@ -66,12 +65,7 @@ public class GameStateHelper {
         for (int i = 0; i < amount; i++) {
             Firework firework = world.spawn(loc, Firework.class);
             FireworkMeta meta = firework.getFireworkMeta();
-            meta.addEffect(FireworkEffect.builder()
-                    .withColor(Color.RED, Color.BLUE)
-                    .with(FireworkEffect.Type.BALL)
-                    .trail(true)
-                    .flicker(true)
-                    .build());
+            meta.addEffect(FireworkEffect.builder().withColor(Color.RED, Color.BLUE).with(FireworkEffect.Type.BALL).trail(true).flicker(true).build());
             meta.setPower(1);
             firework.setFireworkMeta(meta);
         }
@@ -89,14 +83,10 @@ public class GameStateHelper {
         for (UUID uuid : PlayerAliveManager.getInstance().getPlayersAlive()) {
             Player player = Bukkit.getPlayer(uuid);
 
+            PlayerHelper.teleportPlayerToSpawnLocation(player);
+
             PlayerHelper.preparePlayerToStart(player);
 
-            // Kit Hermit
-            if (!LegendHG.getKitManager().isThePlayerKit(player, Kits.HERMIT)) {
-                PlayerHelper.teleportPlayerToSpawnLocation(player);
-                continue;
-            }
-            PlayerHelper.teleportHermit(player);
         }
     }
 

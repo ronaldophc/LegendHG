@@ -1,20 +1,13 @@
 package com.ronaldophc.helper;
 
-import java.lang.reflect.Field;
-
+import com.ronaldophc.LegendHG;
+import com.ronaldophc.kits.Kit;
+import com.ronaldophc.kits.manager.KitManager;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import com.ronaldophc.LegendHG;
-import com.ronaldophc.kits.manager.KitManager;
-import com.ronaldophc.constant.Kits;
-
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
-import org.jetbrains.annotations.NotNull;
+import java.lang.reflect.Field;
 
 public class TitleHelper {
 
@@ -61,7 +54,7 @@ public class TitleHelper {
         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(ppoc);
     }
 
-    public static void sendCooldownBar(Player player, @NotNull Kits kit) {
+    public static void sendCooldownBar(Player player, Kit kit) {
         KitManager kitManager = LegendHG.getKitManager();
         sendActionBar(player, Util.bold + Util.color1 + kit.getName() + ": " + Util.error + Util.bold + (kitManager.getCooldown(player, kit) + 1) + "s" + Util.bold + Util.color2 + " para usar novamente.");
     }

@@ -6,8 +6,8 @@ import com.ronaldophc.command.RegisterCommand;
 import com.ronaldophc.command.*;
 import com.ronaldophc.command.FakeCommand;
 import com.ronaldophc.command.SkinCommand;
-import com.ronaldophc.kits.kitCommands.Kit;
-import com.ronaldophc.kits.kitCommands.Kit2;
+import com.ronaldophc.command.KitCommand;
+import com.ronaldophc.command.Kit2Command;
 import com.ronaldophc.feature.report.*;
 
 public class RegisterCommands extends LegendHG {
@@ -28,8 +28,8 @@ public class RegisterCommands extends LegendHG {
         instance.getCommand("reportbugs").setExecutor(new ReportBugs());
         instance.getCommand("reportother").setExecutor(new ReportOther());
         instance.getCommand("reports").setExecutor(new ReportMenus());
-        instance.getCommand("kit").setExecutor(new Kit());
-        instance.getCommand("kit2").setExecutor(new Kit2());
+        instance.getCommand("kit").setExecutor(new KitCommand());
+        instance.getCommand("kit2").setExecutor(new Kit2Command());
         instance.getCommand("flyspeed").setExecutor(new FlySpeed());
         instance.getCommand("pull").setExecutor(new Pull());
         instance.getCommand("lfeast").setExecutor(new FeastCommand());

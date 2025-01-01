@@ -1,24 +1,24 @@
 package com.ronaldophc.player.listener;
 
-import com.ronaldophc.database.CurrentGameSQL;
-import com.ronaldophc.feature.scoreboard.Board;
+import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.Scores;
+import com.ronaldophc.database.CurrentGameSQL;
+import com.ronaldophc.database.PlayerSQL;
+import com.ronaldophc.feature.scoreboard.Board;
 import com.ronaldophc.helper.GameHelper;
+import com.ronaldophc.helper.Util;
+import com.ronaldophc.kits.Kit;
+import com.ronaldophc.player.PlayerAliveManager;
+import com.ronaldophc.player.PlayerHelper;
+import com.ronaldophc.player.PlayerSpectatorManager;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import com.ronaldophc.LegendHG;
-import com.ronaldophc.database.PlayerSQL;
-import com.ronaldophc.helper.Util;
-import com.ronaldophc.kits.manager.KitManager;
-import com.ronaldophc.constant.Kits;
-import com.ronaldophc.player.PlayerAliveManager;
-import com.ronaldophc.player.PlayerHelper;
-import com.ronaldophc.player.PlayerSpectatorManager;
 
 import java.sql.SQLException;
 
@@ -31,20 +31,23 @@ public class PlayerDeath implements Listener {
         event.setDeathMessage(null);
 
         Player player = event.getEntity();
-        KitManager kitManager = LegendHG.getKitManager();
-        Kits diedKit = kitManager.getPlayerKit(player);
-        Kits diedKit2 = kitManager.getPlayerKit2(player);
+        Account account = AccountManager.getOrCreateAccount(player);
 
-        event.getDrops().removeIf(item -> kitManager.isItemKit(item, diedKit));
-        event.getDrops().removeIf(item -> kitManager.isItemKit(item, diedKit2));
+        Kit diedKit = account.getKits().getPrimary();
+        Kit diedKit2 = account.getKits().getSecondary();
+
+        event.getDrops().removeIf(diedKit::isItemKit);
+        event.getDrops().removeIf(diedKit2::isItemKit);
 
         String message = "O player " + Util.color3 + player.getName() + " morreu";
         Player killer = event.getEntity().getKiller();
 
         if (event.getEntity().getKiller() != null) {
 
-            Kits killerKit = kitManager.getPlayerKit(player);
-            Kits killerKit2 = kitManager.getPlayerKit2(player);
+            Account killerAccount = AccountManager.getOrCreateAccount(killer);
+
+            Kit killerKit = killerAccount.getKits().getPrimary();
+            Kit killerKit2 = killerAccount.getKits().getSecondary();
             if (GameHelper.getInstance().isTwoKits()) {
                 message = Util.color1 + player.getName() + "(" + killerKit.getName() + " e " + killerKit2.getName() + ") foi para a próxima vida, cortesia de " + killer.getName();
             } else {
@@ -58,7 +61,6 @@ public class PlayerDeath implements Listener {
             } catch (Exception ignored) {
             }
         }
-
 
 
         if (PlayerAliveManager.getInstance().isPlayerAlive(player.getUniqueId())) {

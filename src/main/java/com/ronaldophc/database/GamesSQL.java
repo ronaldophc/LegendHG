@@ -3,8 +3,9 @@ package com.ronaldophc.database;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.GameHelper;
 import com.ronaldophc.helper.Logger;
-import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.player.PlayerAliveManager;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -46,12 +47,12 @@ public class GamesSQL {
         if (!LegendHG.getMySQLManager().isActive()) return;
         String query = "UPDATE games SET winner = ?, kit1_winner = ?, kit2_winner = ?, kills = ? WHERE id = ?;";
         Connection connection = LegendHG.getMySQLManager().getConnection();
-        KitManager kitManager = LegendHG.getKitManager();
+        Account account = AccountManager.getOrCreateAccount(player);
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);) {
             preparedStatement.setString(1, player.getUniqueId().toString());
-            preparedStatement.setString(2, kitManager.getPlayerKitName(player));
-            preparedStatement.setString(3, kitManager.getPlayerKitName2(player));
+            preparedStatement.setString(2, account.getKits().getPrimary().getName());
+            preparedStatement.setString(3, account.getKits().getSecondary().getName());
             preparedStatement.setInt(4, CurrentGameSQL.getCurrentGameKills(player, LegendHG.getGameId()));
             preparedStatement.setInt(5, LegendHG.getGameId());
             preparedStatement.executeUpdate();

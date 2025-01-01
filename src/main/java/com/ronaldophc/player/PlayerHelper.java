@@ -4,9 +4,11 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.GameHelper;
 import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.kits.listeners.Barbarian;
+import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
-import com.ronaldophc.constant.Kits;
+import com.ronaldophc.kits.registry.Nenhum;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.setting.Settings;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -28,16 +30,6 @@ public class PlayerHelper {
     public static void teleportPlayerToSpawnLocation(Player player) {
         World world = Bukkit.getWorld("world");
         Location spawnLocation = getRandomSpawnLocation(world);
-        player.teleport(spawnLocation);
-    }
-
-    public static void teleportHermit(Player player) {
-        Random random = new Random();
-        int x = random.nextBoolean() ? random.nextInt(150) + 200 : -(random.nextInt(150) + 200);
-        int z = random.nextBoolean() ? random.nextInt(150) + 200 : -(random.nextInt(150) + 200);
-        World world = Bukkit.getWorld("world");
-        int y = world.getHighestBlockYAt(x, z) + 5;
-        Location spawnLocation =  new Location(world, x, y, z);
         player.teleport(spawnLocation);
     }
 
@@ -68,17 +60,9 @@ public class PlayerHelper {
     }
 
     private static void addItemsToStart(Player player) {
-        KitManager kitManager = LegendHG.getKitManager();
-        kitManager.addCompass(player);
-        if (kitManager.isThePlayerKit(player, Kits.BARBARIAN)) {
-            player.getInventory().addItem(Barbarian.BarbarianSwords.FIRST_SWORD.getItem());
-        }
-        if (kitManager.whoPlayerKit(player, Kits.BARBARIAN) != 1) {
-            kitManager.addItemKit(player);
-        }
-        if (kitManager.whoPlayerKit(player, Kits.BARBARIAN) != 2) {
-            kitManager.addItemKit2(player);
-        }
+        Account account = AccountManager.getOrCreateAccount(player);
+        account.getKits().getPrimary().apply(player);
+        account.getKits().getSecondary().apply(player);
     }
 
     public static void preparePlayerToSpec(Player player) {
@@ -96,15 +80,6 @@ public class PlayerHelper {
         player.getInventory().addItem(new ItemManager(Material.CHEST, "Kit 1").addEnchantment(Enchantment.DURABILITY, 1).build());
         if (GameHelper.getInstance().getKits() == 2) {
             player.getInventory().addItem(new ItemManager(Material.CHEST, "Kit 2").addEnchantment(Enchantment.DURABILITY, 2).build());
-        }
-    }
-
-    public static void setKitLogin(Player player) {
-        if (!LegendHG.getKitManager().isSetPlayerKit(player)) {
-            LegendHG.getKitManager().setPlayerKit(player, Kits.NENHUM);
-        }
-        if (!LegendHG.getKitManager().isSetPlayerKit2(player)) {
-            LegendHG.getKitManager().setPlayerKit2(player, Kits.NENHUM);
         }
     }
 }

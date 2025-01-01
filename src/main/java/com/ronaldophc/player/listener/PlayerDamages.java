@@ -1,5 +1,8 @@
 package com.ronaldophc.player.listener;
 
+import com.ronaldophc.kits.Kit;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -7,7 +10,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.kits.manager.KitManager;
-import com.ronaldophc.constant.Kits;
 import com.ronaldophc.player.PlayerSpectatorManager;
 
 public class PlayerDamages implements Listener {
@@ -36,9 +38,10 @@ public class PlayerDamages implements Listener {
         }
 
         KitManager kitManager = LegendHG.getKitManager();
+        Account account = AccountManager.getOrCreateAccount(player);
 
-        Kits kit = kitManager.getPlayerKit(player);
-        Kits kit2 = kitManager.getPlayerKit2(player);
+        Kit kit = account.getKits().getPrimary();
+        Kit kit2 = account.getKits().getSecondary();
         /* To do: BossBar to show the kits
         String title = Util.success + player.getName() + Util.color2 + " - " + Util.color1 + kit.getName();
 
@@ -46,11 +49,11 @@ public class PlayerDamages implements Listener {
             title = Util.success + player.getName() + Util.color2 + " - " + Util.color1 + kit.getName() + Util.color2 + " - " + Util.color1 + kit2.getName();
         }
         */
-        if (kit.getCombatLog()) {
+        if (kit.isCombatLog()) {
             kitManager.setCooldown(player, 5, kit);
         }
 
-        if (kit2.getCombatLog()) {
+        if (kit2.isCombatLog()) {
             kitManager.setCooldown(player, 5, kit2);
         }
 
