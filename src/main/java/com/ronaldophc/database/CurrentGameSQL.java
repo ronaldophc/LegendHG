@@ -67,19 +67,17 @@ public class CurrentGameSQL {
         }
     }
 
-    public void updateCurrentGameKills(Player player, int gameId, int kills) throws SQLException {
+    public static void addCurrentGameKill(Player player, int gameId) throws SQLException {
         if (!LegendHG.getMySQLManager().isActive()) return;
-        String query = "INSERT INTO current_game_stats (uuid, game_id, kills, deaths) VALUES (?, ?, ?, ?) " +
-                "ON DUPLICATE KEY UPDATE kills = ?";
+        String query = "UPDATE current_game_stats SET kills = ? where uuid = ? AND game_id = ?";
         Connection connection = LegendHG.getMySQLManager().getConnection();
         String uuid = player.getUniqueId().toString();
+        int kills = getCurrentGameKills(player, gameId) + 1;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, uuid);
-            preparedStatement.setInt(2, gameId);
-            preparedStatement.setInt(3, kills);
-            preparedStatement.setInt(4, 0); // Assuming deaths start at 0
-            preparedStatement.setInt(5, kills);
+            preparedStatement.setInt(1, kills);
+            preparedStatement.setString(2, uuid);
+            preparedStatement.setInt(3, gameId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
             Logger.debugMySql("Updated current game kills for player: " + player.getName());
@@ -110,29 +108,27 @@ public class CurrentGameSQL {
         }
     }
 
-    public void updateCurrentGameDeaths(Player player, int gameId) throws SQLException {
+    public static void addCurrentGameDeath(Player player, int gameId) throws SQLException {
         if (!LegendHG.getMySQLManager().isActive()) return;
-        String query = "INSERT INTO current_game_stats (uuid, game_id, kills, deaths) VALUES (?, ?, 0, ?) " +
-                "ON DUPLICATE KEY UPDATE deaths = ?";
+        String query = "UPDATE current_game_stats SET deaths = ? where uuid = ? AND game_id = ?";
         Connection connection = LegendHG.getMySQLManager().getConnection();
         String uuid = player.getUniqueId().toString();
-        int deaths = getCurrentGameDeaths(player, gameId) + 1;
+        int death = getCurrentGameDeaths(player, gameId) + 1;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, uuid);
-            preparedStatement.setInt(2, gameId);
-            preparedStatement.setInt(3, deaths);
-            preparedStatement.setInt(4, deaths);
+            preparedStatement.setInt(1, death);
+            preparedStatement.setString(2, uuid);
+            preparedStatement.setInt(3, gameId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
-            Logger.debugMySql("Updated current game deaths for player: " + player.getName());
+            Logger.debugMySql("Updated current game kills for player: " + player.getName());
         } catch (SQLException e) {
-            Logger.logError("Failed to update current game deaths: " + e.getMessage());
+            Logger.logError("Failed to update current game kills: " + e.getMessage());
             throw e;
         }
     }
 
-    public int getCurrentGameDeaths(Player player, int gameId) throws SQLException {
+    public static int getCurrentGameDeaths(Player player, int gameId) throws SQLException {
         String query = "SELECT deaths FROM current_game_stats WHERE uuid = ? AND game_id = ?";
         Connection connection = LegendHG.getMySQLManager().getConnection();
         String uuid = player.getUniqueId().toString();

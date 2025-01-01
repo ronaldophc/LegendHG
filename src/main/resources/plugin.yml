@@ -114,3 +114,15 @@ commands:
         description: Command to talk in staff chat
         usage: /staffchat <message>
         aliases: [sc]
+    tell:
+        description: Command to send private message
+        usage: /tell <player> <message>
+        aliases: [msg, w, sussurro]
+    teleport:
+        description: Command to teleport
+        usage: /teleport <player>
+        aliases: [tp]
+    stats:
+        description: Command to see stats
+        usage: /stats <player>
+        aliases: [status]

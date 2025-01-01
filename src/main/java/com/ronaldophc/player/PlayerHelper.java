@@ -4,6 +4,7 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.GameHelper;
 import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
+import com.ronaldophc.kits.listeners.Barbarian;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.constant.Kits;
 import com.ronaldophc.setting.Settings;
@@ -41,8 +42,8 @@ public class PlayerHelper {
     }
 
     private static Location getRandomSpawnLocation(World world) {
-        int spawnX = new Random().nextInt(40) - (40 / 2);
-        int spawnZ = new Random().nextInt(40) - (40 / 2);
+        int spawnX = new Random().nextInt(20) - (10);
+        int spawnZ = new Random().nextInt(20) - (10);
         int y = world.getHighestBlockYAt(spawnX, spawnZ);
         return new Location(world, spawnX, y + 1, spawnZ);
     }
@@ -69,8 +70,15 @@ public class PlayerHelper {
     private static void addItemsToStart(Player player) {
         KitManager kitManager = LegendHG.getKitManager();
         kitManager.addCompass(player);
-        kitManager.addItemKit(player);
-        kitManager.addItemKit2(player);
+        if (kitManager.isThePlayerKit(player, Kits.BARBARIAN)) {
+            player.getInventory().addItem(Barbarian.BarbarianSwords.FIRST_SWORD.getItem());
+        }
+        if (kitManager.whoPlayerKit(player, Kits.BARBARIAN) != 1) {
+            kitManager.addItemKit(player);
+        }
+        if (kitManager.whoPlayerKit(player, Kits.BARBARIAN) != 2) {
+            kitManager.addItemKit2(player);
+        }
     }
 
     public static void preparePlayerToSpec(Player player) {

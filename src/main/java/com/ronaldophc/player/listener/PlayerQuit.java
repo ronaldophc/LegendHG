@@ -29,10 +29,14 @@ public class PlayerQuit implements Listener {
             return;
         }
 
+        if (!PlayerAliveManager.getInstance().isPlayerAlive(player.getUniqueId())) {
+            return;
+        }
+
         GameState gameState = LegendHG.getGameStateManager().getGameState();
         if (gameState == GameState.COUNTDOWN) {
             quitPlayer(player);
-            event.setQuitMessage(Util.color2 + "[-] " + Util.color1 + event.getPlayer().getName());
+            event.setQuitMessage(Util.color3 + event.getPlayer().getName() + " saiu do jogo");
             return;
         }
 
@@ -42,7 +46,7 @@ public class PlayerQuit implements Listener {
     private void removePlayer(Player player) {
         if (player.isOnline()) return;
         quitPlayer(player);
-        Bukkit.broadcastMessage(Util.color2 + "O jogador " + Util.color1 + player.getName() + Util.color2 + " saiu do jogo e foi eliminado!");
+        Bukkit.broadcastMessage(Util.color3 + player.getName() + " saiu do jogo e foi eliminado!");
     }
 
     private void quitPlayer(Player player) {

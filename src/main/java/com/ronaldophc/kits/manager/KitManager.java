@@ -125,7 +125,6 @@ public class KitManager {
         if (getPlayerKit2(player) == kit) {
             return 2;
         }
-        Logger.logError("Função: whoPlayerKit - KitManager.\nPlayer: " + player.getName() + ", kit: " + kit.getName());
         return 0;
     }
 

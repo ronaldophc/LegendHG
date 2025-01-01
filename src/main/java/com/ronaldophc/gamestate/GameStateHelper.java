@@ -94,7 +94,7 @@ public class GameStateHelper {
             // Kit Hermit
             if (!LegendHG.getKitManager().isThePlayerKit(player, Kits.HERMIT)) {
                 PlayerHelper.teleportPlayerToSpawnLocation(player);
-                return;
+                continue;
             }
             PlayerHelper.teleportHermit(player);
         }

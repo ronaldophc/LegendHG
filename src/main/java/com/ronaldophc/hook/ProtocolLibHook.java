@@ -76,7 +76,7 @@ public class ProtocolLibHook {
                         }
                     }
 
-                    packet.getPlayerInfoDataLists().write(0, list);
+//                    packet.getPlayerInfoDataLists().write(0, list);
                 }
             }
         });

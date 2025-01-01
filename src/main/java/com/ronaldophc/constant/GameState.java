@@ -15,7 +15,7 @@ public enum GameState {
     private final boolean canVipUpdateKit;
     private final boolean canUseKit;
 
-    private GameState(boolean canBreakBlocks, boolean canTakeDamage, boolean canPlaceBlocks, boolean canFreeUpdateKit, boolean canVipUpdateKit, boolean canUseKit) {
+    GameState(boolean canBreakBlocks, boolean canTakeDamage, boolean canPlaceBlocks, boolean canFreeUpdateKit, boolean canVipUpdateKit, boolean canUseKit) {
         this.canBreakBlocks = canBreakBlocks;
         this.canTakeDamage = canTakeDamage;
         this.canPlaceBlocks = canPlaceBlocks;

@@ -60,7 +60,6 @@ public class AsyncPlayerChat implements Listener {
             throw new RuntimeException(e);
         }
 
-
         if (cooldown.contains(player)) {
             player.sendMessage(Util.error + "Espere um pouco para mandar mensagem novamente");
             event.setCancelled(true);
@@ -73,7 +72,7 @@ public class AsyncPlayerChat implements Listener {
             public void run() {
                 cooldown.remove(player);
             }
-        }.runTaskLater(LegendHG.getInstance(), 40);
+        }.runTaskLater(LegendHG.getInstance(), 20);
 
         String message = event.getMessage();
 
@@ -83,11 +82,9 @@ public class AsyncPlayerChat implements Listener {
 
         try {
             Tags tag = Tag.getTag(player);
-
             event.setFormat(tag.getColor() + tag.name() + " §7" + player.getCustomName() + " §8» §f" + message);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

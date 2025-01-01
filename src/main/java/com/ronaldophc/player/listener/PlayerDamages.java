@@ -17,7 +17,10 @@ public class PlayerDamages implements Listener {
 
         if (!(event.getEntity() instanceof Player)) return;
         if (!(event.getDamager() instanceof Player)) return;
-        if (!LegendHG.getGameStateManager().getGameState().canTakeDamage()) return;
+        if (!LegendHG.getGameStateManager().getGameState().canTakeDamage()) {
+            event.setCancelled(true);
+            return;
+        }
 
         Player player = (Player) event.getEntity();
         Player damager = (Player) event.getDamager();

@@ -30,7 +30,7 @@ public class PrefsCommand implements CommandExecutor {
 
     private static void openMenu(Player player) {
         // Score, tell, chat
-        Inventory prefs = Bukkit.createInventory(null, 6 * 9, Util.title + " " + Util.color2 +"Ajustes");
+        Inventory prefs = Bukkit.createInventory(null, 6 * 9, Util.title + Util.color2 + " Ajustes");
 
         player.openInventory(prefs);
     }

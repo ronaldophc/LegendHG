@@ -14,8 +14,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.ronaldophc.LegendHG;
@@ -32,12 +36,16 @@ public class GladiatorFight extends GladiatorController implements Listener {
     public final Player gladiator;
     public final Player target;
     public Location arenaCenter;
+    public Location originalLocation;
+    private int timeRemaining;
 
-    public GladiatorFight(Player gladiator, Player target, Location arenaCenter) {
+    public GladiatorFight(Player gladiator, Player target, Location arenaCenter, Location originalLocation) {
         super();
         this.gladiator = gladiator;
         this.target = target;
         this.arenaCenter = arenaCenter;
+        this.timeRemaining = 60 * 1;
+        this.originalLocation = originalLocation;
         registerListener();
         initializeBattle();
     }
@@ -78,13 +86,24 @@ public class GladiatorFight extends GladiatorController implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
+                timeRemaining--;
+                gladiator.sendMessage(Util.color1 + "Tempo restante: " + Util.color3 + Util.formatSeconds(timeRemaining) + "s");
+                if (timeRemaining <= 0) {
+                    endBattle(gladiator, target);
+                    endGladiatorFight(GladiatorFight.this);
+                    cancel();
+                }
+                if (timeRemaining == 30) {
+                    gladiator.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 30 * 20, 1));
+                    target.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 30 * 20, 1));
+                }
                 if (!gladiator.isOnline() || !target.isOnline() || gladiator.isDead() || target.isDead() || !isInArena(gladiator, arenaCenter) || !isInArena(target, arenaCenter)) {
                     endBattle(gladiator, target);
                     endGladiatorFight(GladiatorFight.this);
                     cancel();
                 }
             }
-        }.runTaskTimer(LegendHG.getInstance(), 0, 10);
+        }.runTaskTimer(LegendHG.getInstance(), 0, 20);
     }
 
     private void createArena(Location center) {
@@ -139,6 +158,7 @@ public class GladiatorFight extends GladiatorController implements Listener {
         }
 
         if (PlayerAliveManager.getInstance().isPlayerOnline(gladiator.getUniqueId())) {
+            gladiator.removePotionEffect(PotionEffectType.WITHER);
             int y = Bukkit.getWorld("world").getHighestBlockYAt(gladiator.getLocation());
             loc = gladiator.getLocation();
             loc.setY(y);
@@ -148,6 +168,7 @@ public class GladiatorFight extends GladiatorController implements Listener {
         }
 
         if (PlayerAliveManager.getInstance().isPlayerOnline(target.getUniqueId())) {
+            target.removePotionEffect(PotionEffectType.WITHER);
             int y = Bukkit.getWorld("world").getHighestBlockYAt(target.getLocation());
             loc = target.getLocation();
             loc.setY(y);
@@ -173,9 +194,26 @@ public class GladiatorFight extends GladiatorController implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        if (!PlayerAliveManager.getInstance().isPlayerOnline(player.getUniqueId())) {
+            return;
+        }
         if (isInFight(player)) {
             event.setQuitMessage(Util.color3 + "O jogador " + Util.color1 + player.getName() + Util.color3 + " saiu da partida durante um duelo no Gladiator!");
         }
+    }
 
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        Player player = event.getEntity();
+
+        if (!isInFight(player)) {
+            return;
+        }
+        for (ItemStack item : event.getDrops()) {
+            if (item != null && item.getType() != Material.AIR) {
+                player.getWorld().dropItemNaturally(originalLocation, item);
+            }
+        }
+        event.getDrops().clear();
     }
 }

@@ -25,7 +25,7 @@ public class Compass implements Listener {
                 player.sendMessage(Util.color1 + "Nenhum jogador foi encontrado.");
                 return;
             }
-            player.sendMessage(Util.color1 + "Apontando para " + Util.color3 + target.getName());
+            player.sendMessage(Util.color3 + "Bússola apontando para " + target.getName());
             player.setCompassTarget(target.getLocation());
         }
     }

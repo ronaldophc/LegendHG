@@ -37,6 +37,9 @@ public class PlayerAliveManager {
     }
 
     public void removePlayer(Player player) {
+        if (!isPlayerAlive(player.getUniqueId())) {
+            return;
+        }
         LegendHG.logger.log(Level.INFO, "Removing player {0}", player.getName());
         playersAlive.remove(player.getUniqueId());
 

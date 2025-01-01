@@ -34,6 +34,7 @@ public class RegisterEvents extends LegendHG {
         pm.registerEvents(new PlayerPickupItem(), getInstance());
         pm.registerEvents(new GeneralEvent(), getInstance());
         pm.registerEvents(new AsyncPlayerChat(), getInstance());
+        pm.registerEvents(new InventoryClick(), getInstance());
 //        try {
 //            pm.registerEvents(new AuthListener(), getInstance());
 //        } catch (Exception e) {

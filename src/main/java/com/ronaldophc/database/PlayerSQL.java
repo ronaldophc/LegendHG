@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class PlayerSQL {
 
@@ -193,6 +194,25 @@ public class PlayerSQL {
 
     // ----- GETTERS ----- //
 
+    public static UUID getUUIDByName(String name) throws SQLException {
+        String query = "SELECT uuid FROM players WHERE name = ?";
+        Connection connection = LegendHG.getMySQLManager().getConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return UUID.fromString(resultSet.getString("uuid"));
+            }
+            preparedStatement.close();
+            return null;
+        } catch (SQLException e) {
+            Logger.logError("Failed to retrieve player UUID: " + e.getMessage());
+            throw e;
+        }
+    }
+
     public static int getPlayerKills(Player player) throws SQLException {
         String query = "SELECT kills FROM players WHERE uuid = ?";
         String uuid = player.getUniqueId().toString();
@@ -309,6 +329,84 @@ public class PlayerSQL {
             return null;
         } catch (SQLException e) {
             Logger.logError("Failed to retrieve player IP address: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    // ----- GETTERS by UUID ----- //
+
+    public static String getNameByUUID(UUID uuid) throws SQLException {
+        String query = "SELECT name FROM players WHERE uuid = ?";
+        Connection connection = LegendHG.getMySQLManager().getConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, uuid.toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("name");
+            }
+            preparedStatement.close();
+            return null;
+        } catch (SQLException e) {
+            Logger.logError("Failed to retrieve player Name: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public static int getPlayerKills(UUID uuid) throws SQLException {
+        String query = "SELECT kills FROM players WHERE uuid = ?";
+        Connection connection = LegendHG.getMySQLManager().getConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, uuid.toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("kills");
+            }
+            preparedStatement.close();
+            return 0;
+        } catch (SQLException e) {
+            Logger.logError("Failed to retrieve player kills: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public static int getPlayerDeaths(UUID uuid) throws SQLException {
+        String query = "SELECT deaths FROM players WHERE uuid = ?";
+        Connection connection = LegendHG.getMySQLManager().getConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, uuid.toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("deaths");
+            }
+            preparedStatement.close();
+            return 0;
+        } catch (SQLException e) {
+            Logger.logError("Failed to retrieve player deaths: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public static int getPlayerWins(UUID uuid) throws SQLException {
+        String query = "SELECT wins FROM players WHERE uuid = ?";
+        Connection connection = LegendHG.getMySQLManager().getConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, uuid.toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("wins");
+            }
+            preparedStatement.close();
+            return 0;
+        } catch (SQLException e) {
+            Logger.logError("Failed to retrieve player wins: " + e.getMessage());
             throw e;
         }
     }
