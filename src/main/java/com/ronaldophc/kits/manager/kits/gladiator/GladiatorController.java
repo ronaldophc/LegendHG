@@ -20,12 +20,12 @@ public class GladiatorController {
         location.setY(110);
 
         while (isLocationOccupied(location)) {
-            location.add(17, 1, 0);
+            location.add(17, 0, 0);
         }
 
         if (isPlayerInFight(gladiator) || isPlayerInFight(target)) return;
 
-        GladiatorFight fight = new GladiatorFight(gladiator, target, location);
+        GladiatorFight fight = new GladiatorFight(gladiator, target, location, gladiator.getLocation());
         activeFights.add(fight);
     }
 

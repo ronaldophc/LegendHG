@@ -34,7 +34,7 @@ public class GameEvents implements Listener {
     }
 
     @EventHandler
-    public void Cama(PlayerBedEnterEvent e) {
+    public void onBed(PlayerBedEnterEvent e) {
         e.setCancelled(true);
     }
 
@@ -46,7 +46,13 @@ public class GameEvents implements Listener {
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
         if (LegendHG.getGameStateManager().getGameState() == GameState.COUNTDOWN || PlayerSpectatorManager.getInstance().isPlayerSpectating((Player) event.getPlayer())) {
-            if (event.getInventory().getType() == InventoryType.CHEST && !event.getInventory().getTitle().contains("Kit")) {
+            String[] titles = {"Kit", "Ajustes", "Status"};
+            if (event.getInventory().getType() == InventoryType.CHEST) {
+                for (String title : titles) {
+                    if (event.getInventory().getTitle().contains(title)) {
+                        return;
+                    }
+                }
                 event.setCancelled(true);
             }
         }
@@ -65,4 +71,8 @@ public class GameEvents implements Listener {
             event.setCancelled(true);
         }
     }
+
+
 }
+
+

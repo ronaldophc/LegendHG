@@ -44,7 +44,7 @@ public class Timerlord implements Listener {
                 {
                     blockedPlayers.remove(player);
                 }
-            }.runTaskLater(LegendHG.getInstance(), 20 * 5);
+            }.runTaskLater(LegendHG.getInstance(), 20 * 4);
         }
     }
 

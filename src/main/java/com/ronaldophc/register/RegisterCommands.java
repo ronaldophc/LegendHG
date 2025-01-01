@@ -45,6 +45,11 @@ public class RegisterCommands extends LegendHG {
         instance.getCommand("tag").setExecutor(new TagCommand());
         instance.getCommand("ip").setExecutor(new IpCommand());
         instance.getCommand("gameprofile").setExecutor(new GameProfileCommand());
+        instance.getCommand("prefs").setExecutor(new PrefsCommand());
+        instance.getCommand("staffchat").setExecutor(new StaffChatCommand());
+        instance.getCommand("tell").setExecutor(new TellCommand());
+        instance.getCommand("teleport").setExecutor(new TeleportCommand());
+        instance.getCommand("stats").setExecutor(new StatsCommand());
     }
 
 }

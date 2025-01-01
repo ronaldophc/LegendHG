@@ -10,6 +10,7 @@ import com.ronaldophc.constant.GameState;
 import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.Util;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
@@ -102,14 +103,7 @@ public class Board implements Runnable {
 
     private void update(Player player) throws SQLException {
         Scoreboard scoreboard = player.getScoreboard();
-        String name = player.getCustomName();
-        Team team = scoreboard.getTeam(name);
-        Tags tag = Tag.getTag(player);
-
-        player.setPlayerListName(tag.getColor() + tag.name() + " " + Util.color1 + name + " " + Util.color2 + player.getName());
-        if (team == null) {
-            setPlayerNameTag(player, tag.getColor() + tag.name() + " ", " " + Util.color2 + player.getName(), scoreboard);
-        }
+        setPlayerNameTag(player, scoreboard);
 
         Scores scoreType = playerScore.get(player.getUniqueId());
         switch (scoreType) {
@@ -159,17 +153,21 @@ public class Board implements Runnable {
         }
     }
 
-    private static void setPlayerNameTag(Player player, String prefix, String suffix, Scoreboard scoreboard) {
-        String name = player.getCustomName();
-        Team team = scoreboard.getTeam(name);
+    private static void setPlayerNameTag(Player player, Scoreboard scoreboard) throws SQLException {
+        for (Player player1 : Bukkit.getOnlinePlayers()) {
+            Scoreboard scoreboard1 = player1.getScoreboard();
+            String name = player.getName();
+            Tags tag = Tag.getTag(player);
+            Team team = scoreboard1.getTeam(name);
 
-        if (team == null) {
-            team = scoreboard.registerNewTeam(name);
+            if (team == null) {
+                team = scoreboard1.registerNewTeam(name);
+            }
+
+            team.setPrefix(tag.getColor() + tag.name() + ChatColor.RESET + " ");
+//        team.setSuffix(suffix);
+            team.addEntry(name);
         }
-
-        team.setPrefix(prefix);
-        team.setSuffix(suffix);
-        team.addEntry(name);
     }
 
     public static Board getInstance() {

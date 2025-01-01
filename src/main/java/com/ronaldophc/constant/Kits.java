@@ -40,7 +40,7 @@ public enum Kits {
 
     BERSERKER("Berserker", "legendhg.kits.berserker", new ItemManager(Material.REDSTONE, Util.color3 + "Berserker").setLore(Arrays.asList(Util.success + "Ao matar um jogador", Util.success + "você ganhará força.")).build(), Collections.emptyList(), false),
 
-    BARBARIAN("Barbarian", "legendhg.kits.barbarian", new ItemManager(Material.IRON_SWORD, Util.color3 + "Barbarian").setLore(Arrays.asList(Util.success + "Ao matar um jogador", Util.success + "evolua sua espada.")).build(), Arrays.asList(new ItemStack[] {new ItemManager(Material.WOOD_SWORD, Util.color3 + "Berserker").setUnbreakable().build(), new ItemManager(Material.STONE_SWORD, Util.color3 + "Berserker").setUnbreakable().build(), new ItemManager(Material.IRON_SWORD, Util.color3 + "Berserker").setUnbreakable().build(), new ItemManager(Material.DIAMOND_SWORD, Util.color3 + "Berserker").setUnbreakable().build(), new ItemManager(Material.DIAMOND_SWORD, Util.color3 + "Berserker").setUnbreakable().addEnchantment(Enchantment.DAMAGE_ALL, 1) .build(), new ItemManager(Material.DIAMOND_SWORD, Util.color3 + "Berserker").setUnbreakable().addEnchantment(Enchantment.DAMAGE_ALL, 2) .build()}), false),
+    BARBARIAN("Barbarian", "legendhg.kits.barbarian", new ItemManager(Material.DIAMOND_SWORD, Util.color3 + "Barbarian").setLore(Arrays.asList(Util.success + "Ao matar um jogador", Util.success + "evolua sua espada.")).addEnchantment(Enchantment.DAMAGE_ALL, 2).build(), Arrays.asList(new ItemStack[] {new ItemManager(Material.WOOD_SWORD, Util.color3 + "Berserker").setUnbreakable().build(), new ItemManager(Material.STONE_SWORD, Util.color3 + "Berserker").setUnbreakable().build(), new ItemManager(Material.IRON_SWORD, Util.color3 + "Berserker").setUnbreakable().build(), new ItemManager(Material.DIAMOND_SWORD, Util.color3 + "Berserker").setUnbreakable().build(), new ItemManager(Material.DIAMOND_SWORD, Util.color3 + "Berserker").setUnbreakable().addEnchantment(Enchantment.DAMAGE_ALL, 1) .build(), new ItemManager(Material.DIAMOND_SWORD, Util.color3 + "Berserker").setUnbreakable().addEnchantment(Enchantment.DAMAGE_ALL, 2) .build()}), false),
 
     BLINK("Blink", "legendhg.kits.blink", new ItemManager(Material.NETHER_STAR, Util.color3 + "Blink").setLore(Arrays.asList(Util.success + "Se teleporte", Util.success + "instantaneamente gerando folhas.")).build(), Arrays.asList(new ItemStack[]{new ItemManager(Material.NETHER_STAR, Util.color3 + "Blink").setUnbreakable().build()}), true),
 
@@ -99,6 +99,8 @@ public enum Kits {
     POPAI("Popai", "legendhg.kits.popai", new ItemManager(Material.CARROT_ITEM, Util.color3 + "Popai").setLore(Arrays.asList(Util.success + "Ao comer fique imune", Util.success + "a efeitos negativos", Util.success + "e ganhe regeneração por 60s.")).build(), Arrays.asList(new ItemStack[] {new ItemManager(Material.CARROT_ITEM, Util.color3 + "Popai").setAmount(5).build()}), false),
 
     TIMERLORD("Timerlord", "legendhg.kits.timerlord", new ItemManager(Material.WATCH, Util.color3 + "Timerlord").setLore(Arrays.asList(Util.success + "Ao clicar com o relogio", Util.success + "congele os jogadores em sua volta.")).build(), Arrays.asList(new ItemStack[] {new ItemManager(Material.WATCH, Util.color3 + "Timerlord").setUnbreakable().build()}), false),
+
+    POSEIDON("Poseidon", "legendhg.kits.poseidon", new ItemManager(Material.WATER_BUCKET, Util.color3 + "Poseidon").setLore(Arrays.asList(Util.success + "Fique forte", Util.success + "ao entrar na agua!")).build(), Collections.emptyList(), false),
     ;
 
     private final String permission;

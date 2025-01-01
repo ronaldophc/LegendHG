@@ -2,6 +2,7 @@ package com.ronaldophc.helper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.material.MaterialData;
@@ -126,4 +128,5 @@ public class ItemManager {
         }
         return this;
     }
+
 }

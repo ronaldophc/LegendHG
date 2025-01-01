@@ -23,7 +23,6 @@ import java.util.UUID;
 public class Phantom implements Listener {
 
     private final Kits PHANTOM = Kits.PHANTOM;
-    private static final Map<UUID, ItemStack[]> armors = new HashMap<>();
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
@@ -48,35 +47,9 @@ public class Phantom implements Listener {
         if (!kitManager.isItemKit(event.getItem(), PHANTOM)) return;
         if (kitManager.isOnCooldown(phantom, PHANTOM)) return;
 
-        ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
-        LeatherArmorMeta chestp = (LeatherArmorMeta) chest.getItemMeta();
-        chestp.setColor(Color.WHITE);
-        chest.setItemMeta((ItemMeta) chestp);
-
-        ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
-        LeatherArmorMeta helmetMeta = (LeatherArmorMeta) helmet.getItemMeta();
-        helmetMeta.setColor(Color.WHITE);
-        helmet.setItemMeta((ItemMeta) helmetMeta);
-
-        ItemStack legs = new ItemStack(Material.LEATHER_LEGGINGS);
-        LeatherArmorMeta legsMeta = (LeatherArmorMeta) legs.getItemMeta();
-        legsMeta.setColor(Color.WHITE);
-        legs.setItemMeta((ItemMeta) legsMeta);
-
-        ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
-        LeatherArmorMeta bootsMeta = (LeatherArmorMeta) boots.getItemMeta();
-        bootsMeta.setColor(Color.WHITE);
-        boots.setItemMeta((ItemMeta) bootsMeta);
-
         kitManager.setCooldown(phantom, 40, PHANTOM);
         phantom.setAllowFlight(true);
         phantom.setFlying(true);
-        armors.put(phantom.getUniqueId(), phantom.getInventory().getArmorContents());
-        phantom.getInventory().setArmorContents(new ItemStack[4]);
-        phantom.getInventory().setChestplate(chest);
-        phantom.getInventory().setHelmet(helmet);
-        phantom.getInventory().setLeggings(legs);
-        phantom.getInventory().setBoots(boots);
         phantom.updateInventory();
         (new BukkitRunnable() {
             public void run() {
@@ -97,9 +70,6 @@ public class Phantom implements Listener {
             public void run() {
                 phantom.setFlying(false);
                 phantom.setAllowFlight(false);
-                phantom.updateInventory();
-                phantom.getInventory().setArmorContents(armors.get(phantom.getUniqueId()));
-                armors.remove(phantom.getUniqueId());
             }
         }).runTaskLater(LegendHG.getInstance(), 100L);
     }

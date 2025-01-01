@@ -13,44 +13,52 @@ public class SkinCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (command.getName().equalsIgnoreCase("skin")) {
-
-            if (commandSender == null) {
-                return true;
-            }
-
-            if (!(commandSender instanceof Player)) {
-                commandSender.sendMessage(Util.noConsole);
-                return true;
-            }
-
-            Player player = (Player) commandSender;
-            if (!commandSender.isOp() && !commandSender.hasPermission("legendhg.skin")) {
-                commandSender.sendMessage(Util.noPermission);
-                return true;
-            }
-
-            if (strings.length == 0) {
-                commandSender.sendMessage(Util.usage("/skin <nome>"));
-                return true;
-            }
-
-            if (strings.length == 1) {
-                String skin = strings[0];
-                try {
-                    if (SkinFix.changePlayerSkin(player, skin)) {
-                        MasterHelper.refreshPlayer(player);
-                        player.sendMessage(Util.success + "Sua skin foi alterada com sucesso.");
-                        return true;
-                    }
-                    player.sendMessage(Util.error + "Skin não encontrada");
-                } catch (Exception e) {
-                    player.sendMessage(Util.error + "Ocorreu um erro ao tentar alterar sua skin.");
-                    Logger.logError("Erro ao alterar skin: " + e.getMessage());
-                }
-            }
+        if (!command.getName().equalsIgnoreCase("skin")) {
             return true;
         }
-        return false;
+
+        if (!(commandSender instanceof Player)) {
+            commandSender.sendMessage(Util.noConsole);
+            return true;
+        }
+
+        Player player = (Player) commandSender;
+        if (!commandSender.isOp() && !commandSender.hasPermission("legendhg.skin")) {
+            commandSender.sendMessage(Util.noPermission);
+            return true;
+        }
+
+        if (strings.length == 0) {
+            commandSender.sendMessage(Util.usage("/skin <nome>"));
+            return true;
+        }
+
+        String skin = strings[0];
+
+        if (skin.length() > 16) {
+            player.sendMessage(Util.error + "O nome da skin não pode ter mais de 16 caracteres.");
+            return true;
+        }
+
+        try {
+            if (skin.equalsIgnoreCase("reset")) {
+                if (SkinFix.fixPlayerSkin(player)) {
+                    MasterHelper.refreshPlayer(player);
+                    player.sendMessage(Util.success + "Sua skin foi resetada com sucesso.");
+                } else {
+                    player.sendMessage(Util.error + "Ocorreu um erro ao tentar alterar sua skin.");
+                }
+                return true;
+            }
+            if (SkinFix.changePlayerSkin(player, skin)) {
+                MasterHelper.refreshPlayer(player);
+                player.sendMessage(Util.success + "Sua skin foi alterada com sucesso.");
+                return true;
+            }
+            player.sendMessage(Util.error + "Skin não encontrada");
+        } catch (Exception e) {
+            Logger.logError("Erro ao alterar skin: " + e.getMessage());
+        }
+        return true;
     }
 }

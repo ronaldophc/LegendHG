@@ -13,14 +13,26 @@ import java.util.*;
 public class MiniFeast {
 
     Location location;
-    Random random = new Random();
+    static Random random = new Random();
+    static boolean boolX;
+    static boolean boolZ;
 
     List<ItemStack> items;
 
     public MiniFeast() {
+        boolX = random.nextBoolean();
+        boolZ = random.nextBoolean();
         location = getRandomSpawnLocation();
         createStructure();
-        Bukkit.broadcastMessage("§a§lMiniFeast §7has been spawned at §a" + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ());
+        String x = "x: 175 e x: 350";
+        if (!boolX) {
+            x = "x: -175 e x: -350";
+        }
+        String z = "z: 175 e z: 350";
+        if (!boolZ) {
+            z = "z: -175 e z: -350";
+        }
+        Bukkit.broadcastMessage("§cMiniFeast apareceu entre ( " + x + " ) ( " + z + " )");
     }
 
     private void createStructure() {
@@ -59,20 +71,6 @@ public class MiniFeast {
     }
 
     private void addItemsToChest(Inventory inventory) {
-//        int potionCount = 0;
-//        for (Iterator<ItemStack> iterator = potionItems.iterator(); iterator.hasNext(); ) {
-//            if (potionCount >= 2) {
-//                break;
-//            }
-//            ItemStack item = iterator.next();
-//            int chance = 16;
-//            if (random.nextInt(100) < chance) {
-//                addItemToChest(inventory, item);
-//                iterator.remove();
-//                potionCount++;
-//            }
-//        }
-
         Collections.shuffle(items);
 
         int singleCount = 0;
@@ -93,9 +91,8 @@ public class MiniFeast {
     }
 
     private static Location getRandomSpawnLocation() {
-        Random random = new Random();
-        int x = random.nextBoolean() ? random.nextInt(175) + 175 : -(random.nextInt(175) + 175);
-        int z = random.nextBoolean() ? random.nextInt(175) + 175 : -(random.nextInt(175) + 175);
+        int x = boolX ? random.nextInt(175) + 175 : -(random.nextInt(175) + 175);
+        int z = boolZ ? random.nextInt(175) + 175 : -(random.nextInt(175) + 175);
         World world = Bukkit.getWorld("world");
         int y = world.getHighestBlockYAt(x, z) + 5;
         return new Location(world, x, y, z);

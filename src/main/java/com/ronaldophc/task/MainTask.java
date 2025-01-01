@@ -1,6 +1,7 @@
 package com.ronaldophc.task;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.ronaldophc.player.PlayerAliveManager;
@@ -12,6 +13,8 @@ public class MainTask implements Runnable {
 
     @Override
     public void run() {
+        World world = Bukkit.getWorld("world");
+        world.setTime(1800);
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (PlayerAliveManager.getInstance().isPlayerAlive(player.getUniqueId())) {
                 continue;

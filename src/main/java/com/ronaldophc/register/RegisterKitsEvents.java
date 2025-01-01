@@ -48,5 +48,7 @@ public class RegisterKitsEvents extends LegendHG {
         pm.registerEvents(new Magma(), getInstance());
         pm.registerEvents(new Popai(), getInstance());
         pm.registerEvents(new Timerlord(), getInstance());
+        pm.registerEvents(new Poseidon(), getInstance());
     }
+
 }
