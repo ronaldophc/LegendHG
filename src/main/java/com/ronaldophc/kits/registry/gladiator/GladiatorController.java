@@ -9,10 +9,9 @@ import java.util.Set;
 public class GladiatorController {
 
     private final Set<GladiatorFight> activeFights = new HashSet<>();
-    private static GladiatorController instance;
 
     public GladiatorController() {
-        instance = this;
+        GladiatorController instance = this;
     }
 
     public void startGladiatorFight(Player gladiator, Player target) {
@@ -51,7 +50,4 @@ public class GladiatorController {
         activeFights.remove(fight);
     }
 
-    public static GladiatorController getInstance() {
-        return instance;
-    }
 }

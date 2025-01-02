@@ -26,7 +26,7 @@ public class Cultivator extends Kit {
                 new ItemManager(Material.SAPLING, Util.color3 + "Cultivator")
                         .setLore(Arrays.asList(Util.success + "Ao plantar uma semente", Util.success + "nascerá instantaneamente"))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -35,7 +35,7 @@ public class Cultivator extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player cultivator = event.getPlayer();
-        Account account = AccountManager.getOrCreateAccount(cultivator);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(cultivator);
         if (!account.getKits().contains(this)) return;
 
         Block eventBlock = event.getBlock();

@@ -1,16 +1,17 @@
 package com.ronaldophc.gamestate;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.setting.Settings;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+@Getter
 public class GameStateManager {
     private GameState gameState;
 
-    public GameStateManager(LegendHG plugin) {
+    public GameStateManager() {
         startCountdown();
     }
 
@@ -41,14 +42,10 @@ public class GameStateManager {
     }
 
     public void startRestart() {
-        for(Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             player.kickPlayer(Util.color1 + "O jogo acabou, reiniciando o servidor!");
         }
         setGameState(GameState.RESTARTING, 2);
-    }
-
-    public GameState getGameState() {
-        return gameState;
     }
 
     private void setGameState(GameState state, int time) {

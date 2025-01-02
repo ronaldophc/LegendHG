@@ -12,10 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Pyro extends Kit {
 
@@ -25,8 +23,8 @@ public class Pyro extends Kit {
                 new ItemManager(Material.FIREBALL, Util.color3 + "Pyro")
                         .setLore(Arrays.asList(Util.success + "Lance uma bola de fogo", Util.success + "na direção que estiver olhando."))
                         .build(),
-                Arrays.asList(new ItemStack[] {new ItemManager(Material.FIREBALL, Util.color3 + "Pyro")
-                        .build()}),
+                new ItemManager(Material.FIREBALL, Util.color3 + "Pyro")
+                        .build(),
                 false);
     }
 
@@ -34,7 +32,7 @@ public class Pyro extends Kit {
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         if (!isItemKit(event.getItem())) return;
         if (!LegendHG.getGameStateManager().getGameState().canTakeDamage()) {
@@ -61,7 +59,7 @@ public class Pyro extends Kit {
         Player player = (Player) fireball.getShooter();
         Player target = (Player) event.getEntity();
 
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         if (player == target) {
             event.setCancelled(true);

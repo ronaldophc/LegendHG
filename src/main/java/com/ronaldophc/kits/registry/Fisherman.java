@@ -24,9 +24,9 @@ public class Fisherman extends Kit {
                 new ItemManager(Material.FISHING_ROD, Util.color3 + "Fisherman")
                         .setLore(Arrays.asList(Util.success + "Ao acertar um jogador", Util.success + "puxará ele até você."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.FISHING_ROD, Util.color3 + "Fisherman")
+                new ItemManager(Material.FISHING_ROD, Util.color3 + "Fisherman")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 false);
 
     }
@@ -37,7 +37,7 @@ public class Fisherman extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player player = event.getPlayer();
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         Entity caught = event.getCaught();

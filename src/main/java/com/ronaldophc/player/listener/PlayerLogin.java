@@ -1,15 +1,14 @@
 package com.ronaldophc.player.listener;
 
+import com.ronaldophc.LegendHG;
+import com.ronaldophc.constant.GameState;
+import com.ronaldophc.helper.Util;
+import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.setting.Settings;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
-
-import com.ronaldophc.LegendHG;
-import com.ronaldophc.constant.GameState;
-import com.ronaldophc.helper.Util;
-import com.ronaldophc.player.PlayerAliveManager;
-import com.ronaldophc.setting.Settings;
 
 public class PlayerLogin implements Listener {
 
@@ -22,10 +21,10 @@ public class PlayerLogin implements Listener {
         String permSpec = "legendhg.login.spectator";
         String permMax = "legendhg.login.maxplayers";
         int maxPlayers = Settings.getInstance().getInt("MaxPlayers");
-        int playerOn = PlayerAliveManager.getInstance().getPlayersAlive().size();
+        int playersOn = LegendHG.getAccountManager().getPlayersAlive().size();
         switch (gameState) {
             case COUNTDOWN:
-                if (playerOn >= maxPlayers && (!player.hasPermission(permMax)) && !player.isOp())
+                if (playersOn >= maxPlayers && (!player.hasPermission(permMax)) && !player.isOp())
                     event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Util.color1 + "Apenas" + Util.color2 + " VIP " + Util.color1 + "pode entrar com o servidor cheio!!");
                 break;
 

@@ -14,10 +14,8 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Switcher extends Kit {
 
@@ -27,8 +25,8 @@ public class Switcher extends Kit {
                 new ItemManager(Material.SNOW_BALL, Util.color3 + "Switcher")
                         .setLore(Arrays.asList(Util.success + "Troque de lugar com", Util.success + "o jogador que acertar."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.SNOW_BALL, Util.color3 + "Switcher")
-                        .build()}),
+                new ItemManager(Material.SNOW_BALL, Util.color3 + "Switcher")
+                        .build(),
                 false);
     }
 
@@ -36,7 +34,7 @@ public class Switcher extends Kit {
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(event.getItem())) return;
@@ -50,9 +48,7 @@ public class Switcher extends Kit {
             return;
         }
         kitManager.setCooldown(player, 1, this);
-        for (ItemStack item : getKitItems()) {
-            player.getInventory().addItem(item);
-        }
+        player.getInventory().addItem(getKitItem());
         player.updateInventory();
     }
 
@@ -68,7 +64,7 @@ public class Switcher extends Kit {
         Player target = (Player) event.getEntity();
 
         KitManager kitManager = LegendHG.getKitManager();
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
 
         if (!account.getKits().contains(this)) return;
         if (player == target) return;

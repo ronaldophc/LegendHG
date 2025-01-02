@@ -25,9 +25,9 @@ public class Phantom extends Kit {
                 new ItemManager(Material.FEATHER, Util.color3 + "Phantom")
                         .setLore(Arrays.asList(Util.success + "Use seu phantom", Util.success + "para poder voar", Util.success + "por 5 segundos."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.FEATHER, Util.color3 + "Phantom")
+                new ItemManager(Material.FEATHER, Util.color3 + "Phantom")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 true);
     }
 
@@ -37,7 +37,7 @@ public class Phantom extends Kit {
 
         Player phantom = event.getPlayer();
 
-        Account account = AccountManager.getOrCreateAccount(phantom);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(phantom);
         if (!account.getKits().contains(this)) return;
         if (event.getItem() == null) return;
         if (!isItemKit(event.getItem())) return;

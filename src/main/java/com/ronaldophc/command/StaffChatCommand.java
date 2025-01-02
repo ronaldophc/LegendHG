@@ -5,7 +5,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class StaffChatCommand implements CommandExecutor {
 
@@ -35,7 +34,7 @@ public class StaffChatCommand implements CommandExecutor {
 
             for (Player online : player.getServer().getOnlinePlayers()) {
                 if (online.hasPermission("legendhg.admin.staffchat")) {
-                    online.sendMessage(("§8[§cStaff§8] §7" + player.getName() + " §8» §f" + message.toString()));
+                    online.sendMessage(("§8[§cStaff§8] §7" + player.getName() + " §8» §f" + message));
                 }
             }
 

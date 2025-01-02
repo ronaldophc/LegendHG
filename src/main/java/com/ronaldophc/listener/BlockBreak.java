@@ -1,9 +1,8 @@
 package com.ronaldophc.listener;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
+import com.ronaldophc.LegendHG;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -12,8 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.ronaldophc.LegendHG;
-import com.ronaldophc.player.PlayerSpectatorManager;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class BlockBreak implements Listener {
 
@@ -36,7 +36,8 @@ public class BlockBreak implements Listener {
             return;
         }
 
-        if (PlayerSpectatorManager.getInstance().isPlayerSpectating(player)) {
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        if (account.isSpectator()) {
             event.setCancelled(true);
             return;
         }

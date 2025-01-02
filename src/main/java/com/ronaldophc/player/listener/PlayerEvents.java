@@ -3,7 +3,8 @@ package com.ronaldophc.player.listener;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
-import com.ronaldophc.player.PlayerSpectatorManager;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -21,8 +22,8 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
-        if (PlayerSpectatorManager.getInstance().isPlayerSpectating(player)) {
-            PlayerSpectatorManager.getInstance().removePlayer(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        if (account.isSpectator()) {
             event.setCancelled(true);
             return;
         }
@@ -47,7 +48,8 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        if (PlayerSpectatorManager.getInstance().isPlayerSpectating(player)) {
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        if (account.isSpectator()) {
             event.setCancelled(true);
             return;
         }
@@ -58,6 +60,7 @@ public class PlayerEvents implements Listener {
         for (Kit kit : kitManager.getKits()) {
             if (kit.isItemKit(item)) {
                 if (kit.getName().equalsIgnoreCase("Launcher")) continue;
+                if (kit.getName().equalsIgnoreCase("Brand")) continue;
                 event.setCancelled(true);
                 player.updateInventory();
                 return;

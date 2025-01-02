@@ -31,9 +31,9 @@ public class Kangaroo extends Kit {
                 new ItemManager(Material.FIREWORK, Util.color3 + "Kangaroo")
                         .setLore(Collections.singletonList(Util.success + "Pule como um canguru"))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.FIREWORK, Util.color3 + "Kangaroo")
+                new ItemManager(Material.FIREWORK, Util.color3 + "Kangaroo")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 true);
     }
 
@@ -46,7 +46,7 @@ public class Kangaroo extends Kit {
 
         Player kangaroo = event.getPlayer();
 
-        Account account = AccountManager.getOrCreateAccount(kangaroo);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(kangaroo);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(kangaroo.getItemInHand())) return;
@@ -95,7 +95,7 @@ public class Kangaroo extends Kit {
         if (!(event.getEntity() instanceof Player)) return;
         Player kangaroo = (Player) event.getEntity();
 
-        Account account = AccountManager.getOrCreateAccount(kangaroo);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(kangaroo);
         if (!account.getKits().contains(this)) return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {

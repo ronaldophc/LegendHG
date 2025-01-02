@@ -24,9 +24,9 @@ public class Thermo extends Kit {
                 new ItemManager(Material.DAYLIGHT_DETECTOR, Util.color3 + "Thermo")
                         .setLore(Collections.singletonList(Util.success + "Inverta Agua e Lava"))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.DAYLIGHT_DETECTOR, Util.color3 + "Thermo")
+                new ItemManager(Material.DAYLIGHT_DETECTOR, Util.color3 + "Thermo")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 false);
     }
 
@@ -35,7 +35,7 @@ public class Thermo extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player player = event.getPlayer();
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         ItemStack itemInHand = player.getItemInHand();

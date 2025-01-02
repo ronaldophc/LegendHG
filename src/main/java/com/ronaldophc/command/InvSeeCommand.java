@@ -10,11 +10,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 
 import com.ronaldophc.helper.Util;
 
-public class InvSee implements CommandExecutor, TabCompleter {
+public class InvSeeCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
@@ -55,9 +54,9 @@ public class InvSee implements CommandExecutor, TabCompleter {
                 try {
                     Player target = player.getServer().getPlayer(strings[0]);
                     player.sendMessage(Util.color1 + "Abrindo inventario de " + Util.color2 + target.getName());
-                    player.openInventory((Inventory) target.getInventory());
+                    player.openInventory(target.getInventory());
                 } catch (Exception e) {
-                    player.sendMessage(Util.error + "Jogador nao encontrado.");
+                    player.sendMessage(Util.noPlayer);
                     Util.errorCommand("invsee", e);
                 }
             }

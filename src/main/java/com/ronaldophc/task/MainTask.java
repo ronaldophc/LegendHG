@@ -1,14 +1,16 @@
 package com.ronaldophc.task;
 
+import com.ronaldophc.LegendHG;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import com.ronaldophc.player.PlayerAliveManager;
-import com.ronaldophc.player.PlayerSpectatorManager;
-
 public class MainTask implements Runnable {
 
+    @Getter
     private static final MainTask instance = new MainTask();
 
     @Override
@@ -16,10 +18,11 @@ public class MainTask implements Runnable {
         World world = Bukkit.getWorld("world");
         world.setTime(1800);
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (PlayerAliveManager.getInstance().isPlayerAlive(player.getUniqueId())) {
+            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+            if (account.isAlive()) {
                 continue;
             }
-            if (PlayerSpectatorManager.getInstance().isPlayerSpectating(player)) {
+            if (account.isSpectator()) {
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
                     if (player2.isOp()) continue;
                     player2.hidePlayer(player);
@@ -29,7 +32,4 @@ public class MainTask implements Runnable {
 
     }
 
-    public static MainTask getInstance() {
-        return instance;
-    }
 }

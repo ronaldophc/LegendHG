@@ -25,7 +25,7 @@ public class Forger extends Kit {
                 new ItemManager(Material.COAL, Util.color3 + "Forger")
                         .setLore(Arrays.asList(Util.success + "Queime ferro", Util.success + "sem fornalha."))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -37,7 +37,7 @@ public class Forger extends Kit {
 
         ItemStack currentItem = event.getCurrentItem();
 
-        Account account = AccountManager.getOrCreateAccount(forger);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(forger);
         if (!account.getKits().contains(this)) return;
         if (currentItem == null || currentItem.getType() == Material.AIR) return;
 

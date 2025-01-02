@@ -1,15 +1,22 @@
 package com.ronaldophc.player.account;
 
+import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class AccountManager {
 
-    private static final List<Account> accounts = new ArrayList<>();
+    private final List<Account> accounts = new ArrayList<>();
 
-    public static Account getOrCreateAccount(Player player) {
+    public AccountManager() {
+        AccountManager instance = this;
+    }
+
+    public Account getOrCreateAccount(Player player) {
         for (Account account : accounts) {
             if (account.getUUID().equals(player.getUniqueId())) {
                 return account;
@@ -18,5 +25,24 @@ public class AccountManager {
         Account newAccount = new Account(player);
         accounts.add(newAccount);
         return newAccount;
+    }
+
+    public Account getAccountByActualName(String name) {
+        for (Account account : accounts) {
+            if (account.getActualName().equalsIgnoreCase(name)) {
+                return account;
+            }
+        }
+        return null;
+    }
+
+    public List<Player> getPlayersAlive() {
+        List<Player> playersAlive = new ArrayList<>();
+        for (Account account : accounts) {
+            if (account.isAlive()) {
+                playersAlive.add(account.getPlayer());
+            }
+        }
+        return playersAlive;
     }
 }

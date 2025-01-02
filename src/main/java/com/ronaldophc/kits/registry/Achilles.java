@@ -19,7 +19,7 @@ public class Achilles extends Kit {
     public Achilles() {
         super("Achilles",
                 "legendhg.kits.achilles", new ItemManager(Material.WOOD_SWORD, Util.color3 + "Achilles").setLore(Arrays.asList(Util.success + "Tome mais dano para", Util.success + "espada de madeira", Util.success + "e menos das outras espadas.")).build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -29,7 +29,7 @@ public class Achilles extends Kit {
             if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
             Player damager = (Player) event.getDamager();
             Player player = (Player) event.getEntity();
-            Account account = AccountManager.getOrCreateAccount(player);
+            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
             if (!account.getKits().contains(this)) return;
             if (damager.getItemInHand().getType().name().contains("WOOD_")) {
                 event.setDamage(event.getDamage() * 1.5);

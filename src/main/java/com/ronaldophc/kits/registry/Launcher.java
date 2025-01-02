@@ -4,13 +4,11 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
-import com.ronaldophc.player.PlayerAliveManager;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -22,7 +20,6 @@ import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 public class Launcher extends Kit {
 
@@ -32,9 +29,9 @@ public class Launcher extends Kit {
                 new ItemManager(Material.SPONGE, Util.color3 + "Launcher")
                         .setLore(Arrays.asList(Util.success + "Ganhe impulsao", Util.success + "ao subir na esponja."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.SPONGE, Util.color3 + "Launcher")
+                new ItemManager(Material.SPONGE, Util.color3 + "Launcher")
                         .setAmount(20)
-                        .build()}),
+                        .build(),
                 false);
     }
 

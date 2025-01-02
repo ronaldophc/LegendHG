@@ -1,16 +1,15 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.helper.Util;
-import com.ronaldophc.gamestate.CountDown;
 import com.ronaldophc.constant.GameState;
+import com.ronaldophc.gamestate.CountDown;
+import com.ronaldophc.helper.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class CountdownCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         if (command.getName().equalsIgnoreCase("countdown")) {
             if (strings.length == 1) {
-                return Arrays.asList("set");
+                return Collections.singletonList("set");
             }
         }
         return Collections.emptyList();
@@ -59,7 +58,7 @@ public class CountdownCommand implements CommandExecutor, TabCompleter {
                     CountDown.getInstance().setTime(seconds);
                     Bukkit.broadcastMessage(Util.color1 + "Contagem regressiva definida para " + Util.color2 + seconds + Util.color1 + " segundos por um §cADMIN.");
                 } catch (NumberFormatException e) {
-                    commandSender.sendMessage(Util.error + ("O valor inserido nao e um numero."));
+                    commandSender.sendMessage(Util.error + ("O valor inserido nao é um numero."));
                 }
             }
             return true;

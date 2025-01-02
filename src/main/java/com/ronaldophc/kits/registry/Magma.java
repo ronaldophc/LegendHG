@@ -11,11 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 public class Magma extends Kit {
@@ -26,7 +23,7 @@ public class Magma extends Kit {
                 new ItemManager(Material.MAGMA_CREAM, Util.color3 + "Magma")
                         .setLore(Arrays.asList(Util.success + "Ao bater em um jogador", Util.success + "tenha chance de aplicar fogo nele.", Util.success + "Não recebe dano de fogo."))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -36,7 +33,7 @@ public class Magma extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player damager = (Player) event.getDamager();
-        Account account = AccountManager.getOrCreateAccount(damager);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(damager);
         if (!account.getKits().contains(this)) return;
 
         Player damaged = (Player) event.getEntity();
@@ -53,7 +50,7 @@ public class Magma extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player damaged = (Player) event.getEntity();
-        Account account = AccountManager.getOrCreateAccount(damaged);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(damaged);
         if (!account.getKits().contains(this)) return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == EntityDamageEvent.DamageCause.FIRE || event.getCause() == EntityDamageEvent.DamageCause.LAVA) {

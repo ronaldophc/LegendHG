@@ -2,7 +2,9 @@ package com.ronaldophc.kits.registry.gladiator;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.player.PlayerAliveManager;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,6 +30,7 @@ import java.util.UUID;
 public class GladiatorFight extends GladiatorController implements Listener {
 
     private final HashMap<UUID, UUID> gladiatorBattles = new HashMap<>();
+    @Getter
     private final Set<Block> arenaBlocks = new HashSet<>();
     public final Set<Block> placedBlocks = new HashSet<>();
     public final Player gladiator;
@@ -35,6 +38,8 @@ public class GladiatorFight extends GladiatorController implements Listener {
     public Location arenaCenter;
     public Location originalLocation;
     private int timeRemaining;
+    private Account targetAccount;
+    private Account gladiatorAccount;
 
     public GladiatorFight(Player gladiator, Player target, Location arenaCenter, Location originalLocation) {
         super();
@@ -43,6 +48,8 @@ public class GladiatorFight extends GladiatorController implements Listener {
         this.arenaCenter = arenaCenter;
         this.timeRemaining = 60;
         this.originalLocation = originalLocation;
+        Account targetAccount = LegendHG.getAccountManager().getOrCreateAccount(target);
+        Account gladiatorAccount = LegendHG.getAccountManager().getOrCreateAccount(gladiator);
         registerListener();
         initializeBattle();
     }
@@ -58,10 +65,6 @@ public class GladiatorFight extends GladiatorController implements Listener {
 
     public void addPlacedBlock(Block block) {
         placedBlocks.add(block);
-    }
-
-    public Set<Block> getArenaBlocks() {
-        return arenaBlocks;
     }
 
     public boolean isInFight(Player player) {
@@ -148,13 +151,13 @@ public class GladiatorFight extends GladiatorController implements Listener {
         Location loc;
 
         if (!target.isOnline()) {
-            PlayerAliveManager.getInstance().removePlayer(target);
+            targetAccount.setAlive(false);
         }
         if (!gladiator.isOnline()) {
-            PlayerAliveManager.getInstance().removePlayer(gladiator);
+            gladiatorAccount.setAlive(false);
         }
 
-        if (PlayerAliveManager.getInstance().isPlayerOnline(gladiator.getUniqueId())) {
+        if (gladiatorAccount.isAlive()) {
             gladiator.removePotionEffect(PotionEffectType.WITHER);
             int y = Bukkit.getWorld("world").getHighestBlockYAt(gladiator.getLocation());
             loc = gladiator.getLocation();
@@ -163,7 +166,7 @@ public class GladiatorFight extends GladiatorController implements Listener {
             new GladiatorEndsEvent(gladiator).callEvent();
         }
 
-        if (PlayerAliveManager.getInstance().isPlayerOnline(target.getUniqueId())) {
+        if (targetAccount.isAlive()) {
             target.removePotionEffect(PotionEffectType.WITHER);
             int y = Bukkit.getWorld("world").getHighestBlockYAt(target.getLocation());
             loc = target.getLocation();
@@ -191,7 +194,8 @@ public class GladiatorFight extends GladiatorController implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        if (!PlayerAliveManager.getInstance().isPlayerOnline(player.getUniqueId())) {
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        if (!account.isAlive()) {
             return;
         }
         if (isInFight(player)) {

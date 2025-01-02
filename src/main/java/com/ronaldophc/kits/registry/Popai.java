@@ -27,9 +27,9 @@ public class Popai extends Kit {
                 new ItemManager(Material.CARROT_ITEM, Util.color3 + "Popai")
                         .setLore(Arrays.asList(Util.success + "Ao comer fique imune", Util.success + "a efeitos negativos", Util.success + "e ganhe regeneração por 60s."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.CARROT_ITEM, Util.color3 + "Popai")
+                new ItemManager(Material.CARROT_ITEM, Util.color3 + "Popai")
                         .setAmount(5)
-                        .build()}),
+                        .build(),
                 false);
     }
 
@@ -39,7 +39,7 @@ public class Popai extends Kit {
 
         Player popai = event.getPlayer();
 
-        Account account = AccountManager.getOrCreateAccount(popai);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(popai);
         if (!account.getKits().contains(this)) return;
 
         ItemStack itemInHand = popai.getItemInHand();
@@ -56,7 +56,7 @@ public class Popai extends Kit {
         if (!(event.getEntity() instanceof Player)) return;
 
         Player popai = (Player) event.getEntity();
-        Account account = AccountManager.getOrCreateAccount(popai);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(popai);
         if (!account.getKits().contains(this)) return;
 
         if ((event.getCause() == EntityDamageEvent.DamageCause.POISON

@@ -5,7 +5,6 @@ import com.ronaldophc.constant.GameState;
 import com.ronaldophc.gamestate.CountDown;
 import com.ronaldophc.helper.GameHelper;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.player.PlayerAliveManager;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
@@ -17,17 +16,17 @@ public class ScoreSimple extends Board {
 
     public static void createNewScoreboardOneKit(Player player, Objective objective, Scoreboard scoreboard) {
         objective.setDisplayName(Util.bold + Util.color1 + "Começo " + Util.formatSeconds(CountDown.getInstance().getRemainingTime()));
-        addTeam(scoreboard, "team1", "§1", Util.color2 + "", Util.color1 + "", 1);
-        addTeam(scoreboard, "team0", "§0", Util.color2 + "Players ", Util.color1 + PlayerAliveManager.getInstance().getPlayersAlive().size(), 0);
+        addTeam(scoreboard, "team1", "§1", Util.color2, Util.color1, 1);
+        addTeam(scoreboard, "team0", "§0", Util.color2 + "Players ", Util.color1 + LegendHG.getAccountManager().getPlayersAlive().size(), 0);
 
         player.setScoreboard(scoreboard);
     }
 
     public static void createNewScoreboardTwoKits(Player player, Objective objective, Scoreboard scoreboard) {
         objective.setDisplayName(Util.bold + Util.color1 + "Começo " + Util.formatSeconds(CountDown.getInstance().getRemainingTime()));
-        addTeam(scoreboard, "team2", "§2", Util.color2 + "", Util.color1 + "", 2);
-        addTeam(scoreboard, "team1", "§1", Util.color2 + "", Util.color1 + "", 1);
-        addTeam(scoreboard, "team0", "§0", Util.color2 + "Players ", Util.color1 + PlayerAliveManager.getInstance().getPlayersAlive().size(), 0);
+        addTeam(scoreboard, "team2", "§2", Util.color2, Util.color1, 2);
+        addTeam(scoreboard, "team1", "§1", Util.color2, Util.color1, 1);
+        addTeam(scoreboard, "team0", "§0", Util.color2 + "Players ", Util.color1 + LegendHG.getAccountManager().getPlayersAlive().size(), 0);
 
         player.setScoreboard(scoreboard);
     }
@@ -35,7 +34,7 @@ public class ScoreSimple extends Board {
     public static void updateScoreboard(Player player, Objective objective) {
         GameState gameState = LegendHG.getGameStateManager().getGameState();
         Scoreboard scoreboard = player.getScoreboard();
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
 
         if (GameHelper.getInstance().getKits() == 2) {
             Team team2 = scoreboard.getTeam("team2");
@@ -46,7 +45,7 @@ public class ScoreSimple extends Board {
         team1.setSuffix(Util.color1 + account.getKits().getPrimary().getName());
 
         Team team0 = scoreboard.getTeam("team0");
-        team0.setSuffix(Util.color1 + PlayerAliveManager.getInstance().getPlayersAlive().size());
+        team0.setSuffix(Util.color1 + LegendHG.getAccountManager().getPlayersAlive().size());
 
         String time = Util.formatSeconds(CountDown.getInstance().getRemainingTime());
 

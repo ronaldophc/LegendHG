@@ -25,9 +25,9 @@ public class JackHammer extends Kit {
                         .setLore(Arrays.asList(Util.success + "Ao quebrar um bloco com o machado", Util.success + "quebre tudo até a bedrock"))
                         .setUnbreakable()
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.STONE_AXE, Util.color3 + "Jackhammer")
+                new ItemManager(Material.STONE_AXE, Util.color3 + "Jackhammer")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 false);
     }
 
@@ -36,7 +36,7 @@ public class JackHammer extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player player = event.getPlayer();
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(player.getItemInHand())) return;

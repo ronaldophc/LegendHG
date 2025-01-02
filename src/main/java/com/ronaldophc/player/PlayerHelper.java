@@ -20,7 +20,7 @@ import java.util.Random;
 public class PlayerHelper {
 
     public static boolean verifyMinPlayers() {
-        if (PlayerAliveManager.getInstance().getPlayersAlive().size() >= Settings.getInstance().getInt("MinPlayers")) {
+        if (LegendHG.getAccountManager().getPlayersAlive().size() >= Settings.getInstance().getInt("MinPlayers")) {
             return true;
         }
         Bukkit.broadcastMessage(Util.errorServer + "Jogadores insuficientes para começar, reiniciando a contagem");
@@ -60,13 +60,16 @@ public class PlayerHelper {
     }
 
     private static void addItemsToStart(Player player) {
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        if (!player.getInventory().contains(Material.COMPASS)) {
+            player.getInventory().addItem(new ItemStack(Material.COMPASS));
+        }
         account.getKits().getPrimary().apply(player);
         account.getKits().getSecondary().apply(player);
     }
 
     public static void preparePlayerToSpec(Player player) {
-        player.setGameMode(GameMode.SURVIVAL);
+        resetPlayerState(player);
         player.setAllowFlight(true);
         player.setFlying(true);
     }

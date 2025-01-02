@@ -18,10 +18,10 @@ public class Grandpa extends Kit {
                         .addEnchantment(Enchantment.KNOCKBACK, 2)
                         .setLore(Arrays.asList(Util.success + "Ganhe um graveto", Util.success + "com knockback."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.STICK, Util.color3 + "Grandpa")
+                new ItemManager(Material.STICK, Util.color3 + "Grandpa")
                         .addEnchantment(Enchantment.KNOCKBACK, 2)
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 false);
     }
 }

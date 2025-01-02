@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.EnumSet;
 
-public class Crash implements CommandExecutor {
+public class CrashCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -33,7 +33,7 @@ public class Crash implements CommandExecutor {
 
             Player target = player.getServer().getPlayer(args[0]);
             if (target == null) {
-                player.sendMessage("Player not found.");
+                player.sendMessage(Util.noPlayer);
                 return true;
             }
 

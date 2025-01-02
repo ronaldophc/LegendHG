@@ -27,14 +27,13 @@ public class Util {
     public static String color1 = "§b";
     public static String color2 = "§f";
     public static String color3 = "§e";
-    public static String black = "§0";
     public static String success = "§a";
     public static String error = "§c";
     public static String errorServer = "§4";
     public static String title = "§b§lLegendHG";
-    public static String noPermission = error + "Voce nao tem permissao para executar este comando.";
-    public static String noConsole = error + "Nao pode executar este comando no console.";
-    public static String noPlayer = error + "Jogador nao encontrado.";
+    public static String noPermission = error + "Voce não tem permissao para executar este comando.";
+    public static String noConsole = error + "Não pode executar este comando no console.";
+    public static String noPlayer = error + "Jogador não encontrado.";
 
     public static String formatSeconds(int totalSeconds) {
         int minutes = totalSeconds / 60;
@@ -43,7 +42,7 @@ public class Util {
     }
 
     public static String usage(String usage) {
-        return Util.bold + "" + Util.color1 + "Use " + Util.bold + "" +  Util.color2 + usage;
+        return Util.bold + Util.color1 + "Use " + Util.bold + Util.color2 + usage;
     }
 
     public static void errorCommand(String comando, Exception e) {

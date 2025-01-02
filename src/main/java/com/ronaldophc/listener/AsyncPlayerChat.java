@@ -82,7 +82,7 @@ public class AsyncPlayerChat implements Listener {
         }
 
 
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         Tags tag = account.getTag();
         event.setFormat(tag.getColor() + tag.name() + " §7" + account.getActualName() + " §8» §f" + message);
 

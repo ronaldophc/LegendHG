@@ -14,10 +14,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Blink extends Kit {
 
@@ -27,8 +25,7 @@ public class Blink extends Kit {
                 new ItemManager(Material.NETHER_STAR, Util.color3 + "Blink")
                         .setLore(Arrays.asList(Util.success + "Se teleporte", Util.success + "instantaneamente gerando folhas."))
                         .build(),
-                Arrays.asList(new ItemStack[]
-                        {new ItemManager(Material.NETHER_STAR, Util.color3 + "Blink").setUnbreakable().build()}),
+                new ItemManager(Material.NETHER_STAR, Util.color3 + "Blink").setUnbreakable().build(),
                 true
         );
     }
@@ -38,7 +35,7 @@ public class Blink extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player blinker = event.getPlayer();
 
-        Account account = AccountManager.getOrCreateAccount(blinker);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(blinker);
         if (!account.getKits().contains(this)) return;
 
         if (!(isItemKit(event.getItem()))) return;

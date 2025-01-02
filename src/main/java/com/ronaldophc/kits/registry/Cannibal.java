@@ -26,7 +26,7 @@ public class Cannibal extends Kit {
                 new ItemManager(Material.ROTTEN_FLESH, Util.color3 + "Cannibal")
                         .setLore(Arrays.asList(Util.success + "Ao matar um jogador", Util.success + "você ganhará vida e regeneração."))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -38,7 +38,7 @@ public class Cannibal extends Kit {
         if (event.getEntity().getKiller() == null) return;
         Player killer = player.getKiller();
 
-        Account account = AccountManager.getOrCreateAccount(killer);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(killer);
         if (!account.getKits().contains(this)) return;
 
         killer.setHealth(Math.min(killer.getHealth() + 2, 20));

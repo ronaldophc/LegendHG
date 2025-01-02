@@ -1,10 +1,10 @@
 package com.ronaldophc.feature;
 
+import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.Tags;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
-import com.ronaldophc.player.account.AccountManager;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -16,7 +16,7 @@ public class TagManager {
 
     public static void setTag(Player player, Tags tag) {
         try {
-            Account account = AccountManager.getOrCreateAccount(player);
+            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
             account.setTag(tag);
             PlayerSQL.setPlayerTag(player, tag);
         } catch (Exception e) {

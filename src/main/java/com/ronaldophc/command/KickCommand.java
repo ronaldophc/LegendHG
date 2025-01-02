@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Kick implements CommandExecutor {
+public class KickCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
@@ -31,20 +31,18 @@ public class Kick implements CommandExecutor {
                 }
                 return true;
             }
-            if (strings.length > 1) {
-                try {
-                    Player targetPlayer = Bukkit.getServer().getPlayer(strings[0]);
-                    String message = "";
-                    for (int i = 1; i < strings.length; i++) {
-                        message = String.valueOf(message) + "§f" + strings[i] + " ";
-                    }
-                    targetPlayer.kickPlayer(Util.color1 + "Voce foi kickado do servidor pelo motivo " + message);
-                } catch (Exception e) {
-                    commandSender.sendMessage(Util.error + "Jogador nao encontrado.");
-                    Util.errorCommand("kick", e);
+            try {
+                Player targetPlayer = Bukkit.getServer().getPlayer(strings[0]);
+                String message = "";
+                for (int i = 1; i < strings.length; i++) {
+                    message = String.valueOf(message) + "§f" + strings[i] + " ";
                 }
-                return true;
+                targetPlayer.kickPlayer(Util.color1 + "Voce foi kickado do servidor pelo motivo " + message);
+            } catch (Exception e) {
+                commandSender.sendMessage(Util.error + "Jogador nao encontrado.");
+                Util.errorCommand("kick", e);
             }
+            return true;
         }
         return false;
     }

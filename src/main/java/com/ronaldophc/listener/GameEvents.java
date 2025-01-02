@@ -1,6 +1,7 @@
 package com.ronaldophc.listener;
 
-import com.ronaldophc.player.PlayerSpectatorManager;
+import com.ronaldophc.LegendHG;
+import com.ronaldophc.constant.GameState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,12 +15,9 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
-import com.ronaldophc.LegendHG;
-import com.ronaldophc.constant.GameState;
-
 public class GameEvents implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void weather(WeatherChangeEvent e) {
         e.setCancelled(true);
     }
@@ -45,7 +43,7 @@ public class GameEvents implements Listener {
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
-        if (LegendHG.getGameStateManager().getGameState() == GameState.COUNTDOWN || PlayerSpectatorManager.getInstance().isPlayerSpectating((Player) event.getPlayer())) {
+        if (LegendHG.getGameStateManager().getGameState() == GameState.COUNTDOWN || LegendHG.getAccountManager().getOrCreateAccount((Player) event.getPlayer()).isSpectator()) {
             String[] titles = {"Kit", "Ajustes", "Status"};
             if (event.getInventory().getType() == InventoryType.CHEST) {
                 for (String title : titles) {

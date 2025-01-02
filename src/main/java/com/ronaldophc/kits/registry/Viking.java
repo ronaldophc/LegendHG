@@ -23,9 +23,9 @@ public class Viking extends Kit {
                 new ItemManager(Material.STONE_AXE, Util.color3 + "Viking")
                         .setLore(Arrays.asList(Util.success + "Batalhe como um", Util.success + "verdadeiro viking."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.STONE_AXE, Util.color3 + "Viking")
+                new ItemManager(Material.STONE_AXE, Util.color3 + "Viking")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 false);
     }
 
@@ -37,7 +37,7 @@ public class Viking extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player damager = (Player) event.getDamager();
 
-        Account account = AccountManager.getOrCreateAccount(damager);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(damager);
         if (!account.getKits().contains(this)) return;
 
         if (damager.getInventory().getItemInHand().getType().name().contains("AXE")) {

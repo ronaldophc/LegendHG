@@ -25,7 +25,7 @@ public class Brand extends Kit {
                 new ItemManager(Material.FLINT_AND_STEEL, Util.color3 + "Brand")
                         .setLore(Arrays.asList(Util.success + "Ganhe força", Util.success + "enquanto estiver pegando fogo."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.FLINT_AND_STEEL, Util.color3 + "Brand").build()}),
+                new ItemManager(Material.FLINT_AND_STEEL, Util.color3 + "Brand").build(),
                 false);
     }
 
@@ -35,7 +35,7 @@ public class Brand extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player brand = (Player) event.getEntity();
-        Account account = AccountManager.getOrCreateAccount(brand);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(brand);
         if (!account.getKits().contains(this)) return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {

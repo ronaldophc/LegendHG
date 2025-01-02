@@ -4,8 +4,6 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
-import com.ronaldophc.kits.manager.KitManager;
-import com.ronaldophc.player.PlayerAliveManager;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Location;
@@ -17,7 +15,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Thor extends Kit {
 
@@ -29,9 +29,9 @@ public class Thor extends Kit {
                 new ItemManager(Material.WOOD_AXE, Util.color3 + "Thor")
                         .setLore(Arrays.asList(Util.success + "Ao acertar um jogador", Util.success + "ele será atingido por um", Util.success + "raio."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.WOOD_AXE, Util.color3 + "Thor")
+                new ItemManager(Material.WOOD_AXE, Util.color3 + "Thor")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 false);
     }
 
@@ -41,7 +41,7 @@ public class Thor extends Kit {
 
         Player thor = event.getPlayer();
 
-        Account account = AccountManager.getOrCreateAccount(thor);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(thor);
         if (!account.getKits().contains(this)) return;
 
         if (event.getItem() == null) return;
@@ -56,12 +56,10 @@ public class Thor extends Kit {
         Location targetLocation = block.getLocation();
         targetLocation.getWorld().strikeLightningEffect(targetLocation);
 
-        for (UUID target : PlayerAliveManager.getInstance().getPlayersAlive()) {
-            Player player = LegendHG.getInstance().getServer().getPlayer(target);
-            if (player == null) continue;
+        for (Player player : LegendHG.getAccountManager().getPlayersAlive()) {
             if (player == thor) continue;
             if (player.getLocation().distance(targetLocation) > 3) continue;
-            player.damage(5.0D);
+            player.damage(5.0D, thor);
         }
 
         if (validBaseMaterials.contains(block.getType())) {
@@ -70,6 +68,5 @@ public class Thor extends Kit {
 
         kitManager.setCooldown(thor, 6, this);
     }
-
 
 }

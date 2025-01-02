@@ -21,7 +21,7 @@ public class Anchor extends Kit {
         super("Anchor",
                 "legendhg.kits.anchor",
                 new ItemManager(Material.ANVIL, Util.color3 + "Anchor").setLore(Arrays.asList(Util.success + "Não tome knockback", Util.success + "ao tomar um hit.")).build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -32,8 +32,8 @@ public class Anchor extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player damaged = (Player) event.getEntity();
         Player damager = (Player) event.getDamager();
-        Account damagedAccount = AccountManager.getOrCreateAccount(damaged);
-        Account damagerAccount = AccountManager.getOrCreateAccount(damager);
+        Account damagedAccount = LegendHG.getAccountManager().getOrCreateAccount(damaged);
+        Account damagerAccount = LegendHG.getAccountManager().getOrCreateAccount(damager);
         if (!damagedAccount.getKits().contains(this) && !damagerAccount.getKits().contains(this)) return;
         damaged.damage(event.getDamage());
         event.setCancelled(true);

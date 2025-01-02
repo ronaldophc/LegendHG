@@ -16,22 +16,17 @@ public class RegisterKitsEvents {
     private static final Logger logger = Logger.getLogger(RegisterKitsEvents.class.getName());
 
     public static void registerEvents() {
-        logger.info("Starting to register events...");
-        registerAllKits("com.ronaldophc.kits.registry", LegendHG.getInstance());
+        registerAllKits(LegendHG.getInstance());
     }
 
-    private static void registerAllKits(String packageName, JavaPlugin plugin) {
+    private static void registerAllKits(JavaPlugin plugin) {
         try {
-            Reflections reflections = new Reflections(packageName, Scanners.SubTypes);
+            Reflections reflections = new Reflections("com.ronaldophc.kits.registry", Scanners.SubTypes);
             Set<Class<? extends Kit>> kitClasses = reflections.getSubTypesOf(Kit.class);
 
             for (Class<? extends Kit> clazz : kitClasses) {
                 if (!clazz.isInterface() && !Modifier.isAbstract(clazz.getModifiers())) {
                     Kit kit = clazz.getDeclaredConstructor().newInstance();
-                    if (kit == null) {
-                        logger.severe("Failed to instantiate kit: " + clazz.getName());
-                        continue;
-                    }
 
                     KitManager kitManager = LegendHG.getKitManager();
                     if (kitManager == null) {
@@ -40,12 +35,10 @@ public class RegisterKitsEvents {
                     }
 
                     kitManager.registerKit(kit, plugin);
-//                    logger.info("Registered kit: " + kit.getName());
                 }
             }
         } catch (Exception e) {
             logger.severe("Error registering kits: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

@@ -13,10 +13,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Digger extends Kit {
 
@@ -27,9 +25,9 @@ public class Digger extends Kit {
                 new ItemManager(Material.DRAGON_EGG, Util.color3 + "Digger")
                         .setLore(Arrays.asList(Util.success + "Escave uma area", Util.success + "para baixo."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.DRAGON_EGG, Util.color3 + "Digger")
+                new ItemManager(Material.DRAGON_EGG, Util.color3 + "Digger")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 false);
     }
 
@@ -40,7 +38,7 @@ public class Digger extends Kit {
         if (LegendHG.getGameStateManager().getGameState() == GameState.INVINCIBILITY) return;
 
         Player digger = event.getPlayer();
-        Account account = AccountManager.getOrCreateAccount(digger);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(digger);
         if (!account.getKits().contains(this)) return;
         if (!(isItemKit(event.getItemInHand()))) return;
         event.setCancelled(true);

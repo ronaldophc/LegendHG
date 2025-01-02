@@ -30,9 +30,9 @@ public class Gravity extends Kit {
                 new ItemManager(Material.SEA_LANTERN, Util.color3 + "Gravity")
                         .setLore(Arrays.asList(Util.success + "Ao acertar um jogador", Util.success + "ele será jogado para cima."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.SEA_LANTERN, Util.color3 + "Gravity")
+                new ItemManager(Material.SEA_LANTERN, Util.color3 + "Gravity")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 false);
     }
 
@@ -44,7 +44,7 @@ public class Gravity extends Kit {
         if (!(entity instanceof Player)) return;
         if (!LegendHG.getGameStateManager().getGameState().canTakeDamage()) return;
 
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(player.getItemInHand())) return;

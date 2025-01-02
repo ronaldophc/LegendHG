@@ -26,7 +26,7 @@ public class Tank extends Kit {
                 new ItemManager(Material.TNT, Util.color3 + "Tank")
                         .setLore(Arrays.asList(Util.success + "Ganhe resistência a explosão.", Util.success + "Crie uma explosão ao matar alguém."))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -37,7 +37,7 @@ public class Tank extends Kit {
         }
         Player tank = (Player) event.getEntity();
 
-        Account account = AccountManager.getOrCreateAccount(tank);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(tank);
         if (!account.getKits().contains(this)) return;
 
         if (event.getCause().name().contains("EXPLOSION")) {
@@ -53,7 +53,7 @@ public class Tank extends Kit {
         Player player = event.getEntity();
         Player tank = event.getEntity().getKiller();
 
-        Account account = AccountManager.getOrCreateAccount(tank);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(tank);
         if (!account.getKits().contains(this)) return;
 
         event.getEntity().getWorld().createExplosion(player.getLocation(), 4.0F);

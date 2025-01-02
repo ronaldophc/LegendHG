@@ -28,7 +28,7 @@ public class Poseidon extends Kit {
                 new ItemManager(Material.WATER_BUCKET, Util.color3 + "Poseidon")
                         .setLore(Arrays.asList(Util.success + "Fique forte", Util.success + "ao entrar na agua!"))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -36,7 +36,7 @@ public class Poseidon extends Kit {
     public void onMove(PlayerMoveEvent event) {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player player = event.getPlayer();
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         if (player.getRemainingAir() < 200) {
             player.setRemainingAir(200);

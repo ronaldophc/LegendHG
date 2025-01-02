@@ -29,9 +29,9 @@ public class Flash extends Kit {
                 new ItemManager(Material.REDSTONE_TORCH_ON, Util.color3 + "Flash")
                         .setLore(Collections.singletonList(Util.success + "Corra na velocidade da luz"))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.REDSTONE_TORCH_ON, Util.color3 + "Flash")
+                new ItemManager(Material.REDSTONE_TORCH_ON, Util.color3 + "Flash")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 true);
     }
 
@@ -40,7 +40,7 @@ public class Flash extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player flash = event.getPlayer();
-        Account account = AccountManager.getOrCreateAccount(flash);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(flash);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(flash.getItemInHand())) return;

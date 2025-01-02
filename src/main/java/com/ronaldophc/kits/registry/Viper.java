@@ -4,24 +4,18 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
-import com.ronaldophc.player.PlayerAliveManager;
 import com.ronaldophc.player.account.Account;
-import com.ronaldophc.player.account.AccountManager;
-import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 public class Viper extends Kit {
 
@@ -31,8 +25,8 @@ public class Viper extends Kit {
                 new ItemManager(Material.SPIDER_EYE, Util.color3 + "Viper")
                         .setLore(Arrays.asList(Util.success + "Crie uma area envenenada", Util.success + "em sua volta."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.SPIDER_EYE, Util.color3 + "Viper")
-                        .build()}),
+                new ItemManager(Material.SPIDER_EYE, Util.color3 + "Viper")
+                        .build(),
                 false);
     }
 
@@ -43,7 +37,7 @@ public class Viper extends Kit {
 
         Player player = event.getPlayer();
 
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(player.getItemInHand())) return;
@@ -85,10 +79,9 @@ public class Viper extends Kit {
     }
 
     private void applyPoisonDamage(Location location) {
-        for (UUID uuid : PlayerAliveManager.getInstance().getPlayersAlive()) {
-            Player player = Bukkit.getPlayer(uuid);
+        for (Player player : LegendHG.getAccountManager().getPlayersAlive()) {
 
-            Account account = AccountManager.getOrCreateAccount(player);
+            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
             if (account.getKits().contains(this)) continue;
 
             if (player.getLocation().distance(location) <= 5) {
@@ -97,7 +90,6 @@ public class Viper extends Kit {
             }
         }
     }
-
 
 }
 

@@ -1,5 +1,6 @@
 package com.ronaldophc.kits.registry;
 
+import com.ronaldophc.LegendHG;
 import com.ronaldophc.feature.CustomEnchant;
 import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
@@ -36,8 +37,8 @@ public class Specialist extends Kit {
                 new ItemManager(Material.BOOK, Util.color3 + "Specialist")
                         .setLore(Arrays.asList(Util.success + "Crie itens encantados", Util.success + "com um livro."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.BOOK, Util.color3 + "Specialist")
-                        .build()}),
+                new ItemManager(Material.BOOK, Util.color3 + "Specialist")
+                        .build(),
                 false);
     }
 
@@ -48,7 +49,7 @@ public class Specialist extends Kit {
         if (event.getItem() == null) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_AIR) return;
 
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(player.getItemInHand())) return;
@@ -100,7 +101,7 @@ public class Specialist extends Kit {
     public void onKill(PlayerDeathEvent event) {
         if (event.getEntity().getKiller() == null) return;
         Player player = event.getEntity().getKiller();
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         player.setLevel(player.getLevel() + 1);
     }

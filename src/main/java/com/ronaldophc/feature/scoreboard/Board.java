@@ -8,7 +8,7 @@ import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.GameHelper;
 import com.ronaldophc.helper.Logger;
 import com.ronaldophc.player.account.Account;
-import com.ronaldophc.player.account.AccountManager;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -23,6 +23,7 @@ import java.util.UUID;
 
 public class Board implements Runnable {
 
+    @Getter
     private static final Board instance = new Board();
     public static HashMap<UUID, Scores> playerScore = new HashMap<>();
 
@@ -155,11 +156,11 @@ public class Board implements Runnable {
         }
     }
 
-    private static void setPlayerNameTag(Player player) throws SQLException {
+    private static void setPlayerNameTag(Player player) {
         for (Player player1 : Bukkit.getOnlinePlayers()) {
             Scoreboard scoreboard1 = player1.getScoreboard();
 
-            Account account = AccountManager.getOrCreateAccount(player);
+            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
 
             String name = player.getName();
             Tags tag = account.getTag();
@@ -171,11 +172,8 @@ public class Board implements Runnable {
 
             team.setPrefix(tag.getColor() + tag.name() + ChatColor.RESET + " ");
 //        team.setSuffix(suffix);
-            team.addEntry(name);
+            team.addEntry(account.getActualName());
         }
     }
 
-    public static Board getInstance() {
-        return instance;
-    }
 }

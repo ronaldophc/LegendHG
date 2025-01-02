@@ -25,9 +25,9 @@ public class Monk extends Kit {
                 new ItemManager(Material.BLAZE_ROD, Util.color3 + "Monk")
                         .setLore(Arrays.asList(Util.success + "Use seu monk para", Util.success + "embaralhar o inventario", Util.success + "do seu inimigo!"))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.BLAZE_ROD, Util.color3 + "Monk")
+                new ItemManager(Material.BLAZE_ROD, Util.color3 + "Monk")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 false);
     }
 
@@ -38,7 +38,7 @@ public class Monk extends Kit {
 
         if (!(entity instanceof Player)) return;
         if (!LegendHG.getGameStateManager().getGameState().canTakeDamage()) return;
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         if (!isItemKit(player.getItemInHand())) return;
 

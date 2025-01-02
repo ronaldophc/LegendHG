@@ -28,7 +28,7 @@ public class Berserker extends Kit {
                         .setSkullOwner("Zombie")
                         .setLore(Arrays.asList(Util.success + "Ao matar um jogador", Util.success + "você ganhará força."))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -37,7 +37,7 @@ public class Berserker extends Kit {
         if (event.getEntity().getKiller() == null) return;
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player killer = event.getEntity().getKiller();
-        Account account = AccountManager.getOrCreateAccount(killer);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(killer);
         if (!account.getKits().contains(this)) return;
         killer.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
     }

@@ -1,16 +1,14 @@
 package com.ronaldophc.listener;
 
+import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.player.PlayerAliveManager;
-import org.bukkit.Bukkit;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-
-import java.util.UUID;
 
 public class Compass implements Listener {
 
@@ -32,21 +30,20 @@ public class Compass implements Listener {
 
     private Player getTarget(Player player) {
         Player target = null;
-        for (UUID uuid : PlayerAliveManager.getInstance().getPlayersAlive()) {
-            if (!PlayerAliveManager.getInstance().isPlayerOnline(uuid)) return null;
-            try {
-                Player playerTarget = Bukkit.getPlayer(uuid);
-                if (playerTarget == player) continue;
-                if (playerTarget.getLocation().distance(player.getLocation()) < 15.0D) continue;
-                if (target == null) {
-                    target = playerTarget;
-                    continue;
-                }
-                double actualDistance = target.getLocation().distance(player.getLocation());
-                double newDistance = playerTarget.getLocation().distance(player.getLocation());
-                if (actualDistance > newDistance) target = playerTarget;
-            } catch (Exception e) {
-                e.printStackTrace();
+        for (Player playerTarget : LegendHG.getAccountManager().getPlayersAlive()) {
+
+            if (playerTarget == player) continue;
+            if (playerTarget.getLocation().distance(player.getLocation()) < 15.0D) continue;
+
+            if (target == null) {
+                target = playerTarget;
+                continue;
+            }
+
+            double actualDistance = target.getLocation().distance(player.getLocation());
+            double newDistance = playerTarget.getLocation().distance(player.getLocation());
+            if (actualDistance > newDistance) {
+                target = playerTarget;
             }
         }
         return target;

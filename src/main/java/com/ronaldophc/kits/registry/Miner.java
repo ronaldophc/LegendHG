@@ -26,10 +26,10 @@ public class Miner extends Kit {
                 new ItemManager(Material.STONE_PICKAXE, Util.color3 + "Miner")
                         .setLore(Arrays.asList(Util.success + "Ao acertar um bloco", Util.success + "ele será instantaneamente", Util.success + "quebrado."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.STONE_PICKAXE, Util.color3 + "Miner")
+                new ItemManager(Material.STONE_PICKAXE, Util.color3 + "Miner")
                         .setUnbreakable()
                         .addEnchantment(Enchantment.DIG_SPEED, 2)
-                        .build()}),
+                        .build(),
                 false);
     }
 
@@ -38,7 +38,7 @@ public class Miner extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player miner = event.getPlayer();
-        Account account = AccountManager.getOrCreateAccount(miner);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(miner);
         if (!account.getKits().contains(this)) return;
 
         if (miner.getItemInHand() == null || !isItemKit(miner.getItemInHand()))

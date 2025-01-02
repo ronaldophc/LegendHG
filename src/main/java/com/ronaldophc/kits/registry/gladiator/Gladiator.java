@@ -24,9 +24,9 @@ public class Gladiator extends Kit {
                 new ItemManager(Material.IRON_FENCE, Util.color3 + "Gladiator")
                         .setLore(Arrays.asList(Util.success + "Desafie jogadores para 1x1", Util.success + "em uma arena no céu."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.IRON_FENCE, Util.color3 + "Gladiator")
+                new ItemManager(Material.IRON_FENCE, Util.color3 + "Gladiator")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 false);
     }
 
@@ -37,7 +37,7 @@ public class Gladiator extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         if (LegendHG.getGameStateManager().getGameState() == GameState.INVINCIBILITY) return;
 
-        Account account = AccountManager.getOrCreateAccount(gladiator);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(gladiator);
         if (!account.getKits().contains(this)) return;
 
         if (!(event.getRightClicked() instanceof Player)) return;

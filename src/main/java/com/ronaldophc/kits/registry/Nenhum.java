@@ -18,7 +18,7 @@ public class Nenhum extends Kit {
                 new ItemManager(Material.DEAD_BUSH, Util.color3 + "Nenhum")
                         .setLore(Arrays.asList(Util.success + "Não faz absolutamente", Util.color3 + Util.bold + "NADA!"))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 

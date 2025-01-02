@@ -29,17 +29,9 @@ public class KitManager {
         return kits.stream().anyMatch(kit -> kit.getKitIcon().isSimilar(item));
     }
 
-    public Kit getKit(int index) {
-        return kits.get(index);
-    }
-
     public Kit searchKit(String name) {
         return kits.stream().filter(kit -> kit.getName().equalsIgnoreCase(name)).findFirst()
                 .orElse(null);
-    }
-
-    public boolean hasAbility(String name) {
-        return null != searchKit(name);
     }
 
     public boolean isOnCooldown(Player player, Kit kit) {

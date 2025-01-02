@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Gm implements CommandExecutor {
+public class GameModeCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
@@ -60,7 +60,7 @@ public class Gm implements CommandExecutor {
                         return true;
                     }
                 } catch (Exception e) {
-                    player.sendMessage(Util.error + "Jogador nao encontrado.");
+                    player.sendMessage(Util.noPlayer);
                     Util.errorCommand("gm", e);
                     return true;
                 }

@@ -101,9 +101,6 @@ commands:
     tag:
         description: Command to set tag
         usage: /tag <tag>
-    gameprofile:
-        description: Command to see game profile
-        usage: /gameprofile
     ip:
         description: Command to see ip of player
         usage: /ip <player>
@@ -126,3 +123,9 @@ commands:
         description: Command to see stats
         usage: /stats <player>
         aliases: [status]
+    profile:
+        description: See the profile
+        usage: /profile
+    kills:
+        description: See the kills in this game
+        usage: /kills

@@ -5,7 +5,6 @@ import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.registry.gladiator.GladiatorController;
-import com.ronaldophc.player.PlayerSpectatorManager;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Effect;
@@ -19,7 +18,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -38,9 +36,9 @@ public class Endermage extends Kit {
                 new ItemManager(Material.ENDER_PORTAL_FRAME, Util.color3 + "Endermage")
                         .setLore(Arrays.asList(Util.success + "Ao colocar o portal no chão", Util.success + "teleportará jogadores", Util.success + "próximos."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.ENDER_PORTAL_FRAME, Util.color3 + "Endermage")
+                new ItemManager(Material.ENDER_PORTAL_FRAME, Util.color3 + "Endermage")
                         .setUnbreakable()
-                        .build()}),
+                        .build(),
                 false);
     }
 
@@ -50,7 +48,7 @@ public class Endermage extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player mage = event.getPlayer();
 
-        Account account = AccountManager.getOrCreateAccount(mage);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(mage);
         if (!account.getKits().contains(this)) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (event.getItem() == null) return;
@@ -105,7 +103,7 @@ public class Endermage extends Kit {
     }
 
     public void onKitEndermage(Location portal, Player mage, Player player) {
-        if (PlayerSpectatorManager.getInstance().isPlayerSpectating(player)) return;
+        if (!LegendHG.getAccountManager().getOrCreateAccount(player).isAlive()) return;
         portal = portal.add(0.0D, 1.0D, 0.0D);
         mage.teleport(portal);
         player.teleport(portal);

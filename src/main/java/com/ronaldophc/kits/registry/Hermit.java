@@ -23,7 +23,7 @@ public class Hermit extends Kit {
                 new ItemManager(Material.GRASS, Util.color3 + "Hermit")
                         .setLore(Arrays.asList(Util.success + "Ao iniciar a partida", Util.success + "seja teleportado para borda do mapa."))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 

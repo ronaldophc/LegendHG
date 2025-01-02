@@ -17,7 +17,7 @@ public class PlayerCommandPreprocess implements Listener {
         if (!PlayerSQL.isPlayerLoggedIn(event.getPlayer())) {
             if (!command.startsWith("/login") && !command.startsWith("/register")) {
                 Player player = event.getPlayer();
-                player.sendMessage(Util.title + " > " + Util.color2 + "Você precisa logar para usar comandos.");
+                player.sendMessage(Util.title + " > " + Util.error + "Você precisa logar para usar comandos.");
                 event.setCancelled(true);
                 return;
             }

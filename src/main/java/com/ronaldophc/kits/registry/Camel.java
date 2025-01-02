@@ -24,7 +24,7 @@ public class Camel extends Kit {
                 new ItemManager(Material.SAND, Util.color3 + "Camel")
                         .setLore(Arrays.asList(Util.success + "Ao andar por uma areia", Util.success + "você ganhará velocidade."))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -32,7 +32,7 @@ public class Camel extends Kit {
     public void onMove(PlayerMoveEvent event) {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player player = event.getPlayer();
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         if (player.getLocation().subtract(0, 1, 0).getBlock().getType() == Material.SAND) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 3, 1));

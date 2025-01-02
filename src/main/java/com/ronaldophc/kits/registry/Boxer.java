@@ -24,7 +24,7 @@ public class Boxer extends Kit {
                 new ItemManager(Material.GOLDEN_APPLE, Util.color3 + "Boxer")
                         .setLore(Arrays.asList(Util.success + "Leve menos dano", Util.success + "de outros jogadores"))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -33,7 +33,7 @@ public class Boxer extends Kit {
         if (!(event.getEntity() instanceof Player)) return;
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player player = (Player) event.getEntity();
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         event.setDamage(event.getDamage() - 0.5);
     }

@@ -56,7 +56,7 @@ public class Kit2Command implements CommandExecutor, TabExecutor {
             }
 
             GameState gameState = LegendHG.getGameStateManager().getGameState();
-            Account account = AccountManager.getOrCreateAccount(player);
+            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
 
             if (!gameState.canFreeUpdateKit() && !player.hasPermission("legendhg.vip.kits")) {
 

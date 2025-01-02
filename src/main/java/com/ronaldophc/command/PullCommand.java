@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Pull implements CommandExecutor {
+public class PullCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
@@ -33,8 +33,8 @@ public class Pull implements CommandExecutor {
             }
 
             try {
-
                 Player target = player.getServer().getPlayer(strings[0]);
+
                 if (target == null) {
                     player.sendMessage(Util.error + "Jogador não encontrado");
                     return true;
@@ -45,10 +45,9 @@ public class Pull implements CommandExecutor {
                 player.sendMessage(Util.success + "Jogador puxado");
 
             } catch (NumberFormatException e) {
-
                 player.sendMessage(Util.error + "Jogador não encontrado");
-
             }
+
             return true;
         }
         return true;

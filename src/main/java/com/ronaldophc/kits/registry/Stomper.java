@@ -25,7 +25,7 @@ public class Stomper extends Kit {
                 new ItemManager(Material.IRON_BOOTS, Util.color3 + "Stomper")
                         .setLore(Arrays.asList(Util.success + "Ao cair de uma altura", Util.success + "causará dano em jogadores", Util.success + "próximos."))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -41,7 +41,7 @@ public class Stomper extends Kit {
 
         Player player = (Player) event.getEntity();
 
-        Account account = AccountManager.getOrCreateAccount(player);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         EntityDamageEvent.DamageCause cause = event.getCause();

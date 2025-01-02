@@ -13,7 +13,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Fireman extends Kit {
 
@@ -23,7 +22,7 @@ public class Fireman extends Kit {
                 new ItemManager(Material.LAVA_BUCKET, Util.color3 + "Fireman")
                         .setLore(Arrays.asList(Util.success + "Não tome dano", Util.success + "de lava e fogo.", Util.success + "E ganhe um balde de agua."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemStack(Material.WATER_BUCKET)}),
+                new ItemStack(Material.WATER_BUCKET),
                 false);
     }
 
@@ -33,7 +32,7 @@ public class Fireman extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player fireman = (Player) event.getEntity();
-        Account account = AccountManager.getOrCreateAccount(fireman);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(fireman);
         if (!account.getKits().contains(this)) return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == EntityDamageEvent.DamageCause.LAVA) {

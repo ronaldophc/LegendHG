@@ -25,7 +25,7 @@ public class Ninja extends Kit {
                 new ItemManager(Material.NETHER_STAR, Util.color3 + "Ninja")
                         .setLore(Arrays.asList(Util.success + "Ao apertar shift", Util.success + "você será teleportado", Util.success + "para o ultimo jogador que bateu."))
                         .build(),
-                Collections.emptyList(),
+                null,
                 false);
     }
 
@@ -37,7 +37,7 @@ public class Ninja extends Kit {
 
         Player ninja = (Player) event.getDamager();
 
-        Account account = AccountManager.getOrCreateAccount(ninja);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(ninja);
         if (!account.getKits().contains(this)) return;
 
         Player target = (Player) event.getEntity();
@@ -53,7 +53,7 @@ public class Ninja extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player ninja = event.getPlayer();
-        Account account = AccountManager.getOrCreateAccount(ninja);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(ninja);
         if (!account.getKits().contains(this)) return;
 
         NinjaManager ninjaManager = NinjaManager.getInstance();

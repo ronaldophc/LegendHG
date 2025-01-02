@@ -29,8 +29,8 @@ public class Titan extends Kit {
                 new ItemManager(Material.BEDROCK, Util.color3 + "Titan")
                         .setLore(Arrays.asList(Util.success + "Fique invencivel", Util.success + "por 10 segundos."))
                         .build(),
-                Arrays.asList(new ItemStack[]{new ItemManager(Material.BEDROCK, Util.color3 + "Titan")
-                        .build()}),
+                new ItemManager(Material.BEDROCK, Util.color3 + "Titan")
+                        .build(),
                 false);
     }
 
@@ -51,7 +51,7 @@ public class Titan extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player titan = event.getPlayer();
 
-        Account account = AccountManager.getOrCreateAccount(titan);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(titan);
         if (!account.getKits().contains(this)) return;
 
         ItemStack item = event.getItem();
