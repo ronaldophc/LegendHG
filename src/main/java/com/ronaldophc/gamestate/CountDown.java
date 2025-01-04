@@ -22,7 +22,6 @@ public class CountDown implements Runnable {
 
     @Override
     public void run() {
-
         switch (LegendHG.getGameStateManager().getGameState()) {
             case COUNTDOWN:
                 handleCountDown();
@@ -42,7 +41,7 @@ public class CountDown implements Runnable {
             default:
                 break;
         }
-
+        LegendHG.getBoard().run();
     }
 
     private void handleRestarting() {

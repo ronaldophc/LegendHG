@@ -7,6 +7,7 @@ import com.ronaldophc.feature.scoreboard.Board;
 import com.ronaldophc.helper.GameHelper;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
+import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
 import org.bukkit.Bukkit;
@@ -26,8 +27,8 @@ public class PlayerDeath implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         event.setDeathMessage(null);
 
-        Player player = event.getEntity();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Player died = event.getEntity();
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(died);
 
         Kit diedKit = account.getKits().getPrimary();
         Kit diedKit2 = account.getKits().getSecondary();
@@ -35,10 +36,14 @@ public class PlayerDeath implements Listener {
         event.getDrops().removeIf(diedKit::isItemKit);
         event.getDrops().removeIf(diedKit2::isItemKit);
 
-        String message = "O player " + Util.color3 + player.getName() + " morreu";
+        String message = "O player " + Util.color3 + died.getName() + " morreu";
         Player killer = event.getEntity().getKiller();
+        if (killer == null) {
+            KitManager kitManager = LegendHG.getKitManager();
+            killer = kitManager.getCombatLogHitterPlayer(died);
+        }
 
-        if (event.getEntity().getKiller() != null) {
+        if (killer != null) {
 
             Account killerAccount = LegendHG.getAccountManager().getOrCreateAccount(killer);
 
@@ -46,15 +51,15 @@ public class PlayerDeath implements Listener {
             Kit killerKit2 = killerAccount.getKits().getSecondary();
 
             if (GameHelper.getInstance().isTwoKits()) {
-                message = Util.color1 + player.getName() + "(" + killerKit.getName() + " e " + killerKit2.getName() + ") foi para a próxima vida, cortesia de " + killer.getName();
+                message = Util.color1 + died.getName() + "(" + diedKit.getName() + " e " + diedKit2.getName() + ") foi para a próxima vida, cortesia de " + killer.getName() + "(" + killerKit.getName() + " e " + killerKit2.getName() + ")";
             } else {
-                message = Util.color1 + player.getName() + "(" + killerKit.getName() + ") foi para a próxima vida, cortesia de " + killer.getName();
+                message = Util.color1 + died.getName() + "(" + diedKit.getName() + ") foi para a próxima vida, cortesia de " + killer.getName() + "(" + killerKit.getName() + ")";
             }
 
             try {
                 killerAccount.addKill();
                 PlayerSQL.addPlayerKill(killer);
-                PlayerSQL.addPlayerDeath(player);
+                PlayerSQL.addPlayerDeath(died);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -67,26 +72,27 @@ public class PlayerDeath implements Listener {
         Bukkit.broadcastMessage(message);
         Bukkit.broadcastMessage(Util.color3 + LegendHG.getAccountManager().getPlayersAlive().size() + " jogadores restantes");
 
-        if (!player.hasPermission("legendhg.spec")) {
-            player.kickPlayer(Util.color1 + "Voce morreu e não tem permissão para assistir a partida!");
+        if (!died.hasPermission("legendhg.spec")) {
+            died.kickPlayer(Util.color1 + "Voce morreu e não tem permissão para assistir a partida!");
             return;
         }
 
+        Player finalKiller = killer;
         new BukkitRunnable() {
 
             @Override
             public void run() {
-                player.spigot().respawn();
-                if (killer != null) {
-                    player.teleport(killer.getLocation());
+                died.spigot().respawn();
+                if (finalKiller != null) {
+                    died.teleport(finalKiller.getLocation());
                 } else {
-                    PlayerHelper.teleportPlayerToSpawnLocation(player);
+                    PlayerHelper.teleportPlayerToSpawnLocation(died);
                 }
-                PlayerHelper.preparePlayerToSpec(player);
+                PlayerHelper.preparePlayerToSpec(died);
                 account.setSpectator(true);
                 try {
-                    Board.getInstance().removeScoreboard(player);
-                    Board.setPlayerScore(player, Scores.SPEC);
+                    Board.getInstance().removeScoreboard(died);
+                    Board.setPlayerScore(died, Scores.SPEC);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

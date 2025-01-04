@@ -84,9 +84,25 @@ public class ProtocolLibHook {
                         protocolManager.sendServerPacket(player, tabPacket);
                     }
                 } catch (Exception e) {
-                    throw new RuntimeException("Cannot send packet.", e);
+                    throw new RuntimeException("Cannot send Tab List packet.", e);
                 }
             }
         }.runTaskTimer(LegendHG.getInstance(), 0, 10);
+    }
+
+    // ----------------- ActionBar ----------------- //
+
+    public static void sendActionBar(Player player, String message) {
+        ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+        PacketContainer actionPacket = protocolManager.createPacket(PacketType.Play.Server.CHAT);
+
+        actionPacket.getChatComponents().write(0, WrappedChatComponent.fromText(message));
+        actionPacket.getBytes().write(0, (byte) 2); // ActionBar
+
+        try {
+            protocolManager.sendServerPacket(player, actionPacket);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot send Action Bar packet.", e);
+        }
     }
 }

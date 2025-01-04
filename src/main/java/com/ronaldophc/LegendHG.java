@@ -32,13 +32,13 @@ public class LegendHG extends JavaPlugin {
     public GameStateManager gameStateManager;
     public KitManager kitManager;
     private BukkitTask mainTask;
-    private BukkitTask boardTask;
     private BukkitTask countDownTask;
     private BukkitTask cooldownKits;
     private AccountManager accountManager;
     private MySQLManager mySQLManager;
     private GladiatorController gladiatorController;
     public FeastManager feast;
+    private Board board;
     @Getter
     private static int gameId;
 
@@ -77,9 +77,9 @@ public class LegendHG extends JavaPlugin {
         RegisterKitsEvents.registerEvents();
 
         gameStateManager = new GameStateManager();
+        board = new Board();
         countDownTask = getServer().getScheduler().runTaskTimer(this, CountDown.getInstance(), 0, 20);
         mainTask = getServer().getScheduler().runTaskTimer(this, MainTask.getInstance(), 0, 20);
-        boardTask = getServer().getScheduler().runTaskTimer(this, Board.getInstance(), 0, 19);
         cooldownKits = getServer().getScheduler().runTaskTimer(this, CooldownAPI.getInstance(), 0, 20);
         feast = new FeastManager();
         gladiatorController = new GladiatorController();
@@ -91,9 +91,6 @@ public class LegendHG extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (boardTask != null) {
-            boardTask.cancel();
-        }
         if (countDownTask != null) {
             countDownTask.cancel();
         }
@@ -104,6 +101,10 @@ public class LegendHG extends JavaPlugin {
             cooldownKits.cancel();
         }
         logger.info("LegendHG disabled");
+    }
+
+    public static Board getBoard() {
+        return getInstance().board;
     }
 
     public static LegendHG getInstance() {

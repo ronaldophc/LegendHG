@@ -39,11 +39,32 @@ public class KitManager {
             TitleHelper.sendCooldownBar(player, kit);
             return true;
         }
+        if (cooldownAPI.isOnCombatLogCooldown(player) && kit.isCombatLog()) {
+            TitleHelper.sendCombatLogCooldownBar(player);
+            return true;
+        }
         return false;
     }
 
     public int getCooldown(Player player, Kit kit) {
         return cooldownAPI.getCooldown(player, kit);
+    }
+
+    public int getCombatLogCooldown(Player player) {
+        return cooldownAPI.getCombatLogCooldown(player);
+    }
+
+    public boolean isOnCombatLogCooldown(Player player) {
+        return cooldownAPI.isOnCombatLogCooldown(player);
+    }
+
+    public Player getCombatLogHitterPlayer(Player player) {
+        if (!isOnCombatLogCooldown(player)) return null;
+        return Bukkit.getPlayer(cooldownAPI.getCombatLogHitter(player));
+    }
+
+    public void setCombatLogCooldown(Player player, Player hitter) {
+        cooldownAPI.setCombatLogCooldown(player, hitter, 5);
     }
 
     public void setCooldown(Player player, int time, Kit kit) {

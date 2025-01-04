@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
 import java.util.UUID;
@@ -21,6 +22,18 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) throws SQLException {
         Player player = event.getPlayer();
+
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                ViaAPI api = Via.getAPI();
+                int version = api.getPlayerVersion(player);
+                player.sendMessage("Version: " + version);
+            }
+
+        }.runTaskLater(LegendHG.getInstance(), 20);
+
 
         UUID uuid = player.getUniqueId();
         Account account = LegendHG.getAccountManager().getOrCreateAccount(player);

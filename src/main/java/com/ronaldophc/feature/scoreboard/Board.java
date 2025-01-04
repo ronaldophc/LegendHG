@@ -21,16 +21,12 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class Board implements Runnable {
+public class Board {
 
     @Getter
     private static final Board instance = new Board();
     public static HashMap<UUID, Scores> playerScore = new HashMap<>();
 
-    public Board() {
-    }
-
-    @Override
     public void run() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player == null || !player.isOnline()) {

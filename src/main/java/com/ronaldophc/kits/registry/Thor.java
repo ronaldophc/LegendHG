@@ -59,7 +59,7 @@ public class Thor extends Kit {
         for (Player player : LegendHG.getAccountManager().getPlayersAlive()) {
             if (player == thor) continue;
             if (player.getLocation().distance(targetLocation) > 3) continue;
-            player.damage(5.0D, thor);
+            player.damage(5.0D, event.getPlayer());
         }
 
         if (validBaseMaterials.contains(block.getType())) {

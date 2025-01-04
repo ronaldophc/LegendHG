@@ -40,22 +40,13 @@ public class PlayerDamages implements Listener {
 
         KitManager kitManager = LegendHG.getKitManager();
 
-        Kit kit = playerAccount.getKits().getPrimary();
-        Kit kit2 = playerAccount.getKits().getSecondary();
-
 //        String title = Util.success + player.getName() + Util.color2 + " - " + Util.color1 + kit.getName();
 //
 //        if (GameHelper.getInstance().getKits() == 2) {
 //            title = Util.success + player.getName() + Util.color2 + " - " + Util.color1 + kit.getName() + Util.color2 + " - " + Util.color1 + kit2.getName();
 //        }
 
-        if (kit.isCombatLog()) {
-            kitManager.setCooldown(player, 5, kit);
-        }
-
-        if (kit2.isCombatLog()) {
-            kitManager.setCooldown(player, 5, kit2);
-        }
+        kitManager.setCombatLogCooldown(player, damager);
 
         double damage = event.getDamage() * 0.9;
         if (damage > 8) {

@@ -45,7 +45,7 @@ public class TellCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            Account account = LegendHG.getAccountManager().getAccountByActualName(strings[0]);
+            Account account = LegendHG.getAccountManager().getAccountByName(strings[0]);
 
             if (account == null) {
                 player.sendMessage(Util.noPlayer);

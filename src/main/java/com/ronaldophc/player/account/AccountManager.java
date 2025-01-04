@@ -27,9 +27,12 @@ public class AccountManager {
         return newAccount;
     }
 
-    public Account getAccountByActualName(String name) {
+    public Account getAccountByName(String name) {
         for (Account account : accounts) {
             if (account.getActualName().equalsIgnoreCase(name)) {
+                return account;
+            }
+            if (account.getOriginalName().equalsIgnoreCase(name)) {
                 return account;
             }
         }

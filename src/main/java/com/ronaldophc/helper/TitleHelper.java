@@ -1,13 +1,15 @@
 package com.ronaldophc.helper;
 
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.hook.ProtocolLibHook;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-
-import java.lang.reflect.Field;
 
 public class TitleHelper {
 
@@ -23,39 +25,17 @@ public class TitleHelper {
         connection.sendPacket(subtitlePacket);
     }
 
-    public static void sendTabHF(Player player, String header, String footer) {
-
-        CraftPlayer craftplayer = (CraftPlayer) player;
-        PlayerConnection connection = craftplayer.getHandle().playerConnection;
-        IChatBaseComponent headerJSON = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + header + "\"}");
-        IChatBaseComponent footerJSON = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + footer + "\"}");
-        PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
-
-        try {
-            Field headerField = packet.getClass().getDeclaredField("a");
-            headerField.setAccessible(true);
-            headerField.set(packet, headerJSON);
-            headerField.setAccessible(!headerField.isAccessible());
-
-            Field footerField = packet.getClass().getDeclaredField("b");
-            footerField.setAccessible(true);
-            footerField.set(packet, footerJSON);
-            footerField.setAccessible(!footerField.isAccessible());
-        } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException ignored) {
-        }
-
-        connection.sendPacket(packet);
-
-    }
-
-    public static void sendActionBar(Player p, String message) {
-        IChatBaseComponent cbc = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + message + "\"}");
-        PacketPlayOutChat ppoc = new PacketPlayOutChat(cbc, (byte) 2);
-        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(ppoc);
+    public static void sendActionBar(Player player, String message) {
+        ProtocolLibHook.sendActionBar(player, message);
     }
 
     public static void sendCooldownBar(Player player, Kit kit) {
         KitManager kitManager = LegendHG.getKitManager();
         sendActionBar(player, Util.bold + Util.color1 + kit.getName() + ": " + Util.error + Util.bold + (kitManager.getCooldown(player, kit) + 1) + "s" + Util.bold + Util.color2 + " para usar novamente.");
+    }
+
+    public static void sendCombatLogCooldownBar(Player player) {
+        KitManager kitManager = LegendHG.getKitManager();
+        sendActionBar(player, Util.error + Util.bold + (kitManager.getCombatLogCooldown(player) + 1) + "s" + Util.bold + Util.color2 + " para sair do combate.");
     }
 }

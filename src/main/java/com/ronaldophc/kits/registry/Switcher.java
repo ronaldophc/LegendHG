@@ -14,6 +14,7 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.Arrays;
 
@@ -48,7 +49,12 @@ public class Switcher extends Kit {
             return;
         }
         kitManager.setCooldown(player, 1, this);
-        player.getInventory().addItem(getKitItem());
+        Snowball snowball = player.launchProjectile(Snowball.class);
+        snowball.setMetadata("Switcher", new FixedMetadataValue(LegendHG.getInstance(),
+                player.getUniqueId()));
+        snowball.setShooter(player);
+        snowball.setVelocity(snowball.getVelocity().multiply(2));
+        event.setCancelled(true);
         player.updateInventory();
     }
 
