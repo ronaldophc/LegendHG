@@ -34,10 +34,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>LibsDisguises</groupId>
+            <artifactId>LibsDisguises</artifactId>
+            <version>8.6.7</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/LibsDisguises.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>com.viaversion</groupId>
             <artifactId>viaversion-api</artifactId>
-            <version>5.0.0</version>
-            <scope>provided</scope>
+            <version>4.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>

@@ -43,6 +43,8 @@ public class Gladiator extends Kit {
         if (!(event.getRightClicked() instanceof Player)) return;
 
         Player target = (Player) event.getRightClicked();
+        Account targetAccount = LegendHG.getAccountManager().getOrCreateAccount(target);
+        if (!targetAccount.isAlive()) return;
         if (!isItemKit(gladiator.getItemInHand())) return;
 
         event.setCancelled(true);

@@ -53,7 +53,7 @@ public class BorderManager {
             WorldBorder border = world.getWorldBorder();
             border.setCenter(0, 0);
             border.setSize(700);
-            generateBorder(world, -351, 350);
+//            generateBorder(world, -351, 350);
         }
     }
 }

@@ -4,6 +4,7 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.hook.ProtocolLibHook;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
+import com.ronaldophc.player.account.Account;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -30,12 +31,28 @@ public class TitleHelper {
     }
 
     public static void sendCooldownBar(Player player, Kit kit) {
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+
         KitManager kitManager = LegendHG.getKitManager();
-        sendActionBar(player, Util.bold + Util.color1 + kit.getName() + ": " + Util.error + Util.bold + (kitManager.getCooldown(player, kit) + 1) + "s" + Util.bold + Util.color2 + " para usar novamente.");
+        String message = Util.bold + Util.color1 + kit.getName() + ": " + Util.error + Util.bold + (kitManager.getCooldown(player, kit) + 1) + "s" + Util.bold + Util.color2 + " para usar novamente.";
+
+        if (account.getVersion() <= 5) {
+            player.sendMessage(message);
+            return;
+        }
+        sendActionBar(player, message);
     }
 
     public static void sendCombatLogCooldownBar(Player player) {
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+
         KitManager kitManager = LegendHG.getKitManager();
-        sendActionBar(player, Util.error + Util.bold + (kitManager.getCombatLogCooldown(player) + 1) + "s" + Util.bold + Util.color2 + " para sair do combate.");
+        String message = Util.error + Util.bold + (kitManager.getCombatLogCooldown(player) + 1) + "s" + Util.bold + Util.color2 + " para sair do combate.";
+
+        if (account.getVersion() <= 5) {
+            player.sendMessage(message);
+            return;
+        }
+        sendActionBar(player, message);
     }
 }

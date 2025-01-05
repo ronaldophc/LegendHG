@@ -52,6 +52,7 @@ public class PlayerHelper {
         player.getActivePotionEffects().clear();
         player.getInventory().clear();
         player.getInventory().setArmorContents(new ItemStack[4]);
+        player.updateInventory();
     }
 
     public static void preparePlayerToStart(Player player) {
@@ -61,15 +62,26 @@ public class PlayerHelper {
 
     private static void addItemsToStart(Player player) {
         Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        player.getInventory().clear();
         if (!player.getInventory().contains(Material.COMPASS)) {
             player.getInventory().addItem(new ItemStack(Material.COMPASS));
         }
         account.getKits().getPrimary().apply(player);
         account.getKits().getSecondary().apply(player);
+        player.updateInventory();
     }
 
     public static void preparePlayerToSpec(Player player) {
-        resetPlayerState(player);
+        player.setHealth(20);
+        player.setFoodLevel(20);
+        player.setFireTicks(0);
+        player.setExp(0.0F);
+        player.setLevel(0);
+        player.setGameMode(GameMode.SURVIVAL);
+        player.getActivePotionEffects().clear();
+        player.getInventory().clear();
+        player.getInventory().setArmorContents(new ItemStack[4]);
+        player.updateInventory();
         player.setAllowFlight(true);
         player.setFlying(true);
     }

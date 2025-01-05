@@ -83,7 +83,10 @@ public class Launcher extends Kit {
 
         if (item == null) return;
         if (!item.hasItemMeta()) return;
-        if (!item.getItemMeta().getDisplayName().equalsIgnoreCase(Util.color3 + "Launcher")) return;
+        if (!(item.getItemMeta().getDisplayName() == null)) return;
+        if (!item.getItemMeta().getDisplayName().equalsIgnoreCase(Util.color3 + "Launcher")) {
+            return;
+        }
 
         BlockFace face = event.getBlockAgainst().getFace(event.getBlock());
         if (face == BlockFace.DOWN) {

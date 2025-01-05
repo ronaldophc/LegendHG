@@ -35,7 +35,7 @@ public class Camel extends Kit {
         Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         if (player.getLocation().subtract(0, 1, 0).getBlock().getType() == Material.SAND) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 3, 1));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 8, 1));
         }
     }
 }

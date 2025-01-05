@@ -46,10 +46,10 @@ public class GladiatorFight extends GladiatorController implements Listener {
         this.gladiator = gladiator;
         this.target = target;
         this.arenaCenter = arenaCenter;
-        this.timeRemaining = 60;
+        this.timeRemaining = 60 * 3;
         this.originalLocation = originalLocation;
-        Account targetAccount = LegendHG.getAccountManager().getOrCreateAccount(target);
-        Account gladiatorAccount = LegendHG.getAccountManager().getOrCreateAccount(gladiator);
+        targetAccount = LegendHG.getAccountManager().getOrCreateAccount(target);
+        gladiatorAccount = LegendHG.getAccountManager().getOrCreateAccount(gladiator);
         registerListener();
         initializeBattle();
     }
@@ -87,11 +87,11 @@ public class GladiatorFight extends GladiatorController implements Listener {
             @Override
             public void run() {
                 timeRemaining--;
-                gladiator.sendMessage(Util.color1 + "Tempo restante: " + Util.color3 + Util.formatSeconds(timeRemaining) + "s");
+
                 if (timeRemaining <= 0) {
+                    cancel();
                     endBattle(gladiator, target);
                     endGladiatorFight(GladiatorFight.this);
-                    cancel();
                 }
                 if (timeRemaining == 30) {
                     gladiator.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 30 * 20, 1));

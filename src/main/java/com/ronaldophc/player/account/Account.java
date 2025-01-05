@@ -1,13 +1,18 @@
 package com.ronaldophc.player.account;
 
+import com.ronaldophc.LegendHG;
+import com.ronaldophc.constant.Scores;
 import com.ronaldophc.constant.Tags;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.feature.TagManager;
 import com.ronaldophc.helper.Logger;
 import com.ronaldophc.kits.Kits;
+import com.viaversion.viaversion.api.Via;
+import com.viaversion.viaversion.api.ViaAPI;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
 import java.util.UUID;
@@ -28,6 +33,7 @@ public class Account {
     private String actualName;
     private String ip;
     private int kills;
+    private int version;
 
     public Account(Player player) {
         this.player = player;
@@ -42,6 +48,19 @@ public class Account {
         this.spectator = false;
         this.vanish = false;
         this.kills = 0;
+        setVersion();
+    }
+
+    public void setVersion() {
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                ViaAPI api = Via.getAPI();
+                version = api.getPlayerVersion(player);
+            }
+
+        }.runTaskLater(LegendHG.getInstance(), 20);
     }
 
     public void addKill() throws SQLException {
@@ -57,4 +76,12 @@ public class Account {
         }
     }
 
+    public Scores getScore() {
+        try {
+            return PlayerSQL.getPlayerScore(player);
+        } catch (SQLException e) {
+            Logger.logError("Erro ao recuperar Score do jogador: " + e.getMessage());
+        }
+        return Scores.NONE;
+    }
 }

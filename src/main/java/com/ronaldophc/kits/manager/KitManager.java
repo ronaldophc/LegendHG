@@ -1,8 +1,10 @@
 package com.ronaldophc.kits.manager;
 
+import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.TitleHelper;
 import com.ronaldophc.kits.CooldownAPI;
 import com.ronaldophc.kits.Kit;
+import com.ronaldophc.player.account.Account;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -67,7 +69,7 @@ public class KitManager {
         cooldownAPI.setCombatLogCooldown(player, hitter, 5);
     }
 
-    public void setCooldown(Player player, int time, Kit kit) {
-        cooldownAPI.setCooldown(player, kit, time);
+    public void setCooldown(Player player, int seconds, Kit kit) {
+        cooldownAPI.setCooldown(player, kit, seconds);
     }
 }

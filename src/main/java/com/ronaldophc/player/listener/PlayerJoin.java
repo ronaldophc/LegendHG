@@ -8,6 +8,8 @@ import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
+import com.viaversion.viaversion.api.Via;
+import com.viaversion.viaversion.api.ViaAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,18 +24,6 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) throws SQLException {
         Player player = event.getPlayer();
-
-        new BukkitRunnable() {
-
-            @Override
-            public void run() {
-                ViaAPI api = Via.getAPI();
-                int version = api.getPlayerVersion(player);
-                player.sendMessage("Version: " + version);
-            }
-
-        }.runTaskLater(LegendHG.getInstance(), 20);
-
 
         UUID uuid = player.getUniqueId();
         Account account = LegendHG.getAccountManager().getOrCreateAccount(player);

@@ -47,7 +47,7 @@ public class ScoreComplete extends Board {
         player.setScoreboard(scoreboard);
     }
 
-    public static void updateScoreboard(Player player) throws SQLException {
+    public static void updateScoreboard(Player player) {
         GameState gameState = LegendHG.getGameStateManager().getGameState();
         Scoreboard scoreboard = player.getScoreboard();
         Account account = LegendHG.getAccountManager().getOrCreateAccount(player);

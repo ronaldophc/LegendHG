@@ -75,6 +75,7 @@ public class GameStateHelper {
         player.getInventory().clear();
         player.setHealth(20);
         player.getInventory().setItem(1, new ItemStack(Material.WATER_BUCKET));
+        player.updateInventory();
     }
 
     public static void preparePlayerToStart() {
@@ -84,7 +85,6 @@ public class GameStateHelper {
             PlayerHelper.teleportPlayerToSpawnLocation(player);
 
             PlayerHelper.preparePlayerToStart(player);
-
         }
     }
 

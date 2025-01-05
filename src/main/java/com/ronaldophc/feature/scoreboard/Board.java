@@ -33,13 +33,12 @@ public class Board {
                 continue;
             }
 
-            try {
-                if (!PlayerSQL.isPlayerLoggedIn(player)) {
-                    continue;
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+
+            if (!account.isLoggedIn()) {
+                continue;
             }
+
 
             if (LegendHG.getGameStateManager().getGameState() == GameState.FINISHED) {
                 removeScoreboard(player);
@@ -82,11 +81,7 @@ public class Board {
                 ScoreComplete.createNewScoreboardOneKit(player, objective, scoreboard);
                 break;
             case SIMPLE:
-                if (GameHelper.getInstance().getKits() == 2) {
-                    ScoreSimple.createNewScoreboardTwoKits(player, objective, scoreboard);
-                    break;
-                }
-                ScoreSimple.createNewScoreboardOneKit(player, objective, scoreboard);
+                ScoreSimple.createNewScoreboard(player, objective, scoreboard);
                 break;
             case SPEC:
                 try {
@@ -110,7 +105,7 @@ public class Board {
                 ScoreComplete.updateScoreboard(player);
                 break;
             case SIMPLE:
-                ScoreSimple.updateScoreboard(player, player.getScoreboard().getObjective(DisplaySlot.SIDEBAR));
+                ScoreSimple.updateScoreboard(player);
                 break;
             case SPEC:
                 ScoreSpec.updateScoreboard(player);

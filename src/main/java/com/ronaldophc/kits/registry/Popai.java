@@ -28,7 +28,6 @@ public class Popai extends Kit {
                         .setLore(Arrays.asList(Util.success + "Ao comer fique imune", Util.success + "a efeitos negativos", Util.success + "e ganhe regeneração por 60s."))
                         .build(),
                 new ItemManager(Material.CARROT_ITEM, Util.color3 + "Popai")
-                        .setAmount(5)
                         .build(),
                 false);
     }
@@ -42,12 +41,11 @@ public class Popai extends Kit {
         Account account = LegendHG.getAccountManager().getOrCreateAccount(popai);
         if (!account.getKits().contains(this)) return;
 
-        ItemStack itemInHand = popai.getItemInHand();
         if (event.getItem() == null) return;
         if (!isItemKit(event.getItem())) return;
         if ((event.getAction().name().contains("RIGHT"))) {
             popai.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 60 * 20, 0));
-            itemInHand.setAmount(itemInHand.getAmount() - 1);
+            kitManager.setCooldown(popai, 120, this);
         }
     }
 

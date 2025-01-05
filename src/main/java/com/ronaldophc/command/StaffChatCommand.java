@@ -23,7 +23,7 @@ public class StaffChatCommand implements CommandExecutor {
             }
 
             if (strings.length == 0) {
-                player.sendMessage(Util.usage("/staffchat <mesage>"));
+                player.sendMessage(Util.usage("/staffchat <message>"));
                 return true;
             }
 

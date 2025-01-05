@@ -1,9 +1,11 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.helper.Util;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public class PullCommand implements CommandExecutor {
@@ -32,11 +34,18 @@ public class PullCommand implements CommandExecutor {
                 return true;
             }
 
+            if (strings[0].equalsIgnoreCase("all")) {
+                for (Entity entity : Bukkit.getWorld("world").getEntities()) {
+                    entity.teleport(player.getLocation());
+                }
+                return true;
+            }
+
             try {
                 Player target = player.getServer().getPlayer(strings[0]);
 
                 if (target == null) {
-                    player.sendMessage(Util.error + "Jogador não encontrado");
+                    player.sendMessage(Util.noPlayer);
                     return true;
                 }
 

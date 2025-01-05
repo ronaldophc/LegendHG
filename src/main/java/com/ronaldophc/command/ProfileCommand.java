@@ -26,11 +26,13 @@ public class ProfileCommand implements CommandExecutor {
 
             Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
             player.sendMessage("Profile Infomation:");
-            player.sendMessage("§aName: §f" + account.getActualName());
+            player.sendMessage("§aActual Name: §f" + account.getActualName());
             player.sendMessage("§aUUID: §f" + account.getUUID());
             player.sendMessage("§aKits: §f" + account.getKits().toString());
             player.sendMessage("§aisAlive: §f" + account.isAlive());
             player.sendMessage("§aisSpec: §f" + account.isSpectator());
+            player.sendMessage("§aVersion: §f" + account.getVersion());
+            player.sendMessage("§aScore: §f" + account.getScore());
 
             return true;
         }

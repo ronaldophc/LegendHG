@@ -2,17 +2,14 @@ package com.ronaldophc.listener;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.Tags;
-import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
-import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,13 +49,10 @@ public class AsyncPlayerChat implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
 
-        try {
-            if (!PlayerSQL.isPlayerLoggedIn(player)) {
-                event.setCancelled(true);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (!account.isLoggedIn()) {
+            event.setCancelled(true);
         }
 
         if (cooldown.contains(player)) {
@@ -81,8 +75,6 @@ public class AsyncPlayerChat implements Listener {
             message = message.replaceAll("(?i)" + word, new String(new char[word.length()]).replace("\0", "*"));
         }
 
-
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
         Tags tag = account.getTag();
         event.setFormat(tag.getColor() + tag.name() + " §7" + account.getActualName() + " §8» §f" + message);
 
