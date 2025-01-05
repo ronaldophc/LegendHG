@@ -1,12 +1,34 @@
 package com.ronaldophc.command;
 
+import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.Util;
+import com.ronaldophc.player.account.Account;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-public class TellCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class TellCommand implements CommandExecutor, TabCompleter {
+
+    @Override
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
+        if (command.getName().equalsIgnoreCase("tell")) {
+            List<String> playerNames = new ArrayList<>();
+            for (Account account : LegendHG.getAccountManager().getAccounts()) {
+                Player player = account.getPlayer();
+                if (player.isOnline() && player != commandSender) {
+                    playerNames.add(account.getActualName());
+                }
+            }
+            return playerNames;
+        }
+        return Collections.emptyList();
+    }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
@@ -23,9 +45,16 @@ public class TellCommand implements CommandExecutor {
                 return true;
             }
 
-            Player target = player.getServer().getPlayer(strings[0]);
-            if (target == null) {
-                player.sendMessage(Util.error + "Player não encontrado.");
+            Account account = LegendHG.getAccountManager().getAccountByName(strings[0]);
+
+            if (account == null) {
+                player.sendMessage(Util.noPlayer);
+                return true;
+            }
+
+            Player target = account.getPlayer();
+            if (target == null || !(target.isOnline())) {
+                player.sendMessage(Util.error + "Player não encontrado ou offline.");
                 return true;
             }
 
@@ -34,10 +63,8 @@ public class TellCommand implements CommandExecutor {
                 message.append(strings[i]).append(" ");
             }
 
-            player.sendMessage("§8[§7Você §8» §7" + target.getName() + "§8] §f" + message.toString());
-            target.sendMessage("§8[§7" + player.getName() + " §8» §7Você§8] §f" + message.toString());
-
-
+            player.sendMessage("§8[§7Você §8» §7" + account.getActualName() + "§8] §f" + message);
+            target.sendMessage("§8[§7" + LegendHG.getAccountManager().getOrCreateAccount(player).getActualName() + " §8» §7Você§8] §f" + message);
 
             return true;
         }

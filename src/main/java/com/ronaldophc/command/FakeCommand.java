@@ -1,8 +1,10 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.feature.SkinFix;
+import com.ronaldophc.LegendHG;
+import com.ronaldophc.feature.SkinManager;
 import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,10 +14,11 @@ import java.util.HashMap;
 
 public class FakeCommand implements CommandExecutor {
 
-    private static HashMap<Player, String> fakeList = new HashMap<>();
+    private static final HashMap<Player, String> fakeList = new HashMap<>();
 
     public FakeCommand() {
     }
+
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (command.getName().equalsIgnoreCase("fake")) {
@@ -69,16 +72,16 @@ public class FakeCommand implements CommandExecutor {
     }
 
     private static void setFake(Player player, String name) throws Exception {
-        if (!SkinFix.changePlayerSkin(player, name)) {
+        if (!SkinManager.changePlayerSkin(player, name)) {
             player.sendMessage(Util.error + "Skin não encontrada para o fake");
         }
         setSettings(player, name);
         fakeList.put(player, name);
-        player.sendMessage(Util.color1 + "Seu nome foi alterado para " + player.getCustomName());
+        player.sendMessage(Util.color1 + "Seu nome foi alterado para " + name);
     }
 
     private static void resetFake(Player player) throws Exception {
-        if (!SkinFix.fixPlayerSkin(player)) {
+        if (!SkinManager.fixPlayerSkin(player)) {
             player.sendMessage(Util.error + "Erro ao resetar a skin");
         }
         setSettings(player, player.getName());
@@ -86,8 +89,8 @@ public class FakeCommand implements CommandExecutor {
         player.sendMessage(Util.color1 + "Seu fake foi resetado");
     }
 
-    private static void setSettings(Player player, String name) throws Exception {
-        player.setCustomName(name);
+    private static void setSettings(Player player, String name) {
+        LegendHG.getAccountManager().getOrCreateAccount(player).setActualName(name);
         MasterHelper.refreshPlayer(player);
     }
 }

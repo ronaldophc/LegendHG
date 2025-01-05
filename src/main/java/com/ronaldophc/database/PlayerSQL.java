@@ -254,6 +254,7 @@ public class PlayerSQL {
     }
 
     public static Tags getPlayerTag(Player player) throws SQLException {
+        if (!LegendHG.getMySQLManager().isActive()) return Tags.NORMAL;
         String query = "SELECT tag FROM players WHERE uuid = ?";
         String uuid = player.getUniqueId().toString();
         Connection connection = LegendHG.getMySQLManager().getConnection();

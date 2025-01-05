@@ -1,7 +1,7 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.feature.MiniFeast;
+import com.ronaldophc.feature.MiniFeastManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,7 +15,7 @@ public class MiniFeastCommand implements CommandExecutor {
                 commandSender.sendMessage(Util.noPermission);
                 return true;
             }
-            new MiniFeast();
+            new MiniFeastManager();
             return true;
         }
         return false;

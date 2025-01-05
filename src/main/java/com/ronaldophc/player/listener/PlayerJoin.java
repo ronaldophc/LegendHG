@@ -1,25 +1,20 @@
 package com.ronaldophc.player.listener;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.database.CurrentGameSQL;
 import com.ronaldophc.database.PlayerSQL;
-import com.ronaldophc.feature.SkinFix;
-import com.ronaldophc.feature.Tag;
-import com.ronaldophc.feature.auth.AuthManager;
+import com.ronaldophc.feature.SkinManager;
 import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.player.PlayerAliveManager;
 import com.ronaldophc.player.PlayerHelper;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import com.ronaldophc.player.account.Account;
+import com.viaversion.viaversion.api.Via;
+import com.viaversion.viaversion.api.ViaAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
-import org.bukkit.scoreboard.Team;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
 import java.util.UUID;
@@ -31,37 +26,31 @@ public class PlayerJoin implements Listener {
         Player player = event.getPlayer();
 
         UUID uuid = player.getUniqueId();
-        String name = player.getCustomName() == null ? player.getName() : player.getCustomName();
-        player.setCustomName(name);
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
 
         if (!(player.isOp())) {
             MasterHelper.injectPlayerNotTabComplete(player);
         }
 
         try {
-            Tag.setTag(player);
-
-            if (SkinFix.playerSkin.containsKey(uuid)) {
-                SkinFix.changePlayerSkin(player, SkinFix.playerSkin.get(uuid));
+            if (SkinManager.playerSkin.containsKey(uuid)) {
+                SkinManager.changePlayerSkin(player, SkinManager.playerSkin.get(uuid));
             } else {
-                SkinFix.fixPlayerSkin(player);
+                SkinManager.fixPlayerSkin(player);
             }
-
             MasterHelper.refreshPlayer(player);
         } catch (Exception e) {
             Logger.logError("Erro ao alterar skin ou tag: " + e.getMessage());
             throw new RuntimeException(e);
         }
 
-        boolean isAlive = PlayerAliveManager.getInstance().isPlayerAlive(uuid);
-        if (!isAlive) {
-            PlayerHelper.setKitLogin(player);
+        if (!account.isSpectator()) {
             PlayerHelper.teleportPlayerToSpawnLocation(player);
         }
 
-        event.setJoinMessage(Util.color2 + "[+] " + Util.color1 + name);
+        event.setJoinMessage(Util.color2 + "[+] " + Util.color1 + account.getActualName());
 
-        if (PlayerSQL.isPlayerLoggedIn(player)) {
+        if (account.isLoggedIn()) {
             return;
         }
 
@@ -72,19 +61,6 @@ public class PlayerJoin implements Listener {
         }
 
         player.sendMessage(message);
-
-        if (!player.getName().equalsIgnoreCase("phc02") && !player.getName().equalsIgnoreCase("Ronaldo")) {
-            return;
-        }
-
-        if (!PlayerSQL.loginPlayer(player, "a")) {
-            return;
-        }
-
-        player.setGameMode(org.bukkit.GameMode.CREATIVE);
-        player.sendMessage(Util.title + " > " + Util.success + "Você entrou.");
-        AuthManager.loginPlayer(player);
-        CurrentGameSQL.createCurrentGameStats(player, LegendHG.getGameId());
     }
 
 }

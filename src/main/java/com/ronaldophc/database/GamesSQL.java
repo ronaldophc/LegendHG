@@ -3,8 +3,8 @@ package com.ronaldophc.database;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.GameHelper;
 import com.ronaldophc.helper.Logger;
-import com.ronaldophc.kits.manager.KitManager;
-import com.ronaldophc.player.PlayerAliveManager;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -23,7 +23,7 @@ public class GamesSQL {
             preparedStatement.setString(2, "");
             preparedStatement.setString(3, "");
             preparedStatement.setInt(4, 0);
-            preparedStatement.setInt(5, PlayerAliveManager.getInstance().getPlayersAlive().size());
+            preparedStatement.setInt(5, LegendHG.getAccountManager().getPlayersAlive().size());
             preparedStatement.setInt(6, GameHelper.getInstance().getKits());
             preparedStatement.executeUpdate();
 
@@ -46,13 +46,13 @@ public class GamesSQL {
         if (!LegendHG.getMySQLManager().isActive()) return;
         String query = "UPDATE games SET winner = ?, kit1_winner = ?, kit2_winner = ?, kills = ? WHERE id = ?;";
         Connection connection = LegendHG.getMySQLManager().getConnection();
-        KitManager kitManager = LegendHG.getKitManager();
+        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);) {
             preparedStatement.setString(1, player.getUniqueId().toString());
-            preparedStatement.setString(2, kitManager.getPlayerKitName(player));
-            preparedStatement.setString(3, kitManager.getPlayerKitName2(player));
-            preparedStatement.setInt(4, CurrentGameSQL.getCurrentGameKills(player, LegendHG.getGameId()));
+            preparedStatement.setString(2, account.getKits().getPrimary().getName());
+            preparedStatement.setString(3, account.getKits().getSecondary().getName());
+            preparedStatement.setInt(4, account.getKills());
             preparedStatement.setInt(5, LegendHG.getGameId());
             preparedStatement.executeUpdate();
             preparedStatement.close();

@@ -1,10 +1,11 @@
 package com.ronaldophc.command;
 
+import com.ronaldophc.LegendHG;
+import com.ronaldophc.constant.Scores;
+import com.ronaldophc.feature.scoreboard.Board;
 import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.player.PlayerSpectatorManager;
-import com.ronaldophc.feature.scoreboard.Board;
-import com.ronaldophc.constant.Scores;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,8 +37,9 @@ public class ScoreBoardCommand implements CommandExecutor {
                 }
             }
 
-            if (PlayerSpectatorManager.getInstance().isPlayerSpectating(player)) {
+            if (LegendHG.getAccountManager().getOrCreateAccount(player).isSpectator()) {
                 if (Board.playerScore.get(player.getUniqueId()) != Scores.SPEC) {
+
                     try {
                         Board.setPlayerScore(player, Scores.SPEC);
                         player.sendMessage(Util.title + " > " + Util.color3 + "Alterado para " + Util.bold + Util.success + "scoreboard visivel");
@@ -46,6 +48,7 @@ public class ScoreBoardCommand implements CommandExecutor {
                     }
                     return true;
                 }
+
                 try {
                     Board.setPlayerScore(player, Scores.NONE);
                     player.sendMessage(Util.title + " > " + Util.color3 + "Alterado para " + Util.bold + Util.success + "scoreboard invisivel");
@@ -57,6 +60,7 @@ public class ScoreBoardCommand implements CommandExecutor {
 
             switch (Board.playerScore.get(player.getUniqueId())) {
                 case SIMPLE:
+
                     try {
                         Board.setPlayerScore(player, Scores.COMPLETE);
                         player.sendMessage(Util.title + " > " + Util.color3 + "Alterado para " + Util.bold + Util.success + "scoreboard completa");
@@ -65,6 +69,7 @@ public class ScoreBoardCommand implements CommandExecutor {
                     }
                     break;
                 case COMPLETE:
+
                     try {
                         Board.setPlayerScore(player, Scores.NONE);
                         player.sendMessage(Util.title + " > " + Util.color3 + "Alterado para " + Util.bold + Util.success + "scoreboard invisivel");
@@ -73,6 +78,7 @@ public class ScoreBoardCommand implements CommandExecutor {
                     }
                     break;
                 default:
+
                     try {
                         Board.setPlayerScore(player, Scores.SIMPLE);
                         player.sendMessage(Util.title + " > " + Util.color3 + "Alterado para " + Util.bold + Util.success + "scoreboard simples");

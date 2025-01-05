@@ -6,24 +6,17 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.*;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.constant.Tags;
-import com.ronaldophc.feature.Tag;
-import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
+import com.ronaldophc.player.account.Account;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,25 +51,21 @@ public class ProtocolLibHook {
 
                         GameProfile gameProfile = ((CraftPlayer) player).getProfile();
 
-                        try {
-                            Tags tag = Tag.getTag(player);
-                            String name = player.getCustomName();
-                            WrappedGameProfile wrappedProfile = new WrappedGameProfile(uniqueId, name);
+                        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+                        WrappedGameProfile wrappedProfile = new WrappedGameProfile(uniqueId, account.getActualName());
 
-                            if (gameProfile.getProperties().containsKey("textures")) {
-                                Property textures = gameProfile.getProperties().get("textures").iterator().next();
-                                wrappedProfile.getProperties().put("textures", new WrappedSignedProperty(textures.getName(), textures.getValue(), textures.getSignature()));
-                            }
-
-                            PlayerInfoData playerInfoData = new PlayerInfoData(wrappedProfile, data.getLatency(), data.getGameMode(), data.getDisplayName());
-
-                            list.set(i, playerInfoData);
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
+                        if (gameProfile.getProperties().containsKey("textures")) {
+                            Property textures = gameProfile.getProperties().get("textures").iterator().next();
+                            wrappedProfile.getProperties().put("textures", new WrappedSignedProperty(textures.getName(), textures.getValue(), textures.getSignature()));
                         }
+
+                        PlayerInfoData playerInfoData = new PlayerInfoData(wrappedProfile, data.getLatency(), data.getGameMode(), data.getDisplayName());
+
+                        list.set(i, playerInfoData);
+
                     }
 
-//                    packet.getPlayerInfoDataLists().write(0, list);
+                    packet.getPlayerInfoDataLists().write(0, list);
                 }
             }
         });
@@ -95,9 +84,25 @@ public class ProtocolLibHook {
                         protocolManager.sendServerPacket(player, tabPacket);
                     }
                 } catch (Exception e) {
-                    throw new RuntimeException("Cannot send packet.", e);
+                    throw new RuntimeException("Cannot send Tab List packet.", e);
                 }
             }
         }.runTaskTimer(LegendHG.getInstance(), 0, 10);
+    }
+
+    // ----------------- ActionBar ----------------- //
+
+    public static void sendActionBar(Player player, String message) {
+        ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+        PacketContainer actionPacket = protocolManager.createPacket(PacketType.Play.Server.CHAT);
+
+        actionPacket.getChatComponents().write(0, WrappedChatComponent.fromText(message));
+        actionPacket.getBytes().write(0, (byte) 2); // ActionBar
+
+        try {
+            protocolManager.sendServerPacket(player, actionPacket);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot send Action Bar packet.", e);
+        }
     }
 }

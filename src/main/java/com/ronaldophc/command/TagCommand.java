@@ -1,21 +1,13 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.constant.Tags;
-import com.ronaldophc.database.PlayerSQL;
-import com.ronaldophc.feature.Tag;
+import com.ronaldophc.feature.TagManager;
 import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
-import org.bukkit.scoreboard.Team;
 
 public class TagCommand implements CommandExecutor {
 
@@ -32,7 +24,7 @@ public class TagCommand implements CommandExecutor {
 
 
             if (strings.length == 0) {
-                Tag.sendTagList(player);
+                TagManager.sendTagList(player);
                 return true;
             }
 
@@ -45,7 +37,7 @@ public class TagCommand implements CommandExecutor {
                         return true;
                     }
 
-                    Tag.setTag(player, tag);
+                    TagManager.setTag(player, tag);
                     MasterHelper.refreshPlayer(player);
                     player.sendMessage(Util.color1 + "Tag alterada para " + tag.getColor() + tag.name());
                 } catch (IllegalArgumentException e) {

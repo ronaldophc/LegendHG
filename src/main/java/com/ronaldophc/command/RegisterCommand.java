@@ -1,7 +1,6 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.database.CurrentGameSQL;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.feature.auth.AuthManager;
 import com.ronaldophc.helper.Logger;
@@ -34,11 +33,11 @@ public class RegisterCommand implements CommandExecutor {
                         player.sendMessage(Util.title + " > " +  Util.color2 + "Você já esta registrado.");
                         return true;
                     }
-                    String ipAddress = player.getAddress().getAddress().getHostAddress();
-                    PlayerSQL.setPlayerIpAddress(player, ipAddress);
                     PlayerSQL.registerPlayer(player, password);
+
+                    LegendHG.getAccountManager().getOrCreateAccount(player).setLoggedIn(true);
                     AuthManager.loginPlayer(player);
-                    CurrentGameSQL.createCurrentGameStats(player, LegendHG.getGameId());
+
                     player.sendMessage(Util.title + " > " + Util.success + "Você se registrou.");
                     return true;
                 } catch (Exception e) {

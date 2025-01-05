@@ -2,7 +2,7 @@ package com.ronaldophc.command;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.feature.Feast;
+import com.ronaldophc.feature.FeastManager;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,9 +19,9 @@ public class FeastCommand implements CommandExecutor {
         }
 
         Player player = (Player) commandSender;
-        Feast feast = LegendHG.getFeast();
+        FeastManager feast = LegendHG.getFeast();
         if (command.getName().equalsIgnoreCase("feast")) {
-            if (feast.getState() == Feast.states.NOT_SPAWNED) {
+            if (feast.getState() == FeastManager.states.NOT_SPAWNED) {
                 player.sendMessage(Util.color1 + "O feast ainda não foi spawnado");
                 return true;
             }
@@ -39,11 +39,11 @@ public class FeastCommand implements CommandExecutor {
             }
 
             if (strings.length == 0) {
-                if (feast.getState() == Feast.states.NOT_SPAWNED) {
+                if (feast.getState() == FeastManager.states.NOT_SPAWNED) {
                     feast.start();
                     return true;
                 }
-                if (feast.getState() == Feast.states.SPAWNED) {
+                if (feast.getState() == FeastManager.states.SPAWNED) {
                     feast.spawnChests();
                     return true;
                 }

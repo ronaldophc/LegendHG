@@ -1,11 +1,11 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.database.CurrentGameSQL;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.feature.auth.AuthManager;
 import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.Util;
+import com.ronaldophc.player.account.Account;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,21 +30,23 @@ public class LoginCommand implements CommandExecutor {
 
             if (strings.length == 1) {
                 String password = strings[0];
-
+                Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
                 try {
-                    if (PlayerSQL.isPlayerLoggedIn(player)) {
+                    if (account.isLoggedIn()) {
                         player.sendMessage(Util.title + " > " + Util.color2 + "Você já entrou.");
                         return true;
                     }
                     if (!PlayerSQL.isPlayerRegistered(player)) {
-                        player.sendMessage(Util.title + " > " + Util.color2 + "Você não esta registrado.");
+                        player.sendMessage(Util.title + " > " + Util.color2 + "Você não está registrado.");
                         return true;
                     }
                     if (PlayerSQL.loginPlayer(player, password)) {
                         String ipAddress = player.getAddress().getAddress().getHostAddress();
                         PlayerSQL.setPlayerIpAddress(player, ipAddress);
+
+                        account.setLoggedIn(true);
                         AuthManager.loginPlayer(player);
-                        CurrentGameSQL.createCurrentGameStats(player, LegendHG.getGameId());
+
                         player.sendMessage(Util.title + " > " + Util.success + "Você entrou.");
                         return true;
                     }

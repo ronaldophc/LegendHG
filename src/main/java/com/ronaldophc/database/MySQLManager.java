@@ -63,9 +63,6 @@ public class MySQLManager {
             String sql = "CREATE TABLE IF NOT EXISTS players (uuid VARCHAR(36) PRIMARY KEY, name VARCHAR(16), password VARCHAR(255), kills INT, deaths INT, wins INT, scoreboard VARCHAR(15), tag VARCHAR(10), ip_address VARCHAR(45), registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)";
             statement.execute(sql);
             
-            sql = "CREATE TABLE IF NOT EXISTS current_game_stats (uuid VARCHAR(36), game_id INT, kills INT, deaths INT, PRIMARY KEY(uuid, game_id), FOREIGN KEY (uuid) REFERENCES players(uuid))";
-            statement.execute(sql);
-            
             sql = "CREATE TABLE IF NOT EXISTS games (id INT PRIMARY KEY AUTO_INCREMENT, winner VARCHAR(36), kit1_winner VARCHAR(36), kit2_winner VARCHAR(36), kills INT, players INT, type INT, started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, ended_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
             statement.execute(sql);
 

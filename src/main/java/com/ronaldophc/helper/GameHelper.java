@@ -1,12 +1,15 @@
 package com.ronaldophc.helper;
 
 import com.ronaldophc.setting.Settings;
+import lombok.Getter;
 
 import java.util.Random;
 
 public class GameHelper {
 
+    @Getter
     private static final GameHelper instance = new GameHelper();
+    @Getter
     private int kits;
 
     private GameHelper() {
@@ -20,16 +23,8 @@ public class GameHelper {
         }
     }
 
-    public int getKits() {
-        return kits;
-    }
-
     public boolean isTwoKits() {
         return kits == 2;
-    }
-
-    public static GameHelper getInstance() {
-        return instance;
     }
 
 }

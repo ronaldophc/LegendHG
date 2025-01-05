@@ -1,29 +1,30 @@
 package com.ronaldophc.helper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.material.MaterialData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemManager {
+    @Setter
     private String name;
     private List<String> lore = new ArrayList<>();
+    @Getter
+    @Setter
     private Material material;
     private final ItemStack item;
     private final ItemMeta itemMeta;
-    private boolean hasPermission;
-    private String permission;
-    private List<PotionEffect> potionEffects = new ArrayList<>();
+    private final List<PotionEffect> potionEffects = new ArrayList<>();
 
     public ItemManager(Material material, String name) {
         this.material = material;
@@ -39,40 +40,13 @@ public class ItemManager {
         return this;
     }
 
-    public Material getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void resetLore() {
-        lore.clear();
-    }
-
-    public ItemManager addLore(String lore) {
+    public void addLore(String lore) {
         this.lore.add("§f" + lore);
-        return this;
     }
 
     public ItemManager setAmount(int amount) {
         item.setAmount(amount);
         return this;
-    }
-
-    public void addPermission(String permission) {
-        this.hasPermission = true;
-        this.permission = permission;
-    }
-
-    public void removePermission() {
-        this.hasPermission = false;
-        this.permission = null;
     }
 
     public ItemManager setDurability(int durability) {
@@ -82,11 +56,6 @@ public class ItemManager {
 
     public ItemManager addEnchantment(Enchantment enchantment, int level) {
         itemMeta.addEnchant(enchantment, level, true);
-        return this;
-    }
-
-    public ItemManager addUnsafeEnchantment(Enchantment enchantment, int level) {
-        item.addUnsafeEnchantment(enchantment, level);
         return this;
     }
 
@@ -114,17 +83,19 @@ public class ItemManager {
         return item;
     }
 
-    public ItemStack build(Player player) {
-        if (!hasPermission || player.hasPermission(permission)) {
-            return build();
-        }
-        return new ItemStack(Material.AIR);
-    }
-
     public ItemManager setLore(List<String> lore) {
         this.lore = new ArrayList<>();
         for (String line : lore) {
             addLore(line);
+        }
+        return this;
+    }
+
+    public ItemManager setSkullOwner(String owner) {
+        if (item.getType() == Material.SKULL_ITEM && item.getDurability() == 3) {
+            SkullMeta skullMeta = (SkullMeta) itemMeta;
+            skullMeta.setOwner(owner);
+            item.setItemMeta(skullMeta);
         }
         return this;
     }

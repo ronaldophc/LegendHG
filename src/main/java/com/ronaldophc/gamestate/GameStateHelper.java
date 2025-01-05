@@ -1,13 +1,12 @@
 package com.ronaldophc.gamestate;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.constant.Kits;
 import com.ronaldophc.database.GamesSQL;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.feature.auth.AuthManager;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.player.PlayerAliveManager;
 import com.ronaldophc.player.PlayerHelper;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.*;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -16,7 +15,6 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class GameStateHelper {
 
@@ -27,9 +25,9 @@ public class GameStateHelper {
             @Override
             public void run() {
                 Bukkit.broadcastMessage(Util.color1 + "O jogo acabou!");
-                Player player = PlayerAliveManager.getInstance().getWinner();
-                String name = PlayerAliveManager.getInstance().getWinner().getName();
-                Bukkit.broadcastMessage(Util.color1 + "O vencedor foi: " + Util.success + "" + Util.bold + name);
+                Player player = LegendHG.getAccountManager().getPlayersAlive().get(0);
+                String name = player.getName();
+                Bukkit.broadcastMessage(Util.color1 + "O vencedor foi: " + Util.success + Util.bold + name);
                 createCakePlatform(player);
                 preparePlayerToFinish(player);
                 try {
@@ -57,21 +55,16 @@ public class GameStateHelper {
             }
         }
         player.teleport(loc.add(0, platformY - loc.getY() + 2, 0));
-        launchFireworks(player, 10);
+        launchFireworks(player);
     }
 
-    private static void launchFireworks(Player player, int amount) {
+    private static void launchFireworks(Player player) {
         World world = player.getWorld();
         Location loc = player.getLocation();
-        for (int i = 0; i < amount; i++) {
+        for (int i = 0; i < 10; i++) {
             Firework firework = world.spawn(loc, Firework.class);
             FireworkMeta meta = firework.getFireworkMeta();
-            meta.addEffect(FireworkEffect.builder()
-                    .withColor(Color.RED, Color.BLUE)
-                    .with(FireworkEffect.Type.BALL)
-                    .trail(true)
-                    .flicker(true)
-                    .build());
+            meta.addEffect(FireworkEffect.builder().withColor(Color.RED, Color.BLUE).with(FireworkEffect.Type.BALL).trail(true).flicker(true).build());
             meta.setPower(1);
             firework.setFireworkMeta(meta);
         }
@@ -82,21 +75,16 @@ public class GameStateHelper {
         player.getInventory().clear();
         player.setHealth(20);
         player.getInventory().setItem(1, new ItemStack(Material.WATER_BUCKET));
+        player.updateInventory();
     }
 
     public static void preparePlayerToStart() {
         AuthManager.kickPlayersNotLoggedIn();
-        for (UUID uuid : PlayerAliveManager.getInstance().getPlayersAlive()) {
-            Player player = Bukkit.getPlayer(uuid);
+        for (Player player : LegendHG.getAccountManager().getPlayersAlive()) {
+
+            PlayerHelper.teleportPlayerToSpawnLocation(player);
 
             PlayerHelper.preparePlayerToStart(player);
-
-            // Kit Hermit
-            if (!LegendHG.getKitManager().isThePlayerKit(player, Kits.HERMIT)) {
-                PlayerHelper.teleportPlayerToSpawnLocation(player);
-                continue;
-            }
-            PlayerHelper.teleportHermit(player);
         }
     }
 
