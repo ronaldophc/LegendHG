@@ -41,16 +41,9 @@ public class Launcher extends Kit {
         Block block = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
 
         if (!(block.hasMetadata("launcher"))) return;
-        player.sendMessage("teste");
-        double strength = 0D;
 
-        Block under = block;
-        while (under.hasMetadata("launcher")) {
-            strength ++;
-            under = under.getRelative(BlockFace.DOWN);
-        }
+        double strength = 5D;
 
-        strength = Math.min(strength, 5);
         BlockFace face = (BlockFace) block.getMetadata("launcher").get(0).value();
         double y = face.getModY() * strength;
 
@@ -83,10 +76,9 @@ public class Launcher extends Kit {
 
         if (item == null) return;
         if (!item.hasItemMeta()) return;
-        if (!(item.getItemMeta().getDisplayName() == null)) return;
-        if (!item.getItemMeta().getDisplayName().equalsIgnoreCase(Util.color3 + "Launcher")) {
+        if (!item.getItemMeta().hasDisplayName()) return;
+        if (!item.getItemMeta().getDisplayName().equals(Util.color3 + "Launcher"))
             return;
-        }
 
         BlockFace face = event.getBlockAgainst().getFace(event.getBlock());
         if (face == BlockFace.DOWN) {
