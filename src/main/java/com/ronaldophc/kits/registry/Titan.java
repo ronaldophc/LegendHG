@@ -51,7 +51,7 @@ public class Titan extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player titan = event.getPlayer();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(titan);
+        Account account = AccountManager.getInstance().getOrCreateAccount(titan);
         if (!account.getKits().contains(this)) return;
 
         ItemStack item = event.getItem();

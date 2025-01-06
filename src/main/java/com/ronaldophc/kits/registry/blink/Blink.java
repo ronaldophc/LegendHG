@@ -35,7 +35,7 @@ public class Blink extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player blinker = event.getPlayer();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(blinker);
+        Account account = AccountManager.getInstance().getOrCreateAccount(blinker);
         if (!account.getKits().contains(this)) return;
 
         if (!(isItemKit(event.getItem()))) return;

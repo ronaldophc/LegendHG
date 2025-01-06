@@ -5,6 +5,7 @@ import com.ronaldophc.constant.GameState;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -36,7 +37,7 @@ public class AuthManager {
 
     public static void loginPlayer(Player player) {
         GameState gameState = LegendHG.getGameStateManager().getGameState();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         boolean isAlive = account.isAlive();
 
         switch (gameState) {
@@ -62,7 +63,7 @@ public class AuthManager {
 
     public static void kickPlayersNotLoggedIn() {
         for (Player player : LegendHG.getInstance().getServer().getOnlinePlayers()) {
-            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+            Account account = AccountManager.getInstance().getOrCreateAccount(player);
             if (!account.isLoggedIn()) {
                 player.kickPlayer(Util.title + " > " + Util.error + "O jogo começou e você não entrou.");
             }

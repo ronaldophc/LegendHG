@@ -5,6 +5,7 @@ import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -38,7 +39,7 @@ public class Worm extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player player = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
         if (!account.getKits().contains(this)) return;
 

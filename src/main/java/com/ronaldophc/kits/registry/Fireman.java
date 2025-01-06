@@ -32,7 +32,7 @@ public class Fireman extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player fireman = (Player) event.getEntity();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(fireman);
+        Account account = AccountManager.getInstance().getOrCreateAccount(fireman);
         if (!account.getKits().contains(this)) return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == EntityDamageEvent.DamageCause.LAVA) {

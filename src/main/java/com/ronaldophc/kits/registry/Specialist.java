@@ -49,7 +49,7 @@ public class Specialist extends Kit {
         if (event.getItem() == null) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_AIR) return;
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(player.getItemInHand())) return;
@@ -101,7 +101,7 @@ public class Specialist extends Kit {
     public void onKill(PlayerDeathEvent event) {
         if (event.getEntity().getKiller() == null) return;
         Player player = event.getEntity().getKiller();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         player.setLevel(player.getLevel() + 1);
     }

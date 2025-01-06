@@ -37,7 +37,7 @@ public class Viking extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player damager = (Player) event.getDamager();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(damager);
+        Account account = AccountManager.getInstance().getOrCreateAccount(damager);
         if (!account.getKits().contains(this)) return;
 
         if (damager.getInventory().getItemInHand().getType().name().contains("AXE")) {

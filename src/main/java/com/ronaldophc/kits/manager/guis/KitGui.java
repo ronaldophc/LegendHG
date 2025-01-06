@@ -14,7 +14,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 public class KitGui {
 
-    private static final int ITEMS_PER_PAGE = 46;
+    private static final int ITEMS_PER_PAGE = 45;
 
     public static void openGui(Player player, int page, int whoKit) {
         int totalPages = getNumberOfPages();

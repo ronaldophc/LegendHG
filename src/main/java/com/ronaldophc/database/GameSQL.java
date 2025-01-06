@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GamesSQL {
+public class GameSQL {
 
     public static int createGame() throws SQLException {
         String query = "INSERT INTO games (winner, kit1_winner, kit2_winner, kills, players, type) VALUES (?, ?, ?, ?, ?, ?)";
@@ -23,7 +23,7 @@ public class GamesSQL {
             preparedStatement.setString(2, "");
             preparedStatement.setString(3, "");
             preparedStatement.setInt(4, 0);
-            preparedStatement.setInt(5, LegendHG.getAccountManager().getPlayersAlive().size());
+            preparedStatement.setInt(5, AccountManager.getInstance().getPlayersAlive().size());
             preparedStatement.setInt(6, GameHelper.getInstance().getKits());
             preparedStatement.executeUpdate();
 
@@ -46,7 +46,7 @@ public class GamesSQL {
         if (!LegendHG.getMySQLManager().isActive()) return;
         String query = "UPDATE games SET winner = ?, kit1_winner = ?, kit2_winner = ?, kills = ? WHERE id = ?;";
         Connection connection = LegendHG.getMySQLManager().getConnection();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);) {
             preparedStatement.setString(1, player.getUniqueId().toString());

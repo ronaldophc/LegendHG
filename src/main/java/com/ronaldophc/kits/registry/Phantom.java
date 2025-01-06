@@ -37,7 +37,7 @@ public class Phantom extends Kit {
 
         Player phantom = event.getPlayer();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(phantom);
+        Account account = AccountManager.getInstance().getOrCreateAccount(phantom);
         if (!account.getKits().contains(this)) return;
         if (event.getItem() == null) return;
         if (!isItemKit(event.getItem())) return;

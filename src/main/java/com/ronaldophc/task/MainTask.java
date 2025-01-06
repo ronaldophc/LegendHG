@@ -18,7 +18,7 @@ public class MainTask implements Runnable {
         World world = Bukkit.getWorld("world");
         world.setTime(1800);
         for (Player player : Bukkit.getOnlinePlayers()) {
-            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+            Account account = AccountManager.getInstance().getOrCreateAccount(player);
             if (account.isAlive()) {
                 continue;
             }

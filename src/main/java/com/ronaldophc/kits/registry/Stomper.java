@@ -41,7 +41,7 @@ public class Stomper extends Kit {
 
         Player player = (Player) event.getEntity();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         EntityDamageEvent.DamageCause cause = event.getCause();

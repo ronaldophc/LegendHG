@@ -14,24 +14,6 @@ import java.sql.SQLException;
 
 public class TagManager {
 
-    public static void setTag(Player player, Tags tag) {
-        try {
-            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
-            account.setTag(tag);
-            PlayerSQL.setPlayerTag(player, tag);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static Tags getTagSQL(Player player) {
-        try {
-            return PlayerSQL.getPlayerTag(player);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public static void sendTagList(Player player) {
         player.sendMessage(Util.color1 + "Escolha sua tag:");
 

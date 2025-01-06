@@ -37,7 +37,7 @@ public class Forger extends Kit {
 
         ItemStack currentItem = event.getCurrentItem();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(forger);
+        Account account = AccountManager.getInstance().getOrCreateAccount(forger);
         if (!account.getKits().contains(this)) return;
         if (currentItem == null || currentItem.getType() == Material.AIR) return;
 

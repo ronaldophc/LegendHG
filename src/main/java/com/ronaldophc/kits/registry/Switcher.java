@@ -35,7 +35,7 @@ public class Switcher extends Kit {
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(event.getItem())) return;
@@ -70,7 +70,7 @@ public class Switcher extends Kit {
         Player target = (Player) event.getEntity();
 
         KitManager kitManager = LegendHG.getKitManager();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
         if (!account.getKits().contains(this)) return;
         if (player == target) return;

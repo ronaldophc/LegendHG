@@ -38,7 +38,7 @@ public class Miner extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player miner = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(miner);
+        Account account = AccountManager.getInstance().getOrCreateAccount(miner);
         if (!account.getKits().contains(this)) return;
 
         if (miner.getItemInHand() == null || !isItemKit(miner.getItemInHand()))

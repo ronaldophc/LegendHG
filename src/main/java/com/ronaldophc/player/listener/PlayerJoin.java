@@ -8,13 +8,11 @@ import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
-import com.viaversion.viaversion.api.Via;
-import com.viaversion.viaversion.api.ViaAPI;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
 import java.util.UUID;
@@ -26,11 +24,11 @@ public class PlayerJoin implements Listener {
         Player player = event.getPlayer();
 
         UUID uuid = player.getUniqueId();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
-        if (!(player.isOp())) {
-            MasterHelper.injectPlayerNotTabComplete(player);
-        }
+//        if (!(player.isOp())) {
+//            MasterHelper.injectPlayerNotTabComplete(player);
+//        }
 
         try {
             if (SkinManager.playerSkin.containsKey(uuid)) {
@@ -44,7 +42,9 @@ public class PlayerJoin implements Listener {
             throw new RuntimeException(e);
         }
 
-        if (!account.isSpectator()) {
+        if (!account.isSpectator() && !account.isAlive()) {
+            player.getInventory().clear();
+            player.updateInventory();
             PlayerHelper.teleportPlayerToSpawnLocation(player);
         }
 

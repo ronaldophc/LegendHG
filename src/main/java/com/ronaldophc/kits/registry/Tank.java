@@ -37,7 +37,7 @@ public class Tank extends Kit {
         }
         Player tank = (Player) event.getEntity();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(tank);
+        Account account = AccountManager.getInstance().getOrCreateAccount(tank);
         if (!account.getKits().contains(this)) return;
 
         if (event.getCause().name().contains("EXPLOSION")) {
@@ -53,7 +53,7 @@ public class Tank extends Kit {
         Player player = event.getEntity();
         Player tank = event.getEntity().getKiller();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(tank);
+        Account account = AccountManager.getInstance().getOrCreateAccount(tank);
         if (!account.getKits().contains(this)) return;
 
         event.getEntity().getWorld().createExplosion(player.getLocation(), 4.0F);

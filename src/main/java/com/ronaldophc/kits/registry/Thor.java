@@ -41,7 +41,7 @@ public class Thor extends Kit {
 
         Player thor = event.getPlayer();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(thor);
+        Account account = AccountManager.getInstance().getOrCreateAccount(thor);
         if (!account.getKits().contains(this)) return;
 
         if (event.getItem() == null) return;
@@ -56,7 +56,7 @@ public class Thor extends Kit {
         Location targetLocation = block.getLocation();
         targetLocation.getWorld().strikeLightningEffect(targetLocation);
 
-        for (Player player : LegendHG.getAccountManager().getPlayersAlive()) {
+        for (Player player : AccountManager.getInstance().getPlayersAlive()) {
             if (player == thor) continue;
             if (player.getLocation().distance(targetLocation) > 3) continue;
             player.damage(5.0D, event.getPlayer());

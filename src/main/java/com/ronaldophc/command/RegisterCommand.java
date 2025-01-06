@@ -5,6 +5,7 @@ import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.feature.auth.AuthManager;
 import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.Util;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,7 +36,7 @@ public class RegisterCommand implements CommandExecutor {
                     }
                     PlayerSQL.registerPlayer(player, password);
 
-                    LegendHG.getAccountManager().getOrCreateAccount(player).setLoggedIn(true);
+                    AccountManager.getInstance().getOrCreateAccount(player).setLoggedIn(true);
                     AuthManager.loginPlayer(player);
 
                     player.sendMessage(Util.title + " > " + Util.success + "Você se registrou.");

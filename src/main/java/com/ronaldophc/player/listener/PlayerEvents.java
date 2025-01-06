@@ -22,7 +22,7 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (account.isSpectator()) {
             event.setCancelled(true);
             return;
@@ -48,7 +48,7 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (account.isSpectator()) {
             event.setCancelled(true);
             return;

@@ -4,6 +4,7 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +17,7 @@ public class PlayerDamages implements Listener {
         if (!(event.getDamager() instanceof Player)) return;
 
         Player damager = (Player) event.getDamager();
-        Account damagerAccount = LegendHG.getAccountManager().getOrCreateAccount(damager);
+        Account damagerAccount = AccountManager.getInstance().getOrCreateAccount(damager);
         if (damagerAccount.isSpectator()) {
             event.setCancelled(true);
             return;
@@ -31,7 +32,7 @@ public class PlayerDamages implements Listener {
 
         Player player = (Player) event.getEntity();
 
-        Account playerAccount = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account playerAccount = AccountManager.getInstance().getOrCreateAccount(player);
 
         if (playerAccount.isSpectator()) {
             event.setCancelled(true);

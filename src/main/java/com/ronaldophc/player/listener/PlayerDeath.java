@@ -10,6 +10,7 @@ import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,7 +29,7 @@ public class PlayerDeath implements Listener {
         event.setDeathMessage(null);
 
         Player died = event.getEntity();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(died);
+        Account account = AccountManager.getInstance().getOrCreateAccount(died);
 
         Kit diedKit = account.getKits().getPrimary();
         Kit diedKit2 = account.getKits().getSecondary();
@@ -45,7 +46,7 @@ public class PlayerDeath implements Listener {
 
         if (killer != null) {
 
-            Account killerAccount = LegendHG.getAccountManager().getOrCreateAccount(killer);
+            Account killerAccount = AccountManager.getInstance().getOrCreateAccount(killer);
 
             Kit killerKit = killerAccount.getKits().getPrimary();
             Kit killerKit2 = killerAccount.getKits().getSecondary();
@@ -58,7 +59,6 @@ public class PlayerDeath implements Listener {
 
             try {
                 killerAccount.addKill();
-                PlayerSQL.addPlayerKill(killer);
                 PlayerSQL.addPlayerDeath(died);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -70,7 +70,7 @@ public class PlayerDeath implements Listener {
         }
 
         Bukkit.broadcastMessage(message);
-        Bukkit.broadcastMessage(Util.color3 + LegendHG.getAccountManager().getPlayersAlive().size() + " jogadores restantes");
+        Bukkit.broadcastMessage(Util.color3 + AccountManager.getInstance().getPlayersAlive().size() + " jogadores restantes");
 
         if (!died.hasPermission("legendhg.spec")) {
             died.kickPlayer(Util.color1 + "Voce morreu e não tem permissão para assistir a partida!");

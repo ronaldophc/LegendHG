@@ -3,6 +3,7 @@ package com.ronaldophc.command;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,15 +25,19 @@ public class ProfileCommand implements CommandExecutor {
                 return true;
             }
 
-            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+            Account account = AccountManager.getInstance().getOrCreateAccount(player);
             player.sendMessage("Profile Infomation:");
             player.sendMessage("§aActual Name: §f" + account.getActualName());
             player.sendMessage("§aUUID: §f" + account.getUUID());
-            player.sendMessage("§aKits: §f" + account.getKits().toString());
             player.sendMessage("§aisAlive: §f" + account.isAlive());
             player.sendMessage("§aisSpec: §f" + account.isSpectator());
             player.sendMessage("§aVersion: §f" + account.getVersion());
             player.sendMessage("§aScore: §f" + account.getScore());
+            player.sendMessage("§aKit 1: §f" + account.getKits().getPrimary());
+            player.sendMessage("§aKit 2: §f" + account.getKits().getSecondary());
+            player.sendMessage("§aChat: §f" + account.isChat());
+            player.sendMessage("§aTell: §f" + account.isTell());
+            player.sendMessage(AccountManager.getInstance().getPlayersAlive().toString());
 
             return true;
         }

@@ -3,6 +3,7 @@ package com.ronaldophc.helper;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -55,7 +56,7 @@ public class MasterHelper {
                     }
                 }, 5L);
 
-                Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+                Account account = AccountManager.getInstance().getOrCreateAccount(player);
                 if (account.isSpectator()) {
                     PlayerHelper.preparePlayerToSpec(player);
                 }

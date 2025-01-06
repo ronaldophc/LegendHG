@@ -10,7 +10,7 @@ public class PlayerPickupItem implements Listener {
 
     @EventHandler
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
-        if (!LegendHG.getAccountManager().getOrCreateAccount(event.getPlayer()).isAlive()) {
+        if (!AccountManager.getInstance().getOrCreateAccount(event.getPlayer()).isAlive()) {
             event.setCancelled(true);
         }
     }

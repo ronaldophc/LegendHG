@@ -16,7 +16,7 @@ public class BlockPlace implements Listener {
             event.setCancelled(true);
         }
         Player player = event.getPlayer();
-        if (LegendHG.getAccountManager().getOrCreateAccount(player).isSpectator()) {
+        if (AccountManager.getInstance().getOrCreateAccount(player).isSpectator()) {
             event.setCancelled(true);
         }
     }

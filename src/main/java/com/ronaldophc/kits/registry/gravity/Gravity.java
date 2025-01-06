@@ -44,7 +44,7 @@ public class Gravity extends Kit {
         if (!(entity instanceof Player)) return;
         if (!LegendHG.getGameStateManager().getGameState().canTakeDamage()) return;
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(player.getItemInHand())) return;

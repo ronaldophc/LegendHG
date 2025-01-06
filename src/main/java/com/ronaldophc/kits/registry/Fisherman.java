@@ -37,7 +37,7 @@ public class Fisherman extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player player = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         Entity caught = event.getCaught();

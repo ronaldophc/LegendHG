@@ -33,7 +33,7 @@ public class Boxer extends Kit {
         if (!(event.getEntity() instanceof Player)) return;
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player player = (Player) event.getEntity();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         event.setDamage(event.getDamage() - 0.5);
     }

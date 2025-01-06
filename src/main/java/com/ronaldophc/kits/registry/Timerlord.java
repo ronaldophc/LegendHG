@@ -5,6 +5,7 @@ import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,7 +41,7 @@ public class Timerlord extends Kit {
 
         Player timerlord = event.getPlayer();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(timerlord);
+        Account account = AccountManager.getInstance().getOrCreateAccount(timerlord);
         if (!account.getKits().contains(this)) return;
 
         if (event.getItem() == null) return;
@@ -53,7 +54,7 @@ public class Timerlord extends Kit {
             if (!(entity instanceof Player)) continue;
 
             Player player = (Player) entity;
-            if (LegendHG.getAccountManager().getOrCreateAccount(player).isAlive()) {
+            if (AccountManager.getInstance().getOrCreateAccount(player).isAlive()) {
                 blockedPlayers.add(player);
                 new BukkitRunnable() {
                     public void run() {

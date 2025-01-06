@@ -21,7 +21,7 @@ public class PlayerLogin implements Listener {
         String permSpec = "legendhg.login.spectator";
         String permMax = "legendhg.login.maxplayers";
         int maxPlayers = Settings.getInstance().getInt("MaxPlayers");
-        int playersOn = LegendHG.getAccountManager().getPlayersAlive().size();
+        int playersOn = AccountManager.getInstance().getPlayersAlive().size();
         switch (gameState) {
             case COUNTDOWN:
                 if (playersOn >= maxPlayers && (!player.hasPermission(permMax)) && !player.isOp())

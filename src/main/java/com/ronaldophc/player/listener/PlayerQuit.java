@@ -6,6 +6,7 @@ import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +22,7 @@ public class PlayerQuit implements Listener {
         event.setQuitMessage(null);
 
         Player player = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
         if (account.isSpectator()) {
             quitPlayer(player);
@@ -57,7 +58,7 @@ public class PlayerQuit implements Listener {
     }
 
     private void quitPlayer(Player player) {
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         account.logout();
         account.setAlive(false);
     }

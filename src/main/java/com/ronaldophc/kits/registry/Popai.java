@@ -38,7 +38,7 @@ public class Popai extends Kit {
 
         Player popai = event.getPlayer();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(popai);
+        Account account = AccountManager.getInstance().getOrCreateAccount(popai);
         if (!account.getKits().contains(this)) return;
 
         if (event.getItem() == null) return;
@@ -54,7 +54,7 @@ public class Popai extends Kit {
         if (!(event.getEntity() instanceof Player)) return;
 
         Player popai = (Player) event.getEntity();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(popai);
+        Account account = AccountManager.getInstance().getOrCreateAccount(popai);
         if (!account.getKits().contains(this)) return;
 
         if ((event.getCause() == EntityDamageEvent.DamageCause.POISON

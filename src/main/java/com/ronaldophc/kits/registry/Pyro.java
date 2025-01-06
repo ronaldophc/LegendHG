@@ -32,7 +32,7 @@ public class Pyro extends Kit {
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         if (!isItemKit(event.getItem())) return;
         if (!LegendHG.getGameStateManager().getGameState().canTakeDamage()) {
@@ -59,7 +59,7 @@ public class Pyro extends Kit {
         Player player = (Player) fireball.getShooter();
         Player target = (Player) event.getEntity();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         if (player == target) {
             event.setCancelled(true);

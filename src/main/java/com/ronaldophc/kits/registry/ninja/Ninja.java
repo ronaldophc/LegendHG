@@ -37,7 +37,7 @@ public class Ninja extends Kit {
 
         Player ninja = (Player) event.getDamager();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(ninja);
+        Account account = AccountManager.getInstance().getOrCreateAccount(ninja);
         if (!account.getKits().contains(this)) return;
 
         Player target = (Player) event.getEntity();
@@ -53,7 +53,7 @@ public class Ninja extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player ninja = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(ninja);
+        Account account = AccountManager.getInstance().getOrCreateAccount(ninja);
         if (!account.getKits().contains(this)) return;
 
         NinjaManager ninjaManager = NinjaManager.getInstance();

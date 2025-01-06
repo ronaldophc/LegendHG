@@ -40,7 +40,7 @@ public class Flash extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player flash = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(flash);
+        Account account = AccountManager.getInstance().getOrCreateAccount(flash);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(flash.getItemInHand())) return;

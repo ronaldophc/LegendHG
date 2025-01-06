@@ -30,7 +30,7 @@ public class Compass implements Listener {
 
     private Player getTarget(Player player) {
         Player target = null;
-        for (Player playerTarget : LegendHG.getAccountManager().getPlayersAlive()) {
+        for (Player playerTarget : AccountManager.getInstance().getPlayersAlive()) {
 
             if (playerTarget == player) continue;
             if (playerTarget.getLocation().distance(player.getLocation()) < 15.0D) continue;

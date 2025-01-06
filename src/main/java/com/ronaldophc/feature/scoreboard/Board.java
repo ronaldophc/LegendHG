@@ -4,10 +4,9 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
 import com.ronaldophc.constant.Scores;
 import com.ronaldophc.constant.Tags;
-import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.GameHelper;
-import com.ronaldophc.helper.Logger;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,7 +32,7 @@ public class Board {
                 continue;
             }
 
-            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+            Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
             if (!account.isLoggedIn()) {
                 continue;
@@ -62,13 +61,10 @@ public class Board {
         Objective objective = scoreboard.registerNewObjective(LegendHG.getInstance().getName(), "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
+
         if (playerScore.get(player.getUniqueId()) == null) {
-            try {
-                playerScore.put(player.getUniqueId(), getScoreType(player));
-            } catch (SQLException e) {
-                Logger.logError(e.getMessage());
-                throw new RuntimeException(e);
-            }
+            playerScore.put(player.getUniqueId(), account.getScore());
         }
 
         Scores scoreType = playerScore.get(player.getUniqueId());
@@ -136,14 +132,11 @@ public class Board {
         player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
     }
 
-    public static Scores getScoreType(Player player) throws SQLException {
-        return PlayerSQL.getPlayerScore(player);
-    }
-
     public static void setPlayerScore(Player player, Scores scoreType) throws SQLException {
         playerScore.replace(player.getUniqueId(), scoreType);
         if (scoreType != Scores.SPEC) {
-            PlayerSQL.setPlayerScore(player, scoreType);
+            Account account = AccountManager.getInstance().getOrCreateAccount(player);
+            account.setScore(scoreType);
         }
     }
 
@@ -151,7 +144,7 @@ public class Board {
         for (Player player1 : Bukkit.getOnlinePlayers()) {
             Scoreboard scoreboard1 = player1.getScoreboard();
 
-            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+            Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
             String name = player.getName();
             Tags tag = account.getTag();

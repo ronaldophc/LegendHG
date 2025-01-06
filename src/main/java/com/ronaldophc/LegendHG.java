@@ -1,6 +1,6 @@
 package com.ronaldophc;
 
-import com.ronaldophc.database.GamesSQL;
+import com.ronaldophc.database.GameSQL;
 import com.ronaldophc.database.MySQLManager;
 import com.ronaldophc.feature.BorderManager;
 import com.ronaldophc.feature.FeastManager;
@@ -11,7 +11,6 @@ import com.ronaldophc.hook.ProtocolLibHook;
 import com.ronaldophc.kits.CooldownAPI;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.kits.registry.gladiator.GladiatorController;
-import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.register.RegisterCommands;
 import com.ronaldophc.register.RegisterEvents;
 import com.ronaldophc.register.RegisterKitsEvents;
@@ -34,7 +33,6 @@ public class LegendHG extends JavaPlugin {
     private BukkitTask mainTask;
     private BukkitTask countDownTask;
     private BukkitTask cooldownKits;
-    private AccountManager accountManager;
     private MySQLManager mySQLManager;
     private GladiatorController gladiatorController;
     public FeastManager feast;
@@ -58,13 +56,12 @@ public class LegendHG extends JavaPlugin {
         }
 
         kitManager = new KitManager();
-        accountManager = new AccountManager();
         mySQLManager = new MySQLManager();
 
         if (LegendHG.getMySQLManager().isActive()) {
             try {
                 mySQLManager.initializeDatabase();
-                gameId = GamesSQL.createGame();
+                gameId = GameSQL.createGame();
                 System.out.println("Game ID: " + gameId);
             } catch (SQLException e) {
                 System.out.println("Could not initialize database.");
@@ -121,10 +118,6 @@ public class LegendHG extends JavaPlugin {
 
     public static KitManager getKitManager() {
         return getInstance().kitManager;
-    }
-
-    public static AccountManager getAccountManager() {
-        return getInstance().accountManager;
     }
 
     public static GladiatorController getGladiatorController() {

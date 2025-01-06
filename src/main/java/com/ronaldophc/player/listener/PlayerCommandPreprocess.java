@@ -3,6 +3,7 @@ package com.ronaldophc.player.listener;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,7 +15,7 @@ public class PlayerCommandPreprocess implements Listener {
     public void PlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage().split(" ")[0];
         Player player = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (account.isLoggedIn()) {
             return;
         }

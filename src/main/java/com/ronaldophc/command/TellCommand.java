@@ -3,6 +3,7 @@ package com.ronaldophc.command;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,7 +20,7 @@ public class TellCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         if (command.getName().equalsIgnoreCase("tell")) {
             List<String> playerNames = new ArrayList<>();
-            for (Account account : LegendHG.getAccountManager().getAccounts()) {
+            for (Account account : AccountManager.getInstance().getAccounts()) {
                 Player player = account.getPlayer();
                 if (player.isOnline() && player != commandSender) {
                     playerNames.add(account.getActualName());
@@ -45,7 +46,7 @@ public class TellCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            Account account = LegendHG.getAccountManager().getAccountByName(strings[0]);
+            Account account = AccountManager.getInstance().getAccountByName(strings[0]);
 
             if (account == null) {
                 player.sendMessage(Util.noPlayer);
@@ -64,7 +65,7 @@ public class TellCommand implements CommandExecutor, TabCompleter {
             }
 
             player.sendMessage("§8[§7Você §8» §7" + account.getActualName() + "§8] §f" + message);
-            target.sendMessage("§8[§7" + LegendHG.getAccountManager().getOrCreateAccount(player).getActualName() + " §8» §7Você§8] §f" + message);
+            target.sendMessage("§8[§7" + AccountManager.getInstance().getOrCreateAccount(player).getActualName() + " §8» §7Você§8] §f" + message);
 
             return true;
         }

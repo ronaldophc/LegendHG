@@ -33,8 +33,8 @@ public class Anchor extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player damaged = (Player) event.getEntity();
         Player damager = (Player) event.getDamager();
-        Account damagedAccount = LegendHG.getAccountManager().getOrCreateAccount(damaged);
-        Account damagerAccount = LegendHG.getAccountManager().getOrCreateAccount(damager);
+        Account damagedAccount = AccountManager.getInstance().getOrCreateAccount(damaged);
+        Account damagerAccount = AccountManager.getInstance().getOrCreateAccount(damager);
         if (!damagedAccount.getKits().contains(this) && !damagerAccount.getKits().contains(this)) return;
         damaged.damage(event.getDamage());
         event.setCancelled(true);

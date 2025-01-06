@@ -6,6 +6,7 @@ import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -63,7 +64,7 @@ public class Barbarian extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player killer = event.getEntity().getKiller();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(killer);
+        Account account = AccountManager.getInstance().getOrCreateAccount(killer);
         if (!account.getKits().contains(this)) return;
 
         try {

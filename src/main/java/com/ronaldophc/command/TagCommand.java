@@ -1,9 +1,12 @@
 package com.ronaldophc.command;
 
+import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.Tags;
 import com.ronaldophc.feature.TagManager;
 import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +25,6 @@ public class TagCommand implements CommandExecutor {
 
             Player player = (Player) commandSender;
 
-
             if (strings.length == 0) {
                 TagManager.sendTagList(player);
                 return true;
@@ -37,7 +39,9 @@ public class TagCommand implements CommandExecutor {
                         return true;
                     }
 
-                    TagManager.setTag(player, tag);
+                    Account account = AccountManager.getInstance().getOrCreateAccount(player);
+
+                    account.setTag(tag);
                     MasterHelper.refreshPlayer(player);
                     player.sendMessage(Util.color1 + "Tag alterada para " + tag.getColor() + tag.name());
                 } catch (IllegalArgumentException e) {

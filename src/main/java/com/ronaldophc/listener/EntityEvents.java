@@ -26,7 +26,7 @@ public class EntityEvents implements Listener {
         }
 
         Player player = (Player) entity;
-        if (LegendHG.getAccountManager().getOrCreateAccount(player).isSpectator()) {
+        if (AccountManager.getInstance().getOrCreateAccount(player).isSpectator()) {
             event.setCancelled(true);
         }
 

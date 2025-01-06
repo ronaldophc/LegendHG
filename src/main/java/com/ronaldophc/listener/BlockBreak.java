@@ -36,7 +36,7 @@ public class BlockBreak implements Listener {
             return;
         }
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (account.isSpectator()) {
             event.setCancelled(true);
             return;

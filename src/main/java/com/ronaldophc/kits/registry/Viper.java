@@ -5,6 +5,7 @@ import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,7 +38,7 @@ public class Viper extends Kit {
 
         Player player = event.getPlayer();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(player.getItemInHand())) return;
@@ -79,9 +80,9 @@ public class Viper extends Kit {
     }
 
     private void applyPoisonDamage(Location location) {
-        for (Player player : LegendHG.getAccountManager().getPlayersAlive()) {
+        for (Player player : AccountManager.getInstance().getPlayersAlive()) {
 
-            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+            Account account = AccountManager.getInstance().getOrCreateAccount(player);
             if (account.getKits().contains(this)) continue;
 
             if (player.getLocation().distance(location) <= 5) {

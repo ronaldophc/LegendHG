@@ -48,8 +48,8 @@ public class GladiatorFight extends GladiatorController implements Listener {
         this.arenaCenter = arenaCenter;
         this.timeRemaining = 60 * 3;
         this.originalLocation = originalLocation;
-        targetAccount = LegendHG.getAccountManager().getOrCreateAccount(target);
-        gladiatorAccount = LegendHG.getAccountManager().getOrCreateAccount(gladiator);
+        targetAccount = AccountManager.getInstance().getOrCreateAccount(target);
+        gladiatorAccount = AccountManager.getInstance().getOrCreateAccount(gladiator);
         registerListener();
         initializeBattle();
     }
@@ -194,7 +194,7 @@ public class GladiatorFight extends GladiatorController implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.isAlive()) {
             return;
         }

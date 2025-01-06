@@ -8,22 +8,21 @@ import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Kangaroo extends Kit {
+
+    private final List<Player> cooldown = new ArrayList<>();
 
     public Kangaroo() {
         super("Kangaroo",
@@ -42,11 +41,9 @@ public class Kangaroo extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         KitManager kitManager = LegendHG.getKitManager();
-        KangarooManager kangarooManager = KangarooManager.getInstance();
-
         Player kangaroo = event.getPlayer();
+        Account account = AccountManager.getInstance().getOrCreateAccount(kangaroo);
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(kangaroo);
         if (!account.getKits().contains(this)) return;
 
         if (!isItemKit(kangaroo.getItemInHand())) return;
@@ -54,57 +51,69 @@ public class Kangaroo extends Kit {
         event.setCancelled(true);
 
         if (kitManager.isOnCooldown(kangaroo, this)) return;
-        if (kangarooManager.hasPlayer(kangaroo) && kangarooManager.getPlayer(kangaroo) == 1) return;
 
         if (event.getAction() == Action.PHYSICAL) return;
-        event.setCancelled(true);
 
-        if (!kangaroo.isSneaking()) {
-            Vector vector = kangaroo.getEyeLocation().getDirection().multiply(0.6F).setY(1.0F);
+        if (kangaroo.isOnGround()) {
+            if (!kangaroo.isSneaking()) {
+                Vector vector = kangaroo.getEyeLocation().getDirection();
+                vector.multiply(0.3F * ((15.0D) / 10.0D));
+                vector.setY(0.75F * ((15.0D) / 10.0D));
+                kangaroo.setVelocity(vector);
+                cooldown.remove(kangaroo);
+                return;
+            }
+
+            Vector vector = kangaroo.getEyeLocation().getDirection();
+            vector.multiply(0.3F * ((20.0D) / 10.0D));
+            vector.setY(0.55F * (1.0));
             kangaroo.setVelocity(vector);
-        }
-
-        if (kangaroo.isSneaking()) {
-            kangaroo.setVelocity(kangaroo.getLocation().getDirection().multiply(1.2D));
-            kangaroo.setVelocity(new Vector(kangaroo.getVelocity().getX(), 0.5D, kangaroo.getVelocity().getZ()));
-        }
-
-        if (!kangarooManager.hasPlayer(kangaroo)) {
-            kangarooManager.setPlayer(kangaroo, 0);
+            cooldown.remove(kangaroo);
             return;
         }
+        if (!cooldown.contains(kangaroo)) {
+            if (!kangaroo.isSneaking()) {
+                Vector vector = kangaroo.getEyeLocation().getDirection();
+                vector.multiply(0.3F * ((15.0D) / 10.0D));
+                vector.setY(0.70F * ((15.0D) / 10.0D));
+                kangaroo.setVelocity(vector);
+                cooldown.add(kangaroo);
+                return;
+            }
 
-        kangarooManager.setPlayer(kangaroo, 1);
+            Vector vector = kangaroo.getEyeLocation().getDirection();
+            vector.multiply(0.80F * ((20.0D) / 10.0D));
+            vector.setY(0.55F * (1.0));
+            kangaroo.setVelocity(vector);
+            cooldown.add(kangaroo);
+        }
+
     }
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
-        KangarooManager kangarooManager = KangarooManager.getInstance();
+        Player kangaroo = event.getPlayer();
+        Account account = AccountManager.getInstance().getOrCreateAccount(kangaroo);
 
-        if (kangarooManager.hasPlayer(player)) {
-            Block b = player.getLocation().getBlock();
-            if (b.getType() != Material.AIR || b.getRelative(BlockFace.DOWN).getType() != Material.AIR && !player.isFlying()) {
-                kangarooManager.removePlayer(player);
-            }
-        }
+        if (!account.getKits().contains(this)) return;
+        if (!cooldown.contains(kangaroo)) return;
+        if (!kangaroo.isOnGround()) return;
+
+        cooldown.remove(kangaroo);
     }
 
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
-        Player kangaroo = (Player) event.getEntity();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(kangaroo);
+        Player kangaroo = (Player) event.getEntity();
+        Account account = AccountManager.getInstance().getOrCreateAccount(kangaroo);
+
         if (!account.getKits().contains(this)) return;
 
-        if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-            if (event.getFinalDamage() < 6.0D) {
-                event.setCancelled(true);
-            }
-            if (event.getFinalDamage() > 10.0D) {
-                event.setDamage(10.0D);
-            }
+        if (event.getCause() != EntityDamageEvent.DamageCause.FALL) return;
+        if (event.getFinalDamage() > 12.0D) {
+            event.setDamage(12.0D);
         }
     }
 }

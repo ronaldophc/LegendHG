@@ -90,7 +90,7 @@ public class FakeCommand implements CommandExecutor {
     }
 
     private static void setSettings(Player player, String name) {
-        LegendHG.getAccountManager().getOrCreateAccount(player).setActualName(name);
+        AccountManager.getInstance().getOrCreateAccount(player).setActualName(name);
         MasterHelper.refreshPlayer(player);
     }
 }

@@ -48,7 +48,7 @@ public class Endermage extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player mage = event.getPlayer();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(mage);
+        Account account = AccountManager.getInstance().getOrCreateAccount(mage);
         if (!account.getKits().contains(this)) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (event.getItem() == null) return;
@@ -103,7 +103,7 @@ public class Endermage extends Kit {
     }
 
     public void onKitEndermage(Location portal, Player mage, Player player) {
-        if (!LegendHG.getAccountManager().getOrCreateAccount(player).isAlive()) return;
+        if (!AccountManager.getInstance().getOrCreateAccount(player).isAlive()) return;
         portal = portal.add(0.0D, 1.0D, 0.0D);
         mage.teleport(portal);
         player.teleport(portal);

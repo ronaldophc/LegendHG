@@ -38,7 +38,7 @@ public class Digger extends Kit {
         if (LegendHG.getGameStateManager().getGameState() == GameState.INVINCIBILITY) return;
 
         Player digger = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(digger);
+        Account account = AccountManager.getInstance().getOrCreateAccount(digger);
         if (!account.getKits().contains(this)) return;
         if (!(isItemKit(event.getItemInHand()))) return;
         event.setCancelled(true);

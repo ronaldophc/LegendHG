@@ -12,6 +12,7 @@ import com.mojang.authlib.properties.Property;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -51,7 +52,7 @@ public class ProtocolLibHook {
 
                         GameProfile gameProfile = ((CraftPlayer) player).getProfile();
 
-                        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+                        Account account = AccountManager.getInstance().getOrCreateAccount(player);
                         WrappedGameProfile wrappedProfile = new WrappedGameProfile(uniqueId, account.getActualName());
 
                         if (gameProfile.getProperties().containsKey("textures")) {

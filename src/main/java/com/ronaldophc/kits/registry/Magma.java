@@ -33,7 +33,7 @@ public class Magma extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player damager = (Player) event.getDamager();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(damager);
+        Account account = AccountManager.getInstance().getOrCreateAccount(damager);
         if (!account.getKits().contains(this)) return;
 
         Player damaged = (Player) event.getEntity();
@@ -50,7 +50,7 @@ public class Magma extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
 
         Player damaged = (Player) event.getEntity();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(damaged);
+        Account account = AccountManager.getInstance().getOrCreateAccount(damaged);
         if (!account.getKits().contains(this)) return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == EntityDamageEvent.DamageCause.FIRE || event.getCause() == EntityDamageEvent.DamageCause.LAVA) {

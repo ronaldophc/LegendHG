@@ -37,13 +37,13 @@ public class Gladiator extends Kit {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         if (LegendHG.getGameStateManager().getGameState() == GameState.INVINCIBILITY) return;
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(gladiator);
+        Account account = AccountManager.getInstance().getOrCreateAccount(gladiator);
         if (!account.getKits().contains(this)) return;
 
         if (!(event.getRightClicked() instanceof Player)) return;
 
         Player target = (Player) event.getRightClicked();
-        Account targetAccount = LegendHG.getAccountManager().getOrCreateAccount(target);
+        Account targetAccount = AccountManager.getInstance().getOrCreateAccount(target);
         if (!targetAccount.isAlive()) return;
         if (!isItemKit(gladiator.getItemInHand())) return;
 

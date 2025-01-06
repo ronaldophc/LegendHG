@@ -4,6 +4,7 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
 import com.ronaldophc.gamestate.CountDown;
 import com.ronaldophc.helper.Util;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -14,7 +15,7 @@ public class ScoreSimple extends Board {
 
     public static void createNewScoreboard(Player player, Objective objective, Scoreboard scoreboard) {
         objective.setDisplayName(Util.bold + Util.color1 + "Começo " + Util.formatSeconds(CountDown.getInstance().getRemainingTime()));
-        addTeam(scoreboard, "team0", "§0", Util.color2 + "Players: ", Util.color1 + LegendHG.getAccountManager().getPlayersAlive().size(), 0);
+        addTeam(scoreboard, "team0", "§0", Util.color2 + "Players: ", Util.color1 + AccountManager.getInstance().getPlayersAlive().size(), 0);
 
         player.setScoreboard(scoreboard);
     }
@@ -27,7 +28,7 @@ public class ScoreSimple extends Board {
         Team team0 = scoreboard.getTeam("team0");
 
         if (team0 != null) {
-            team0.setSuffix(Util.color1 + LegendHG.getAccountManager().getPlayersAlive().size());
+            team0.setSuffix(Util.color1 + AccountManager.getInstance().getPlayersAlive().size());
         }
 
         String time = Util.formatSeconds(CountDown.getInstance().getRemainingTime());

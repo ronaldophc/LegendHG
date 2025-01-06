@@ -3,8 +3,8 @@ package com.ronaldophc.command;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.Scores;
 import com.ronaldophc.feature.scoreboard.Board;
-import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.Util;
+import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,18 +26,15 @@ public class ScoreBoardCommand implements CommandExecutor {
 
             Player player = (Player) commandSender;
 
+            Account account = AccountManager.getInstance().getOrCreateAccount(player);
+
             Board.getInstance().removeScoreboard(player);
 
             if (Board.playerScore.get(player.getUniqueId()) == null) {
-                try {
-                    Board.playerScore.put(player.getUniqueId(), Board.getScoreType(player));
-                } catch (SQLException e) {
-                    Logger.logError("Failed to get ScoreType: " + e.getMessage());
-                    throw new RuntimeException(e);
-                }
+                Board.playerScore.put(player.getUniqueId(), account.getScore());
             }
 
-            if (LegendHG.getAccountManager().getOrCreateAccount(player).isSpectator()) {
+            if (account.isSpectator()) {
                 if (Board.playerScore.get(player.getUniqueId()) != Scores.SPEC) {
 
                     try {

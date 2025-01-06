@@ -1,12 +1,8 @@
 package com.ronaldophc.player;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.GameHelper;
 import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.kits.Kit;
-import com.ronaldophc.kits.manager.KitManager;
-import com.ronaldophc.kits.registry.Nenhum;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.setting.Settings;
@@ -20,7 +16,7 @@ import java.util.Random;
 public class PlayerHelper {
 
     public static boolean verifyMinPlayers() {
-        if (LegendHG.getAccountManager().getPlayersAlive().size() >= Settings.getInstance().getInt("MinPlayers")) {
+        if (AccountManager.getInstance().getPlayersAlive().size() >= Settings.getInstance().getInt("MinPlayers")) {
             return true;
         }
         Bukkit.broadcastMessage(Util.errorServer + "Jogadores insuficientes para começar, reiniciando a contagem");
@@ -61,7 +57,7 @@ public class PlayerHelper {
     }
 
     private static void addItemsToStart(Player player) {
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         player.getInventory().clear();
         if (!player.getInventory().contains(Material.COMPASS)) {
             player.getInventory().addItem(new ItemStack(Material.COMPASS));

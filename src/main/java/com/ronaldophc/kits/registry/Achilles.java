@@ -29,7 +29,7 @@ public class Achilles extends Kit {
             if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
             Player damager = (Player) event.getDamager();
             Player player = (Player) event.getEntity();
-            Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+            Account account = AccountManager.getInstance().getOrCreateAccount(player);
             if (!account.getKits().contains(this)) return;
             if (damager.getItemInHand().getType().name().contains("WOOD_")) {
                 event.setDamage(event.getDamage() * 1.5);

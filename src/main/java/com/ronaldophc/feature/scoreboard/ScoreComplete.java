@@ -6,6 +6,7 @@ import com.ronaldophc.gamestate.CountDown;
 import com.ronaldophc.helper.GameHelper;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.setting.Settings;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
@@ -18,7 +19,7 @@ public class ScoreComplete extends Board {
 
     public static void createNewScoreboardOneKit(Player player, Objective objective, Scoreboard scoreboard) {
         objective.setDisplayName(Util.title);
-        addTeam(scoreboard, "team9", "§9", Util.color2 + "Players: ", Util.color1 + LegendHG.getAccountManager().getPlayersAlive().size(), 9);
+        addTeam(scoreboard, "team9", "§9", Util.color2 + "Players: ", Util.color1 + AccountManager.getInstance().getPlayersAlive().size(), 9);
         addScore(objective, "§8 ", 8);
         addTeam(scoreboard, "team7", "§7", Util.color2 + "Kit: ", Util.color1, 7);
         addScore(objective, "§5", 5);
@@ -33,7 +34,7 @@ public class ScoreComplete extends Board {
 
     public static void createNewScoreboardTwoKits(Player player, Objective objective, Scoreboard scoreboard) {
         objective.setDisplayName(Util.title);
-        addTeam(scoreboard, "team9", "§9", Util.color2 + "Players: ", Util.color1 + LegendHG.getAccountManager().getPlayersAlive().size(), 9);
+        addTeam(scoreboard, "team9", "§9", Util.color2 + "Players: ", Util.color1 + AccountManager.getInstance().getPlayersAlive().size(), 9);
         addScore(objective, "§8 ", 8);
         addTeam(scoreboard, "team7", "§7", Util.color2 + "Kit: ", Util.color1, 7);
         addTeam(scoreboard, "team6", "§6", Util.color2 + "Kit 2: ", Util.color1, 6);
@@ -50,7 +51,7 @@ public class ScoreComplete extends Board {
     public static void updateScoreboard(Player player) {
         GameState gameState = LegendHG.getGameStateManager().getGameState();
         Scoreboard scoreboard = player.getScoreboard();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
         Team team2 = scoreboard.getTeam("team2");
         Team team4 = scoreboard.getTeam("team4");
@@ -58,7 +59,7 @@ public class ScoreComplete extends Board {
         Team team9 = scoreboard.getTeam("team9");
 
         if (team9 != null) {
-            team9.setSuffix(Util.color1 + LegendHG.getAccountManager().getPlayersAlive().size());
+            team9.setSuffix(Util.color1 + AccountManager.getInstance().getPlayersAlive().size());
         }
 
         if (team7 != null) {

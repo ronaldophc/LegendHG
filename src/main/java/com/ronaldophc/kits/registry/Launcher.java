@@ -41,7 +41,7 @@ public class Launcher extends Kit {
         Block block = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
 
         if (!(block.hasMetadata("launcher"))) return;
-
+        player.sendMessage("teste");
         double strength = 0D;
 
         Block under = block;

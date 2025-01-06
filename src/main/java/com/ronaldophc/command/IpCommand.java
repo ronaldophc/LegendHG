@@ -1,5 +1,8 @@
 package com.ronaldophc.command;
 
+import com.ronaldophc.constant.MySQL.PlayerField;
+import com.ronaldophc.constant.MySQL.Tables;
+import com.ronaldophc.database.MySQLManager;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.Util;
 import org.bukkit.command.Command;
@@ -27,7 +30,7 @@ public class IpCommand implements CommandExecutor {
             String name = strings[0];
 
             try {
-                String ip = PlayerSQL.getPlayerIpAddress(name);
+                String ip = MySQLManager.getStringByName(name, Tables.PLAYER.getTableName(), PlayerField.IP.getFieldName());
                 if (ip == null) {
                     commandSender.sendMessage(Util.noPlayer);
                     return true;

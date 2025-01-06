@@ -36,7 +36,7 @@ public class Poseidon extends Kit {
     public void onMove(PlayerMoveEvent event) {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player player = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         if (player.getRemainingAir() < 200) {
             player.setRemainingAir(200);

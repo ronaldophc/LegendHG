@@ -4,6 +4,7 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.Tags;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,7 +50,7 @@ public class AsyncPlayerChat implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
         if (!account.isLoggedIn()) {
             event.setCancelled(true);

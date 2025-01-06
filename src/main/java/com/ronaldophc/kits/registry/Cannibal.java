@@ -38,7 +38,7 @@ public class Cannibal extends Kit {
         if (event.getEntity().getKiller() == null) return;
         Player killer = player.getKiller();
 
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(killer);
+        Account account = AccountManager.getInstance().getOrCreateAccount(killer);
         if (!account.getKits().contains(this)) return;
 
         killer.setHealth(Math.min(killer.getHealth() + 2, 20));

@@ -2,6 +2,7 @@ package com.ronaldophc.listener;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -43,7 +44,7 @@ public class GameEvents implements Listener {
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
-        if (LegendHG.getGameStateManager().getGameState() == GameState.COUNTDOWN || LegendHG.getAccountManager().getOrCreateAccount((Player) event.getPlayer()).isSpectator()) {
+        if (LegendHG.getGameStateManager().getGameState() == GameState.COUNTDOWN || AccountManager.getInstance().getOrCreateAccount((Player) event.getPlayer()).isSpectator()) {
             String[] titles = {"Kit", "Ajustes", "Status"};
             if (event.getInventory().getType() == InventoryType.CHEST) {
                 for (String title : titles) {

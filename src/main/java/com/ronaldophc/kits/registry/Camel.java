@@ -32,7 +32,7 @@ public class Camel extends Kit {
     public void onMove(PlayerMoveEvent event) {
         if (!LegendHG.getGameStateManager().getGameState().canUseKit()) return;
         Player player = event.getPlayer();
-        Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
         if (!account.getKits().contains(this)) return;
         if (player.getLocation().subtract(0, 1, 0).getBlock().getType() == Material.SAND) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 8, 1));

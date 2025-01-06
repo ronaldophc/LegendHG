@@ -3,6 +3,7 @@ package com.ronaldophc.command;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,14 +21,14 @@ public class KillsCommand implements CommandExecutor {
 
             Player player = (Player) commandSender;
             if (strings.length == 0) {
-                Account account = LegendHG.getAccountManager().getOrCreateAccount(player);
+                Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
                 player.sendMessage(Util.color3 + "Kills: §c" + account.getKills());
                 return true;
             }
 
             if (strings.length == 1) {
-                Account account = LegendHG.getAccountManager().getAccountByName(strings[0]);
+                Account account = AccountManager.getInstance().getAccountByName(strings[0]);
                 if (account == null) {
                     player.sendMessage(Util.noPlayer);
                     return true;
