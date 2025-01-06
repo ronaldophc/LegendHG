@@ -46,9 +46,9 @@ public class ProtocolLibHook {
                         UUID uniqueId = data.getProfile().getUUID();
                         Player player = Bukkit.getPlayer(uniqueId);
 
-                        if (player == null) {
+                        if (player == null)
                             continue;
-                        }
+
 
                         GameProfile gameProfile = ((CraftPlayer) player).getProfile();
 
@@ -72,20 +72,21 @@ public class ProtocolLibHook {
         });
 
         // ----------------- Tablist ----------------- //
-        new BukkitRunnable() {
 
+        new BukkitRunnable() {
             @Override
             public void run() {
-                PacketContainer tabPacket = protocolManager.createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
-                tabPacket.getChatComponents().write(0, WrappedChatComponent.fromText(Util.bold + Util.color1 + "LegendHG\n" + Util.color1 + "legendhg.com.br"));
-                tabPacket.getChatComponents().write(1, WrappedChatComponent.fromText(Util.color2 + "Discord: " + Util.color1 + "Discord.gg\n" + Util.color2 + "Site: " + Util.color1 + "§bLegendhg.com.br"));
-
-                try {
-                    for (Player player : Bukkit.getOnlinePlayers()) {
-                        protocolManager.sendServerPacket(player, tabPacket);
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (player.getProtocolVersion() >= 47) { // Protocol version 47 corresponds to Minecraft 1.8
+                        PacketContainer tabPacket = protocolManager.createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
+                        tabPacket.getChatComponents().write(0, WrappedChatComponent.fromText(Util.bold + Util.color1 + "LegendHG\n" + Util.color1 + "legendhg.com.br"));
+                        tabPacket.getChatComponents().write(1, WrappedChatComponent.fromText(Util.color2 + "Discord: " + Util.color1 + "Discord.gg\n" + Util.color2 + "Site: " + Util.color1 + "§bLegendhg.com.br"));
+                        try {
+                            protocolManager.sendServerPacket(player, tabPacket);
+                        } catch (Exception e) {
+                            throw new RuntimeException("Cannot send Tab List packet.", e);
+                        }
                     }
-                } catch (Exception e) {
-                    throw new RuntimeException("Cannot send Tab List packet.", e);
                 }
             }
         }.runTaskTimer(LegendHG.getInstance(), 0, 10);

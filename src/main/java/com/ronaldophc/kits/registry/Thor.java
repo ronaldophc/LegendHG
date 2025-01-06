@@ -59,6 +59,7 @@ public class Thor extends Kit {
         for (Player player : AccountManager.getInstance().getPlayersAlive()) {
             if (player == thor) continue;
             if (player.getLocation().distance(targetLocation) > 3) continue;
+            kitManager.setCombatLogCooldown(player, thor);
             player.damage(5.0D, event.getPlayer());
         }
 

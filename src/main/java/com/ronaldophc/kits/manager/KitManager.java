@@ -1,16 +1,15 @@
 package com.ronaldophc.kits.manager;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.TitleHelper;
 import com.ronaldophc.kits.CooldownAPI;
 import com.ronaldophc.kits.Kit;
-import com.ronaldophc.player.account.Account;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class KitManager {
@@ -21,6 +20,10 @@ public class KitManager {
     public void registerKit(Kit kit, Plugin plugin) {
         kits.add(kit);
         Bukkit.getPluginManager().registerEvents(kit, plugin);
+    }
+
+    public void sortKits() {
+        Collections.sort(kits, (kit1, kit2) -> kit1.getName().compareToIgnoreCase(kit2.getName()));
     }
 
     public Kit[] getKits() {

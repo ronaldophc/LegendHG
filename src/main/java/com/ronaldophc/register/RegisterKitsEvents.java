@@ -23,12 +23,12 @@ public class RegisterKitsEvents {
         try {
             Reflections reflections = new Reflections("com.ronaldophc.kits.registry", Scanners.SubTypes);
             Set<Class<? extends Kit>> kitClasses = reflections.getSubTypesOf(Kit.class);
+            KitManager kitManager = LegendHG.getKitManager();
 
             for (Class<? extends Kit> clazz : kitClasses) {
                 if (!clazz.isInterface() && !Modifier.isAbstract(clazz.getModifiers())) {
                     Kit kit = clazz.getDeclaredConstructor().newInstance();
 
-                    KitManager kitManager = LegendHG.getKitManager();
                     if (kitManager == null) {
                         logger.severe("KitManager is null");
                         continue;
@@ -37,8 +37,11 @@ public class RegisterKitsEvents {
                     kitManager.registerKit(kit, plugin);
                 }
             }
+
+            kitManager.sortKits();
         } catch (Exception e) {
             logger.severe("Error registering kits: " + e.getMessage());
         }
+
     }
 }

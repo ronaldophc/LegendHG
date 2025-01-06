@@ -36,6 +36,7 @@ public class Anchor extends Kit {
         Account damagedAccount = AccountManager.getInstance().getOrCreateAccount(damaged);
         Account damagerAccount = AccountManager.getInstance().getOrCreateAccount(damager);
         if (!damagedAccount.getKits().contains(this) && !damagerAccount.getKits().contains(this)) return;
+        kitManager.setCombatLogCooldown(damaged, damager);
         damaged.damage(event.getDamage());
         event.setCancelled(true);
     }
