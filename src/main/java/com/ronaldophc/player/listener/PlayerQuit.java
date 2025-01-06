@@ -2,8 +2,6 @@ package com.ronaldophc.player.listener;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
-import com.ronaldophc.database.PlayerSQL;
-import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
@@ -12,8 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.sql.SQLException;
 
 public class PlayerQuit implements Listener {
 

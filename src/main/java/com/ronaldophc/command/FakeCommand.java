@@ -1,7 +1,6 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.LegendHG;
-import com.ronaldophc.feature.SkinManager;
+import com.ronaldophc.api.skin.SkinAPI;
 import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.AccountManager;
@@ -72,7 +71,7 @@ public class FakeCommand implements CommandExecutor {
     }
 
     private static void setFake(Player player, String name) throws Exception {
-        if (!SkinManager.changePlayerSkin(player, name)) {
+        if (!SkinAPI.changePlayerSkin(player, name)) {
             player.sendMessage(Util.error + "Skin não encontrada para o fake");
         }
         setSettings(player, name);
@@ -81,7 +80,7 @@ public class FakeCommand implements CommandExecutor {
     }
 
     private static void resetFake(Player player) throws Exception {
-        if (!SkinManager.fixPlayerSkin(player)) {
+        if (!SkinAPI.fixPlayerSkin(player)) {
             player.sendMessage(Util.error + "Erro ao resetar a skin");
         }
         setSettings(player, player.getName());

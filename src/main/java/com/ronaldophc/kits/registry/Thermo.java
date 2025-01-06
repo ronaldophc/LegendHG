@@ -4,7 +4,6 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
-import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Material;

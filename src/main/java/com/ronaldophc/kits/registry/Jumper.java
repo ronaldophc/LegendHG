@@ -82,7 +82,6 @@ public class Jumper extends Kit {
         }
     }
 
-    @EventHandler
     public void onTimer() {
         Iterator<UUID> iterator = track.iterator();
         while (iterator.hasNext()) {

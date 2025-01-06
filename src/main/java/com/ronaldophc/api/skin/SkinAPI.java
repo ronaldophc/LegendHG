@@ -1,4 +1,4 @@
-package com.ronaldophc.feature;
+package com.ronaldophc.api.skin;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class SkinManager {
+public class SkinAPI {
 
     public static HashMap<UUID, Property> playerSkin = new HashMap<>();
 

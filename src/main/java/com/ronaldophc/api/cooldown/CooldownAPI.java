@@ -1,5 +1,12 @@
-package com.ronaldophc.kits;
+package com.ronaldophc.api.cooldown;
 
+import com.ronaldophc.LegendHG;
+import com.ronaldophc.api.actionbar.ActionBarAPI;
+import com.ronaldophc.helper.Util;
+import com.ronaldophc.kits.Kit;
+import com.ronaldophc.kits.manager.KitManager;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 
@@ -94,5 +101,35 @@ public class CooldownAPI implements Runnable {
             this.endTime = endTime;
         }
 
+    }
+
+    public static void sendActionBar(Player player, String message) {
+        ActionBarAPI.send(player, message);
+    }
+
+    public static void sendCooldownBar(Player player, Kit kit) {
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
+
+        KitManager kitManager = LegendHG.getKitManager();
+        String message = Util.bold + Util.color1 + kit.getName() + ": " + Util.error + Util.bold + (kitManager.getCooldown(player, kit) + 1) + "s" + Util.bold + Util.color2 + " para usar novamente.";
+
+        if (account.getVersion() <= 5) {
+            player.sendMessage(message);
+            return;
+        }
+        sendActionBar(player, message);
+    }
+
+    public static void sendCombatLogCooldownBar(Player player) {
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
+
+        KitManager kitManager = LegendHG.getKitManager();
+        String message = Util.error + Util.bold + (kitManager.getCombatLogCooldown(player) + 1) + "s" + Util.bold + Util.color2 + " para sair do combate.";
+
+        if (account.getVersion() <= 5) {
+            player.sendMessage(message);
+            return;
+        }
+        sendActionBar(player, message);
     }
 }

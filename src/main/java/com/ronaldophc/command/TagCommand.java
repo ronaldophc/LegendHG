@@ -1,12 +1,13 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.Tags;
-import com.ronaldophc.feature.TagManager;
 import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,7 +27,7 @@ public class TagCommand implements CommandExecutor {
             Player player = (Player) commandSender;
 
             if (strings.length == 0) {
-                TagManager.sendTagList(player);
+                sendTagList(player);
                 return true;
             }
 
@@ -52,6 +53,19 @@ public class TagCommand implements CommandExecutor {
             return true;
         }
         return true;
+    }
+
+    public static void sendTagList(Player player) {
+        player.sendMessage(Util.color1 + "Escolha sua tag:");
+
+        for (Tags tag : Tags.values()) {
+            if (player.hasPermission(tag.getPermission())) {
+                TextComponent message = new TextComponent(tag.name());
+                message.setColor(ChatColor.valueOf(tag.getColor().name()));
+                message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tag " + tag.name()));
+                player.spigot().sendMessage(message);
+            }
+        }
     }
 
 }

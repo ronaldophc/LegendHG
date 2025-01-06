@@ -1,8 +1,8 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.helper.Util;
 import com.ronaldophc.feature.FeastManager;
+import com.ronaldophc.helper.Util;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

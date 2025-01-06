@@ -1,6 +1,5 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.feature.auth.AuthManager;
 import com.ronaldophc.helper.Logger;

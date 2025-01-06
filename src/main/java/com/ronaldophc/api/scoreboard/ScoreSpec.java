@@ -1,7 +1,6 @@
-package com.ronaldophc.feature.scoreboard;
+package com.ronaldophc.api.scoreboard;
 
-import com.ronaldophc.LegendHG;
-import com.ronaldophc.gamestate.CountDown;
+import com.ronaldophc.game.CountDown;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;

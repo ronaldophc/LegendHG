@@ -6,6 +6,9 @@ api-version: 1.8.8
 load: POSTWORLD
 softdepend: [ ProtocolLib ]
 commands:
+    sound:
+        description: Command to play sound
+        usage: /sound <sound>
     gm:
         description: Command to change gamemode
         usage: /gm <0,1> <player>

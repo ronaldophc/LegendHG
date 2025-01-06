@@ -1,13 +1,11 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.MySQL.PlayerField;
 import com.ronaldophc.constant.MySQL.Tables;
 import com.ronaldophc.database.MySQLManager;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
-import com.ronaldophc.player.account.Account;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -16,11 +14,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class StatsCommand implements CommandExecutor {
 

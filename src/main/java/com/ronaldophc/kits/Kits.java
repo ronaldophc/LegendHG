@@ -2,7 +2,6 @@ package com.ronaldophc.kits;
 
 import com.google.common.collect.Lists;
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.kits.manager.KitManager;
 
 import java.util.List;
 

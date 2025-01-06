@@ -6,17 +6,18 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.wrappers.*;
+import com.comphenix.protocol.wrappers.EnumWrappers;
+import com.comphenix.protocol.wrappers.PlayerInfoData;
+import com.comphenix.protocol.wrappers.WrappedGameProfile;
+import com.comphenix.protocol.wrappers.WrappedSignedProperty;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 import java.util.UUID;
@@ -49,7 +50,6 @@ public class ProtocolLibHook {
                         if (player == null)
                             continue;
 
-
                         GameProfile gameProfile = ((CraftPlayer) player).getProfile();
 
                         Account account = AccountManager.getInstance().getOrCreateAccount(player);
@@ -71,40 +71,6 @@ public class ProtocolLibHook {
             }
         });
 
-        // ----------------- Tablist ----------------- //
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (player.getProtocolVersion() >= 47) { // Protocol version 47 corresponds to Minecraft 1.8
-                        PacketContainer tabPacket = protocolManager.createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
-                        tabPacket.getChatComponents().write(0, WrappedChatComponent.fromText(Util.bold + Util.color1 + "LegendHG\n" + Util.color1 + "legendhg.com.br"));
-                        tabPacket.getChatComponents().write(1, WrappedChatComponent.fromText(Util.color2 + "Discord: " + Util.color1 + "Discord.gg\n" + Util.color2 + "Site: " + Util.color1 + "§bLegendhg.com.br"));
-                        try {
-                            protocolManager.sendServerPacket(player, tabPacket);
-                        } catch (Exception e) {
-                            throw new RuntimeException("Cannot send Tab List packet.", e);
-                        }
-                    }
-                }
-            }
-        }.runTaskTimer(LegendHG.getInstance(), 0, 10);
     }
 
-    // ----------------- ActionBar ----------------- //
-
-    public static void sendActionBar(Player player, String message) {
-        ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
-        PacketContainer actionPacket = protocolManager.createPacket(PacketType.Play.Server.CHAT);
-
-        actionPacket.getChatComponents().write(0, WrappedChatComponent.fromText(message));
-        actionPacket.getBytes().write(0, (byte) 2); // ActionBar
-
-        try {
-            protocolManager.sendServerPacket(player, actionPacket);
-        } catch (Exception e) {
-            throw new RuntimeException("Cannot send Action Bar packet.", e);
-        }
-    }
 }

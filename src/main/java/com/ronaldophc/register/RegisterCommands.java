@@ -1,14 +1,9 @@
 package com.ronaldophc.register;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.command.LoginCommand;
-import com.ronaldophc.command.RegisterCommand;
 import com.ronaldophc.command.*;
-import com.ronaldophc.command.FakeCommand;
-import com.ronaldophc.command.SkinCommand;
-import com.ronaldophc.command.KitCommand;
-import com.ronaldophc.command.Kit2Command;
 import com.ronaldophc.feature.report.*;
+import com.viaversion.viaversion.libs.kyori.adventure.sound.Sound;
 
 public class RegisterCommands extends LegendHG {
 
@@ -51,6 +46,7 @@ public class RegisterCommands extends LegendHG {
         instance.getCommand("stats").setExecutor(new StatsCommand());
         instance.getCommand("profile").setExecutor(new ProfileCommand());
         instance.getCommand("kills").setExecutor(new KillsCommand());
+        instance.getCommand("sound").setExecutor(new SoundCommand());
     }
 
 }

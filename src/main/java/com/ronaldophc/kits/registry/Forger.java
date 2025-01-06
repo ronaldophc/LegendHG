@@ -14,8 +14,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class Forger extends Kit {
 

@@ -1,6 +1,5 @@
 package com.ronaldophc.kits.registry;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.feature.CustomEnchant;
 import com.ronaldophc.helper.ItemManager;
 import com.ronaldophc.helper.Util;
@@ -27,7 +26,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Dye;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Specialist extends Kit {
 

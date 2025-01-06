@@ -1,8 +1,5 @@
 package com.ronaldophc.kits.manager;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class KitCombinationManager {
 
     private static final KitCombinationManager instance = new KitCombinationManager();

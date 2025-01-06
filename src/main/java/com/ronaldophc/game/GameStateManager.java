@@ -1,10 +1,11 @@
-package com.ronaldophc.gamestate;
+package com.ronaldophc.game;
 
 import com.ronaldophc.constant.GameState;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.setting.Settings;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 @Getter
@@ -33,6 +34,7 @@ public class GameStateManager {
 
     public void startRunning() {
         Bukkit.broadcastMessage(Util.color1 + "A invencibilidade acabou!");
+        Util.playSoundForAll(Sound.AMBIENCE_THUNDER);
         setGameState(GameState.RUNNING, 1);
     }
 

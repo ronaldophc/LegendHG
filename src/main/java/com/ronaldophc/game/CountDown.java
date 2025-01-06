@@ -1,11 +1,12 @@
-package com.ronaldophc.gamestate;
-
-import com.ronaldophc.feature.MiniFeastManager;
-import org.bukkit.Bukkit;
+package com.ronaldophc.game;
 
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.feature.MiniFeastManager;
+import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.setting.Settings;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 
 public class CountDown implements Runnable {
 
@@ -59,11 +60,30 @@ public class CountDown implements Runnable {
     }
 
     private void handleCountDown() {
-        if (countdownRemaining <= 10 && !PlayerHelper.verifyMinPlayers()) {
-            countdownRemaining = 30;
-        }
-        if (countdownRemaining <= 0) {
-            plugin.gameStateManager.startInvincibility();
+        switch (countdownRemaining) {
+            case 61:
+                Util.playSoundForAll(Sound.CLICK);
+                break;
+            case 31:
+            case 16:
+            case 11:
+            case 6:
+            case 5:
+            case 4:
+            case 3:
+            case 2:
+            case 1:
+                Util.playSoundForAll(Sound.CLICK);
+                if (!PlayerHelper.verifyMinPlayers()) {
+                    countdownRemaining = 30;
+                }
+                break;
+            case 0:
+            default:
+                if (countdownRemaining <= 0) {
+                    Util.playSoundForAll(Sound.ENDERDRAGON_GROWL);
+                    plugin.gameStateManager.startInvincibility();
+                }
         }
         countdownRemaining--;
     }

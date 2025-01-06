@@ -8,6 +8,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,15 +32,15 @@ public class GladiatorFight extends GladiatorController implements Listener {
 
     private final HashMap<UUID, UUID> gladiatorBattles = new HashMap<>();
     @Getter
-    private final Set<Block> arenaBlocks = new HashSet<>();
+    public final Set<Block> arenaBlocks = new HashSet<>();
     public final Set<Block> placedBlocks = new HashSet<>();
     public final Player gladiator;
     public final Player target;
     public Location arenaCenter;
     public Location originalLocation;
     private int timeRemaining;
-    private Account targetAccount;
-    private Account gladiatorAccount;
+    private final Account targetAccount;
+    private final Account gladiatorAccount;
 
     public GladiatorFight(Player gladiator, Player target, Location arenaCenter, Location originalLocation) {
         super();
@@ -79,6 +80,11 @@ public class GladiatorFight extends GladiatorController implements Listener {
         gladiator.teleport(arenaCenter.clone().add(-6.5, 1, -6.5));
         target.teleport(arenaCenter.clone().add(6.5, 1, 6.5));
 
+        gladiator.sendMessage(Util.color3 + "Você desafiou " + Util.color1 + target.getName() + Util.color3 + " para um duelo no Gladiator!");
+        target.sendMessage(Util.color1 + gladiator.getName() + Util.color3 + " desafiou você para um duelo no Gladiator!");
+        gladiator.playSound(gladiator.getLocation(), org.bukkit.Sound.NOTE_PLING, 1, 1);
+        target.playSound(target.getLocation(), Sound.NOTE_PLING, 1, 1);
+
         // Add to battles
         gladiatorBattles.put(gladiator.getUniqueId(), target.getUniqueId());
 
@@ -97,7 +103,7 @@ public class GladiatorFight extends GladiatorController implements Listener {
                     gladiator.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 30 * 20, 1));
                     target.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 30 * 20, 1));
                 }
-                if (!gladiator.isOnline() || !target.isOnline() || gladiator.isDead() || target.isDead() || !isInArena(gladiator, arenaCenter) || !isInArena(target, arenaCenter)) {
+                if (!targetAccount.isAlive() || !gladiatorAccount.isAlive() || !gladiator.isOnline() || !target.isOnline() || gladiator.isDead() || target.isDead() || !isInArena(gladiator, arenaCenter) || !isInArena(target, arenaCenter)) {
                     endBattle(gladiator, target);
                     endGladiatorFight(GladiatorFight.this);
                     cancel();

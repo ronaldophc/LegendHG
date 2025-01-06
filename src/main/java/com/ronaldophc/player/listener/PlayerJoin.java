@@ -1,8 +1,10 @@
 package com.ronaldophc.player.listener;
 
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.api.bossbar.BossBarAPI;
+import com.ronaldophc.api.skin.SkinAPI;
+import com.ronaldophc.api.title.TitleAPI;
 import com.ronaldophc.database.PlayerSQL;
-import com.ronaldophc.feature.SkinManager;
 import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
@@ -13,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
 import java.util.UUID;
@@ -26,15 +29,15 @@ public class PlayerJoin implements Listener {
         UUID uuid = player.getUniqueId();
         Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
-//        if (!(player.isOp())) {
-//            MasterHelper.injectPlayerNotTabComplete(player);
-//        }
+        if (!(player.isOp())) {
+            MasterHelper.injectPlayerNotTabComplete(player);
+        }
 
         try {
-            if (SkinManager.playerSkin.containsKey(uuid)) {
-                SkinManager.changePlayerSkin(player, SkinManager.playerSkin.get(uuid));
+            if (SkinAPI.playerSkin.containsKey(uuid)) {
+                SkinAPI.changePlayerSkin(player, SkinAPI.playerSkin.get(uuid));
             } else {
-                SkinManager.fixPlayerSkin(player);
+                SkinAPI.fixPlayerSkin(player);
             }
             MasterHelper.refreshPlayer(player);
         } catch (Exception e) {
@@ -55,11 +58,13 @@ public class PlayerJoin implements Listener {
         }
 
         String message = Util.title + " > " + Util.usage("/register <password>");
+        String title = Util.usage("/register");
 
         if (PlayerSQL.isPlayerRegistered(player)) {
             message = Util.title + " > " + Util.usage("/login <password>");
+            title = Util.usage("/login");
         }
-
+        TitleAPI.setTitle(player, title, "Seja Bem-Vindo!", 10, 40, 10);
         player.sendMessage(message);
     }
 

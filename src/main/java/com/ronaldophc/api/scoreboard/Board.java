@@ -1,4 +1,4 @@
-package com.ronaldophc.feature.scoreboard;
+package com.ronaldophc.api.scoreboard;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;

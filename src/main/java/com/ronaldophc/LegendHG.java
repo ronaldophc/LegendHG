@@ -1,14 +1,14 @@
 package com.ronaldophc;
 
+import com.ronaldophc.api.cooldown.CooldownAPI;
 import com.ronaldophc.database.GameSQL;
 import com.ronaldophc.database.MySQLManager;
-import com.ronaldophc.feature.BorderManager;
+import com.ronaldophc.api.border.BorderAPI;
 import com.ronaldophc.feature.FeastManager;
-import com.ronaldophc.feature.scoreboard.Board;
-import com.ronaldophc.gamestate.CountDown;
-import com.ronaldophc.gamestate.GameStateManager;
+import com.ronaldophc.api.scoreboard.Board;
+import com.ronaldophc.game.CountDown;
+import com.ronaldophc.game.GameStateManager;
 import com.ronaldophc.hook.ProtocolLibHook;
-import com.ronaldophc.kits.CooldownAPI;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.kits.registry.gladiator.GladiatorController;
 import com.ronaldophc.register.RegisterCommands;
@@ -58,7 +58,7 @@ public class LegendHG extends JavaPlugin {
         kitManager = new KitManager();
         mySQLManager = new MySQLManager();
 
-        if (LegendHG.getMySQLManager().isActive()) {
+        if (MySQLManager.isActive()) {
             try {
                 mySQLManager.initializeDatabase();
                 gameId = GameSQL.createGame();
@@ -76,12 +76,12 @@ public class LegendHG extends JavaPlugin {
         gameStateManager = new GameStateManager();
         board = new Board();
         countDownTask = getServer().getScheduler().runTaskTimer(this, CountDown.getInstance(), 0, 20);
-        mainTask = getServer().getScheduler().runTaskTimer(this, MainTask.getInstance(), 0, 20);
+        mainTask = getServer().getScheduler().runTaskTimer(this, MainTask.getInstance(), 0, 10);
         cooldownKits = getServer().getScheduler().runTaskTimer(this, CooldownAPI.getInstance(), 0, 20);
         feast = new FeastManager();
         gladiatorController = new GladiatorController();
 
-        BorderManager.setWorldBorder();
+        BorderAPI.setWorldBorder();
 
         logger.info("LegendHG enabled");
     }

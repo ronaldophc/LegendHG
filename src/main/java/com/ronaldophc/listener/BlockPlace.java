@@ -1,12 +1,11 @@
 package com.ronaldophc.listener;
 
+import com.ronaldophc.LegendHG;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-
-import com.ronaldophc.LegendHG;
 
 public class BlockPlace implements Listener {
 

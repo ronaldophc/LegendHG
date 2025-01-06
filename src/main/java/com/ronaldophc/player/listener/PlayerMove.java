@@ -1,6 +1,5 @@
 package com.ronaldophc.player.listener;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.event.EventHandler;

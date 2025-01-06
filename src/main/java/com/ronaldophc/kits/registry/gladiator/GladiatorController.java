@@ -1,6 +1,8 @@
 package com.ronaldophc.kits.registry.gladiator;
 
+import com.ronaldophc.helper.Util;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -26,6 +28,15 @@ public class GladiatorController {
 
         GladiatorFight fight = new GladiatorFight(gladiator, target, location, gladiator.getLocation());
         activeFights.add(fight);
+    }
+
+    public boolean isBlockOfArena(Location location) {
+        for (GladiatorFight fight : activeFights) {
+            if (fight.arenaBlocks.contains(location.getBlock()) || fight.placedBlocks.contains(location.getBlock())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isPlayerInFight(Player player) {

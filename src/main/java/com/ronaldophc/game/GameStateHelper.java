@@ -1,4 +1,4 @@
-package com.ronaldophc.gamestate;
+package com.ronaldophc.game;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.MySQL.PlayerField;

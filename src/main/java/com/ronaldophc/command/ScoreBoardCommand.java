@@ -1,8 +1,7 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.Scores;
-import com.ronaldophc.feature.scoreboard.Board;
+import com.ronaldophc.api.scoreboard.Board;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;

@@ -1,6 +1,9 @@
 package com.ronaldophc.helper;
 
 import com.ronaldophc.LegendHG;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 
 public class Util {
 
@@ -49,4 +52,9 @@ public class Util {
         LegendHG.logger.info("Erro ao usar o comando " + comando + ": " + e.getMessage());
     }
 
+    public static void playSoundForAll(Sound sound) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.playSound(player.getLocation(), sound, 1.0f, 1.0f);
+        }
+    }
 }

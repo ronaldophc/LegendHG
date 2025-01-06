@@ -1,6 +1,5 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.MySQL.PlayerField;
 import com.ronaldophc.constant.MySQL.Tables;
 import com.ronaldophc.database.MySQLManager;

@@ -7,6 +7,7 @@ import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -36,6 +37,7 @@ public class AuthManager {
     }
 
     public static void loginPlayer(Player player) {
+        player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.0f);
         GameState gameState = LegendHG.getGameStateManager().getGameState();
         Account account = AccountManager.getInstance().getOrCreateAccount(player);
         boolean isAlive = account.isAlive();

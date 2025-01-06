@@ -2,7 +2,7 @@ package com.ronaldophc.command;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
-import com.ronaldophc.gamestate.CountDown;
+import com.ronaldophc.game.CountDown;
 import com.ronaldophc.helper.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

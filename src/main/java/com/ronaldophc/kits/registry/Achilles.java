@@ -12,7 +12,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Achilles extends Kit {
 

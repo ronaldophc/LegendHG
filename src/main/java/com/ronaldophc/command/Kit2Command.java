@@ -10,6 +10,7 @@ import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.kits.manager.guis.KitGui;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -124,8 +125,8 @@ public class Kit2Command implements CommandExecutor, TabExecutor {
                         kit.apply(player);
                     }
 
+                    player.playSound(player.getLocation(), Sound.VILLAGER_YES, 1.0f, 1.0f);
                     player.sendMessage(Util.success + "Você selecionou o " + Util.color3 + "Kit 2 " + kit.getName());
-
                 } catch (IllegalArgumentException e) {
 
                     player.sendMessage(Util.errorServer + "Erro ao selecionar o kit 2 " + arg);

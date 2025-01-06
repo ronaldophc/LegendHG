@@ -2,6 +2,7 @@ package com.ronaldophc.feature;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.Util;
+import com.ronaldophc.kits.registry.gladiator.GladiatorController;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -97,6 +98,10 @@ public class FeastManager {
                         Block block = location.getWorld().getBlockAt(x, y, z);
                         if (y == centerY) {
                             block.setType(Material.GRASS);
+                            continue;
+                        }
+                        GladiatorController gladiatorController = LegendHG.getGladiatorController();
+                        if (gladiatorController.isBlockOfArena(block.getLocation())) {
                             continue;
                         }
                         block.setType(Material.AIR);

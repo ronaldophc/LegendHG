@@ -1,5 +1,8 @@
 package com.ronaldophc.kits.manager.guis;
 
+import com.ronaldophc.LegendHG;
+import com.ronaldophc.helper.ItemManager;
+import com.ronaldophc.kits.manager.KitManager;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.libs.jline.internal.Log;
 import org.bukkit.enchantments.Enchantment;
@@ -10,10 +13,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
-import com.ronaldophc.LegendHG;
-import com.ronaldophc.helper.ItemManager;
-import com.ronaldophc.kits.manager.KitManager;
 
 public class KitGuiListener implements Listener {
 

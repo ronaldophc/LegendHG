@@ -1,6 +1,9 @@
 package com.ronaldophc.player.listener;
 
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.api.bossbar.BossBarAPI;
+import com.ronaldophc.helper.GameHelper;
+import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.player.account.Account;
@@ -41,11 +44,20 @@ public class PlayerDamages implements Listener {
 
         KitManager kitManager = LegendHG.getKitManager();
 
-//        String title = Util.success + player.getName() + Util.color2 + " - " + Util.color1 + kit.getName();
-//
-//        if (GameHelper.getInstance().getKits() == 2) {
-//            title = Util.success + player.getName() + Util.color2 + " - " + Util.color1 + kit.getName() + Util.color2 + " - " + Util.color1 + kit2.getName();
-//        }
+        Kit kit = playerAccount.getKits().getPrimary();
+
+
+        String title = player.getName() + " - " + kit.getName();
+
+        if (GameHelper.getInstance().getKits() == 2) {
+            Kit kit2 = playerAccount.getKits().getSecondary();
+            title = player.getName() + " - " + kit.getName() + " e " + kit2.getName();
+        }
+
+        if (BossBarAPI.hasBar(player)) {
+            BossBarAPI.removeBar(player);
+        }
+        BossBarAPI.setBar(damager, title, 2);
 
         kitManager.setCombatLogCooldown(player, damager);
 

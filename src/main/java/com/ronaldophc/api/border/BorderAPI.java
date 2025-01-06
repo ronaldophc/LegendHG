@@ -1,8 +1,8 @@
-package com.ronaldophc.feature;
+package com.ronaldophc.api.border;
 
 import org.bukkit.*;
 
-public class BorderManager {
+public class BorderAPI {
 
     public static void generateConstruction(World world, Location startLocation, boolean rotate) {
         // Blocos de Stone Bricks
@@ -53,7 +53,7 @@ public class BorderManager {
             WorldBorder border = world.getWorldBorder();
             border.setCenter(0, 0);
             border.setSize(700);
-//            generateBorder(world, -351, 350);
+            generateBorder(world, -351, 350);
         }
     }
 }

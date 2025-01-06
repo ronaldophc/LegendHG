@@ -3,7 +3,6 @@ package com.ronaldophc.command;
 import com.ronaldophc.constant.MySQL.PlayerField;
 import com.ronaldophc.constant.MySQL.Tables;
 import com.ronaldophc.database.MySQLManager;
-import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

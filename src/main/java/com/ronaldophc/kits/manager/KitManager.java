@@ -1,7 +1,6 @@
 package com.ronaldophc.kits.manager;
 
-import com.ronaldophc.helper.TitleHelper;
-import com.ronaldophc.kits.CooldownAPI;
+import com.ronaldophc.api.cooldown.CooldownAPI;
 import com.ronaldophc.kits.Kit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -41,11 +40,11 @@ public class KitManager {
 
     public boolean isOnCooldown(Player player, Kit kit) {
         if (cooldownAPI.isOnCooldown(player, kit)) {
-            TitleHelper.sendCooldownBar(player, kit);
+            CooldownAPI.sendCooldownBar(player, kit);
             return true;
         }
         if (cooldownAPI.isOnCombatLogCooldown(player) && kit.isCombatLog()) {
-            TitleHelper.sendCombatLogCooldownBar(player);
+            CooldownAPI.sendCombatLogCooldownBar(player);
             return true;
         }
         return false;

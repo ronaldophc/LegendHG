@@ -1,6 +1,6 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.feature.SkinManager;
+import com.ronaldophc.api.skin.SkinAPI;
 import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.MasterHelper;
 import com.ronaldophc.helper.Util;
@@ -42,7 +42,7 @@ public class SkinCommand implements CommandExecutor {
 
         try {
             if (skin.equalsIgnoreCase("reset")) {
-                if (SkinManager.fixPlayerSkin(player)) {
+                if (SkinAPI.fixPlayerSkin(player)) {
                     MasterHelper.refreshPlayer(player);
                     player.sendMessage(Util.success + "Sua skin foi resetada com sucesso.");
                 } else {
@@ -50,7 +50,7 @@ public class SkinCommand implements CommandExecutor {
                 }
                 return true;
             }
-            if (SkinManager.changePlayerSkin(player, skin)) {
+            if (SkinAPI.changePlayerSkin(player, skin)) {
                 MasterHelper.refreshPlayer(player);
                 player.sendMessage(Util.success + "Sua skin foi alterada com sucesso.");
                 return true;
