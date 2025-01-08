@@ -27,6 +27,8 @@ public class PlayerDeath implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerDeath(PlayerDeathEvent event) {
+        String teste = event.getDeathMessage();
+        Bukkit.broadcastMessage("Death essage: " + teste);
         event.setDeathMessage(null);
 
         Player died = event.getEntity();

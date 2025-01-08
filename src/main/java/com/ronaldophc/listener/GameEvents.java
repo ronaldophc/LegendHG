@@ -23,15 +23,6 @@ public class GameEvents implements Listener {
     }
 
     @EventHandler
-    public void onItemSpawn(ItemSpawnEvent event) {
-        if (LegendHG.getGameStateManager().getGameState() == GameState.COUNTDOWN) {
-            event.getEntity().remove();
-            event.setCancelled(true);
-            return;
-        }
-    }
-
-    @EventHandler
     public void onBed(PlayerBedEnterEvent e) {
         e.setCancelled(true);
     }
@@ -43,7 +34,8 @@ public class GameEvents implements Listener {
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
-        if (LegendHG.getGameStateManager().getGameState() == GameState.COUNTDOWN || AccountManager.getInstance().getOrCreateAccount((Player) event.getPlayer()).isSpectator()) {
+        if (LegendHG.getGameStateManager().getGameState() == GameState.COUNTDOWN
+                || AccountManager.getInstance().getOrCreateAccount((Player) event.getPlayer()).isSpectator()) {
             String[] titles = {"Kit", "Ajustes", "Status"};
             if (event.getInventory().getType() == InventoryType.CHEST) {
                 for (String title : titles) {

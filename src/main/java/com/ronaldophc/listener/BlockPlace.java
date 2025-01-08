@@ -11,6 +11,9 @@ public class BlockPlace implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
         if (!LegendHG.getGameStateManager().getGameState().canPlaceBlocks()) {
             event.setCancelled(true);
         }

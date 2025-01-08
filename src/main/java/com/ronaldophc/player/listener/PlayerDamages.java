@@ -3,7 +3,6 @@ package com.ronaldophc.player.listener;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.api.bossbar.BossBarAPI;
 import com.ronaldophc.helper.GameHelper;
-import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.player.account.Account;
@@ -17,14 +16,11 @@ public class PlayerDamages implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
+        if (event.isCancelled()) return;
         if (!(event.getDamager() instanceof Player)) return;
 
         Player damager = (Player) event.getDamager();
         Account damagerAccount = AccountManager.getInstance().getOrCreateAccount(damager);
-        if (damagerAccount.isSpectator()) {
-            event.setCancelled(true);
-            return;
-        }
 
         if (!(event.getEntity() instanceof Player)) return;
 
@@ -37,15 +33,9 @@ public class PlayerDamages implements Listener {
 
         Account playerAccount = AccountManager.getInstance().getOrCreateAccount(player);
 
-        if (playerAccount.isSpectator()) {
-            event.setCancelled(true);
-            return;
-        }
-
         KitManager kitManager = LegendHG.getKitManager();
 
         Kit kit = playerAccount.getKits().getPrimary();
-
 
         String title = player.getName() + " - " + kit.getName();
 

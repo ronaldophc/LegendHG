@@ -3,8 +3,6 @@ package com.ronaldophc.player.listener;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
-import com.ronaldophc.player.account.Account;
-import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -21,12 +19,8 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onDrop(PlayerDropItemEvent event) {
+        if (event.isCancelled()) return;
         Player player = event.getPlayer();
-        Account account = AccountManager.getInstance().getOrCreateAccount(player);
-        if (account.isSpectator()) {
-            event.setCancelled(true);
-            return;
-        }
 
         ItemStack item = event.getItemDrop().getItemStack();
         if (item == null) return;
@@ -47,12 +41,9 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
+        if (event.isCancelled()) return;
         Player player = event.getPlayer();
-        Account account = AccountManager.getInstance().getOrCreateAccount(player);
-        if (account.isSpectator()) {
-            event.setCancelled(true);
-            return;
-        }
+
         ItemStack item = player.getItemInHand();
         if (item == null) return;
 

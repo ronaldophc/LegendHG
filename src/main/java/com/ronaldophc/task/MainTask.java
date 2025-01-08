@@ -25,7 +25,7 @@ public class MainTask implements Runnable {
         world.setTime(1800);
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (!BossBarAPI.hasBar(player)) {
-                BossBarAPI.setBar(player, Util.bold + colors[colorIndex] + "LegendHG", 1);
+//                BossBarAPI.setInfiniteBar(player, Util.bold + colors[colorIndex] + "LegendHG");
                 colorIndex = (colorIndex + 1) % colors.length;
             }
             Account account = AccountManager.getInstance().getOrCreateAccount(player);
@@ -35,6 +35,7 @@ public class MainTask implements Runnable {
             if (account.isSpectator()) {
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
                     if (player2.isOp()) continue;
+                    if (!(player2.canSee(player))) continue;
                     player2.hidePlayer(player);
                 }
             }

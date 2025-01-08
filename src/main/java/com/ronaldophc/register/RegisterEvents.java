@@ -3,6 +3,10 @@ package com.ronaldophc.register;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.kits.manager.guis.KitGuiListener;
 import com.ronaldophc.listener.*;
+import com.ronaldophc.listener.states.CountdownListener;
+import com.ronaldophc.listener.states.FinishedListener;
+import com.ronaldophc.listener.states.InvicibilityListener;
+import com.ronaldophc.listener.states.RunningListener;
 import com.ronaldophc.player.listener.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -36,6 +40,11 @@ public class RegisterEvents extends LegendHG {
         pm.registerEvents(new AsyncPlayerChat(), getInstance());
         pm.registerEvents(new InventoryClick(), getInstance());
         pm.registerEvents(new TabListener(), getInstance());
+        pm.registerEvents(new SpectatorEvents(), getInstance());
+        pm.registerEvents(new CountdownListener(), getInstance());
+        pm.registerEvents(new InvicibilityListener(), getInstance());
+        pm.registerEvents(new RunningListener(), getInstance());
+        pm.registerEvents(new FinishedListener(), getInstance());
     }
 
     public static void registerRecipes() {

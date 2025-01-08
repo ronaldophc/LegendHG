@@ -13,13 +13,12 @@ import java.util.logging.Logger;
 
 public class RegisterKitsEvents {
 
-    private static final Logger logger = Logger.getLogger(RegisterKitsEvents.class.getName());
-
     public static void registerEvents() {
         registerAllKits(LegendHG.getInstance());
     }
 
     private static void registerAllKits(JavaPlugin plugin) {
+        LegendHG.logger.info("Registering kits...");
         try {
             Reflections reflections = new Reflections("com.ronaldophc.kits.registry", Scanners.SubTypes);
             Set<Class<? extends Kit>> kitClasses = reflections.getSubTypesOf(Kit.class);
@@ -30,7 +29,7 @@ public class RegisterKitsEvents {
                     Kit kit = clazz.getDeclaredConstructor().newInstance();
 
                     if (kitManager == null) {
-                        logger.severe("KitManager is null");
+                        LegendHG.logger.severe("KitManager is null");
                         continue;
                     }
 
@@ -39,8 +38,9 @@ public class RegisterKitsEvents {
             }
 
             kitManager.sortKits();
+            LegendHG.logger.info("Kits registered successfully");
         } catch (Exception e) {
-            logger.severe("Error registering kits: " + e.getMessage());
+            LegendHG.logger.severe("Error registering kits: " + e.getMessage());
         }
 
     }

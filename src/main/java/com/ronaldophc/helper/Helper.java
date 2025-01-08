@@ -10,10 +10,12 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-public class MasterHelper {
+public class Helper {
 
     public static void refreshPlayer(Player player) {
         Bukkit.getScheduler().runTask(LegendHG.getInstance(), () -> {
@@ -90,5 +92,22 @@ public class MasterHelper {
                 super.write(ctx, msg, promise);
             }
         });
+    }
+
+    public static void loadAllChunks() {
+        LegendHG.logger.info("Loading chunks where 400 & -400");
+        World world = Bukkit.getWorld("world");
+        int minX = -400;
+        int maxX = 400;
+        int minZ = -400;
+        int maxZ = 400;
+
+        for (int x = minX; x <= maxX; x += 16) {
+            for (int z = minZ; z <= maxZ; z += 16) {
+                Chunk chunk = world.getChunkAt(x >> 4, z >> 4);
+                world.loadChunk(chunk);
+            }
+        }
+        LegendHG.logger.info("Chunks loaded");
     }
 }

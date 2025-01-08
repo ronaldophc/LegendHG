@@ -8,9 +8,12 @@ import com.ronaldophc.feature.FeastManager;
 import com.ronaldophc.api.scoreboard.Board;
 import com.ronaldophc.game.CountDown;
 import com.ronaldophc.game.GameStateManager;
+import com.ronaldophc.helper.Helper;
 import com.ronaldophc.hook.ProtocolLibHook;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.kits.registry.gladiator.GladiatorController;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.register.RegisterCommands;
 import com.ronaldophc.register.RegisterEvents;
 import com.ronaldophc.register.RegisterKitsEvents;
@@ -27,7 +30,7 @@ import java.util.logging.Logger;
 
 public class LegendHG extends JavaPlugin {
 
-    public static final Logger logger = Logger.getLogger(LegendHG.class.getName());
+    public static Logger logger;
     public GameStateManager gameStateManager;
     public KitManager kitManager;
     private BukkitTask mainTask;
@@ -42,17 +45,19 @@ public class LegendHG extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        logger = getLogger();
         logger.info("LegendHG loaded");
     }
 
     @Override
     public void onEnable() {
+        Helper.loadAllChunks();
         Settings.getInstance().load();
         Debug.getInstance().load();
 
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
             ProtocolLibHook.register();
-            System.out.println("ProtocolLib is enabled.");
+            logger.info("ProtocolLib is enabled.");
         }
 
         kitManager = new KitManager();
@@ -62,9 +67,9 @@ public class LegendHG extends JavaPlugin {
             try {
                 mySQLManager.initializeDatabase();
                 gameId = GameSQL.createGame();
-                System.out.println("Game ID: " + gameId);
+                logger.info("Game ID: " + gameId);
             } catch (SQLException e) {
-                System.out.println("Could not initialize database.");
+                logger.info("Could not initialize database.");
             }
         }
 
@@ -97,6 +102,7 @@ public class LegendHG extends JavaPlugin {
         if (cooldownKits != null) {
             cooldownKits.cancel();
         }
+        AccountManager.getInstance().getAccounts().forEach(Account::quitPlayer);
         logger.info("LegendHG disabled");
     }
 

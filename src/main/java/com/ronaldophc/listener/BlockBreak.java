@@ -29,15 +29,13 @@ public class BlockBreak implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        Player player = event.getPlayer();
-
-        if (!LegendHG.getGameStateManager().getGameState().canBreakBlocks()) {
-            event.setCancelled(true);
+        if (event.isCancelled()) {
             return;
         }
 
-        Account account = AccountManager.getInstance().getOrCreateAccount(player);
-        if (account.isSpectator()) {
+        Player player = event.getPlayer();
+
+        if (!LegendHG.getGameStateManager().getGameState().canBreakBlocks()) {
             event.setCancelled(true);
             return;
         }

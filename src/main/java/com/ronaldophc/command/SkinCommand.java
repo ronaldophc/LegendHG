@@ -2,7 +2,7 @@ package com.ronaldophc.command;
 
 import com.ronaldophc.api.skin.SkinAPI;
 import com.ronaldophc.helper.Logger;
-import com.ronaldophc.helper.MasterHelper;
+import com.ronaldophc.helper.Helper;
 import com.ronaldophc.helper.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -43,7 +43,7 @@ public class SkinCommand implements CommandExecutor {
         try {
             if (skin.equalsIgnoreCase("reset")) {
                 if (SkinAPI.fixPlayerSkin(player)) {
-                    MasterHelper.refreshPlayer(player);
+                    Helper.refreshPlayer(player);
                     player.sendMessage(Util.success + "Sua skin foi resetada com sucesso.");
                 } else {
                     player.sendMessage(Util.error + "Ocorreu um erro ao tentar alterar sua skin.");
@@ -51,7 +51,7 @@ public class SkinCommand implements CommandExecutor {
                 return true;
             }
             if (SkinAPI.changePlayerSkin(player, skin)) {
-                MasterHelper.refreshPlayer(player);
+                Helper.refreshPlayer(player);
                 player.sendMessage(Util.success + "Sua skin foi alterada com sucesso.");
                 return true;
             }

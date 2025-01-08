@@ -12,22 +12,11 @@ public class EntityEvents implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
+        if (event.isCancelled()) return;
 
         if (!LegendHG.getGameStateManager().getGameState().canTakeDamage()) {
             event.setCancelled(true);
             return;
-        }
-
-        Entity entity = event.getEntity();
-
-        // Eventos em que a entidade que tomou dano é um jogador
-        if (!(entity instanceof Player)) {
-            return;
-        }
-
-        Player player = (Player) entity;
-        if (AccountManager.getInstance().getOrCreateAccount(player).isSpectator()) {
-            event.setCancelled(true);
         }
 
     }

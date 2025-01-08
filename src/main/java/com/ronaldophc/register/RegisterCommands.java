@@ -47,6 +47,7 @@ public class RegisterCommands extends LegendHG {
         instance.getCommand("profile").setExecutor(new ProfileCommand());
         instance.getCommand("kills").setExecutor(new KillsCommand());
         instance.getCommand("sound").setExecutor(new SoundCommand());
+        instance.getCommand("schematic").setExecutor(new SchematicCommand());
     }
 
 }

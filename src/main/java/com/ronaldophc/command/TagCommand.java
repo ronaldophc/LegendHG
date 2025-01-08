@@ -1,7 +1,7 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.constant.Tags;
-import com.ronaldophc.helper.MasterHelper;
+import com.ronaldophc.helper.Helper;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
@@ -43,7 +43,7 @@ public class TagCommand implements CommandExecutor {
                     Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
                     account.setTag(tag);
-                    MasterHelper.refreshPlayer(player);
+                    Helper.refreshPlayer(player);
                     player.sendMessage(Util.color1 + "Tag alterada para " + tag.getColor() + tag.name());
                 } catch (IllegalArgumentException e) {
                     player.sendMessage(Util.color1 + "Tag não encontrada.");

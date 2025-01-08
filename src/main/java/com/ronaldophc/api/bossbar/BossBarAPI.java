@@ -102,6 +102,16 @@ public class BossBarAPI implements Listener {
 		}
 	}
 
+	public static void setInfiniteBar(Player player, String message) {
+		Preconditions.checkNotNull(message, "Message cannot be null.");
+		BossBarEntity entity = entityMap.computeIfAbsent(player.getUniqueId(), v -> createBoss(player));
+		if (entity != null && !entity.hasTask() && !(entity instanceof NopeBoss)) {
+			entity.setTitle(message);
+			entity.setHealth(100F);
+			entity.update();
+		}
+	}
+
 	public static boolean hasBar(Player player) {
 		return entityMap.containsKey(player.getUniqueId());
 	}

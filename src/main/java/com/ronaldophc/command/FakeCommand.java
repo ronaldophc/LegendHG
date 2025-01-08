@@ -1,7 +1,7 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.api.skin.SkinAPI;
-import com.ronaldophc.helper.MasterHelper;
+import com.ronaldophc.helper.Helper;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
@@ -90,6 +90,6 @@ public class FakeCommand implements CommandExecutor {
 
     private static void setSettings(Player player, String name) {
         AccountManager.getInstance().getOrCreateAccount(player).setActualName(name);
-        MasterHelper.refreshPlayer(player);
+        Helper.refreshPlayer(player);
     }
 }

@@ -1,12 +1,10 @@
 package com.ronaldophc.player.listener;
 
-import com.ronaldophc.LegendHG;
-import com.ronaldophc.api.bossbar.BossBarAPI;
 import com.ronaldophc.api.skin.SkinAPI;
 import com.ronaldophc.api.title.TitleAPI;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.Logger;
-import com.ronaldophc.helper.MasterHelper;
+import com.ronaldophc.helper.Helper;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
@@ -15,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
 import java.util.UUID;
@@ -30,7 +27,7 @@ public class PlayerJoin implements Listener {
         Account account = AccountManager.getInstance().getOrCreateAccount(player);
 
         if (!(player.isOp())) {
-            MasterHelper.injectPlayerNotTabComplete(player);
+            Helper.injectPlayerNotTabComplete(player);
         }
 
         try {
@@ -39,7 +36,7 @@ public class PlayerJoin implements Listener {
             } else {
                 SkinAPI.fixPlayerSkin(player);
             }
-            MasterHelper.refreshPlayer(player);
+            Helper.refreshPlayer(player);
         } catch (Exception e) {
             Logger.logError("Erro ao alterar skin ou tag: " + e.getMessage());
             throw new RuntimeException(e);

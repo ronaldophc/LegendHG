@@ -8,6 +8,7 @@ import com.ronaldophc.constant.Tags;
 import com.ronaldophc.database.MySQLManager;
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.Logger;
+import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kits;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
@@ -183,4 +184,9 @@ public class Account {
         }
     }
 
+    public void quitPlayer() {
+        if (player.isOnline()) {
+            player.kickPlayer(Util.title + "\n\nServidor reiniciando, voltamos em breve!");
+        }
+    }
 }
