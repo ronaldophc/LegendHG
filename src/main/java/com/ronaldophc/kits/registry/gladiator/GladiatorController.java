@@ -1,8 +1,6 @@
 package com.ronaldophc.kits.registry.gladiator;
 
-import com.ronaldophc.helper.Util;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;

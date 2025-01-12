@@ -1,6 +1,8 @@
 package com.ronaldophc.register;
 
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.feature.battleonthesummit.SummitListener;
+import com.ronaldophc.listener.PrefsInventoryListener;
 import com.ronaldophc.kits.manager.guis.KitGuiListener;
 import com.ronaldophc.listener.*;
 import com.ronaldophc.listener.states.CountdownListener;
@@ -33,7 +35,6 @@ public class RegisterEvents extends LegendHG {
         pm.registerEvents(new PlayerMove(), getInstance());
         pm.registerEvents(new GameEvents(), getInstance());
         pm.registerEvents(new PlayerLogin(), getInstance());
-        pm.registerEvents(new Motd(), getInstance());
         pm.registerEvents(new PlayerCommandPreprocess(), getInstance());
         pm.registerEvents(new PlayerPickupItem(), getInstance());
         pm.registerEvents(new GeneralEvent(), getInstance());
@@ -45,6 +46,9 @@ public class RegisterEvents extends LegendHG {
         pm.registerEvents(new InvicibilityListener(), getInstance());
         pm.registerEvents(new RunningListener(), getInstance());
         pm.registerEvents(new FinishedListener(), getInstance());
+        pm.registerEvents(new BlockNewVersionListener(), getInstance());
+        pm.registerEvents(new PrefsInventoryListener(), getInstance());
+        pm.registerEvents(new SummitListener(), getInstance());
     }
 
     public static void registerRecipes() {

@@ -1,14 +1,18 @@
 name: LegendHG
 main: com.ronaldophc.LegendHG
-version: 1.0-SNAPSHOT
+version: 0.1.0-SNAPSHOT
 author: RonaldoPHC
 api-version: 1.8.8
 load: POSTWORLD
 softdepend: [ ProtocolLib ]
 commands:
-    schematic:
+    build:
+        description: Command to change the build
+        usage: /build
+    rdc:
+    lschematic:
         description: Command to load schematic
-        usage: /schematic
+        usage: /lschematic
     sound:
         description: Command to play sound
         usage: /sound <sound>

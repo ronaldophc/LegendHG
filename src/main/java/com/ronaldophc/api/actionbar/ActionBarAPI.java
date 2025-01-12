@@ -14,6 +14,10 @@ public class ActionBarAPI {
         chatPacket.getChatComponents().write(0, WrappedChatComponent.fromJson("{\"text\":\"" + message + " \"}"));
         chatPacket.getBytes().write(0, (byte) 2); // ActionBar
 
-        ProtocolLibrary.getProtocolManager().sendServerPacket(player, chatPacket);
+        try {
+            ProtocolLibrary.getProtocolManager().sendServerPacket(player, chatPacket);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

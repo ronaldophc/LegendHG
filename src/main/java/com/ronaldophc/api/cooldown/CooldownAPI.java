@@ -2,6 +2,8 @@ package com.ronaldophc.api.cooldown;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.api.actionbar.ActionBarAPI;
+import com.ronaldophc.constant.CooldownType;
+import com.ronaldophc.constant.MCVersion;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
@@ -113,7 +115,7 @@ public class CooldownAPI implements Runnable {
         KitManager kitManager = LegendHG.getKitManager();
         String message = Util.bold + Util.color1 + kit.getName() + ": " + Util.error + Util.bold + (kitManager.getCooldown(player, kit) + 1) + "s" + Util.bold + Util.color2 + " para usar novamente.";
 
-        if (account.getVersion() <= 5) {
+        if (account.getVersion() == MCVersion.MC_1_7 || account.getCooldownType() == CooldownType.CHAT) {
             player.sendMessage(message);
             return;
         }
@@ -126,7 +128,7 @@ public class CooldownAPI implements Runnable {
         KitManager kitManager = LegendHG.getKitManager();
         String message = Util.error + Util.bold + (kitManager.getCombatLogCooldown(player) + 1) + "s" + Util.bold + Util.color2 + " para sair do combate.";
 
-        if (account.getVersion() <= 5) {
+        if (account.getVersion() == MCVersion.MC_1_7 || account.getCooldownType() == CooldownType.CHAT) {
             player.sendMessage(message);
             return;
         }

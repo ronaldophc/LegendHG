@@ -1,6 +1,8 @@
 package com.ronaldophc.player.account;
 
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.constant.CooldownType;
+import com.ronaldophc.constant.MCVersion;
 import com.ronaldophc.constant.MySQL.PlayerField;
 import com.ronaldophc.constant.MySQL.Tables;
 import com.ronaldophc.constant.Scores;
@@ -11,7 +13,6 @@ import com.ronaldophc.helper.Logger;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kits;
 import com.viaversion.viaversion.api.Via;
-import com.viaversion.viaversion.api.ViaAPI;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
@@ -36,11 +37,13 @@ public class Account {
     private String actualName;
     private String ip;
     private int kills;
-    private int version;
+    private MCVersion version;
     private boolean tell;
     private boolean chat;
     private int wins;
     private Scores score;
+    private boolean build;
+    private CooldownType cooldownType;
 
     public Account(Player player) {
         this.player = player;
@@ -54,12 +57,14 @@ public class Account {
         this.spectator = false;
         this.vanish = false;
         this.kills = 0;
+        this.build = false;
         initializeTag();
         initializeTell();
         initializeChat();
         initializeWins();
         initializeScore();
-        setVersion();
+        initializeVersion();
+        initializeCooldownType();
     }
 
     public boolean login(String password) {
@@ -67,6 +72,14 @@ public class Account {
             return PlayerSQL.loginPlayer(player, password);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void initializeCooldownType() {
+        try {
+            this.cooldownType = PlayerSQL.getPlayerCooldownType(player);
+        } catch (SQLException e) {
+            Logger.logError("Erro ao setar as cooldown_type do profile do jogador: " + e.getMessage());
         }
     }
 
@@ -96,7 +109,7 @@ public class Account {
 
     public void initializeTell() {
         try {
-            this.tell = MySQLManager.getBoolean(UUID.toString(), Tables.PLAYER.getTableName(), PlayerField.TELL.getFieldName());
+            tell = MySQLManager.getBoolean(UUID.toString(), Tables.PLAYER.getTableName(), PlayerField.TELL.getFieldName());
         } catch (SQLException e) {
             Logger.logError("Erro ao setar o tell do profile do jogador: " + e.getMessage());
         }
@@ -104,19 +117,23 @@ public class Account {
 
     public void initializeTag() {
         try {
-            tag = PlayerSQL.getPlayerTag(player);
+            this.tag = PlayerSQL.getPlayerTag(player);
         } catch (SQLException e) {
             Logger.logError("Erro ao setar o tag do profile do jogador: " + e.getMessage());
         }
     }
 
-    public void setVersion() {
+    public void initializeVersion() {
         new BukkitRunnable() {
 
             @Override
             public void run() {
-                ViaAPI api = Via.getAPI();
-                version = api.getPlayerVersion(player);
+                int viaVersion = Via.getAPI().getPlayerVersion(player.getUniqueId());
+                if (viaVersion <= MCVersion.MC_1_7.getProtocolVersion()) {
+                    version = MCVersion.MC_1_7;
+                    return;
+                }
+                version = MCVersion.MC_1_8;
             }
 
         }.runTaskLater(LegendHG.getInstance(), 20);
@@ -149,10 +166,19 @@ public class Account {
         }
     }
 
-    public void setTell(Boolean chat) {
-        this.chat = chat;
+    public void setTell(Boolean tell) {
+        this.tell = tell;
         try {
             MySQLManager.setBoolean(UUID.toString(), Tables.PLAYER.getTableName(), PlayerField.TELL.getFieldName(), tell);
+        } catch (SQLException error) {
+            Logger.logError("Erro ao atualizar informações do jogador: " + error.getMessage());
+        }
+    }
+
+    public void setCooldownType(CooldownType cooldown_type) {
+        this.cooldownType = cooldown_type;
+        try {
+            PlayerSQL.setPlayerCooldownType(player, cooldown_type);
         } catch (SQLException error) {
             Logger.logError("Erro ao atualizar informações do jogador: " + error.getMessage());
         }

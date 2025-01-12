@@ -24,14 +24,18 @@ public class MainTask implements Runnable {
         World world = Bukkit.getWorld("world");
         world.setTime(1800);
         for (Player player : Bukkit.getOnlinePlayers()) {
+            Account account = AccountManager.getInstance().getOrCreateAccount(player);
+            if(account.getVersion() == null) continue;
+
             if (!BossBarAPI.hasBar(player)) {
-//                BossBarAPI.setInfiniteBar(player, Util.bold + colors[colorIndex] + "LegendHG");
+                BossBarAPI.setBar(player, Util.bold + colors[colorIndex] + "LegendHG", 1);
                 colorIndex = (colorIndex + 1) % colors.length;
             }
-            Account account = AccountManager.getInstance().getOrCreateAccount(player);
+
             if (account.isAlive()) {
                 continue;
             }
+
             if (account.isSpectator()) {
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
                     if (player2.isOp()) continue;

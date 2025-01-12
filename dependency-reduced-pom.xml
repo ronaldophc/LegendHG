@@ -71,13 +71,6 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>LibsDisguises</groupId>
-      <artifactId>LibsDisguises</artifactId>
-      <version>8.6.7</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/LibsDisguises.jar</systemPath>
-    </dependency>
-    <dependency>
       <groupId>app.ashcon</groupId>
       <artifactId>sportpaper</artifactId>
       <version>1.8.8-R0.1-SNAPSHOT</version>

@@ -9,7 +9,6 @@ import org.reflections.scanners.Scanners;
 
 import java.lang.reflect.Modifier;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public class RegisterKitsEvents {
 

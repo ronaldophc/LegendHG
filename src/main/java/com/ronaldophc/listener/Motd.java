@@ -1,5 +1,6 @@
 package com.ronaldophc.listener;
 
+import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.setting.Settings;
 import org.bukkit.event.EventHandler;
@@ -15,6 +16,9 @@ public class Motd implements Listener {
         String msg2 = Settings.getInstance().getString("Msg2");
         String suffix = Settings.getInstance().getString("Suffix");
         e.setMaxPlayers(max);
+        if (!LegendHG.getInstance().started) {
+            msg2 = "                  §cServidor iniciando...";
+        }
         e.setMotd(suffix + Util.title + " " + msg1 + "\n" + msg2);
     }
 }

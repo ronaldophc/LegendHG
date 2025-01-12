@@ -2,6 +2,7 @@ package com.ronaldophc.player.listener;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.api.bossbar.BossBarAPI;
+import com.ronaldophc.feature.battleonthesummit.SummitManager;
 import com.ronaldophc.helper.GameHelper;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
@@ -23,6 +24,10 @@ public class PlayerDamages implements Listener {
         Account damagerAccount = AccountManager.getInstance().getOrCreateAccount(damager);
 
         if (!(event.getEntity() instanceof Player)) return;
+
+        if (SummitManager.getInstance().getAccounts().contains(damagerAccount)) {
+            return;
+        }
 
         if (!LegendHG.getGameStateManager().getGameState().canTakeDamage()) {
             event.setCancelled(true);

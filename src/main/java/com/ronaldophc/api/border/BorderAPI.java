@@ -50,6 +50,9 @@ public class BorderAPI {
     public static void setWorldBorder() {
         World world = Bukkit.getWorld("world");
         if (world != null) {
+            int y = world.getHighestBlockYAt(0, 0);
+            world.setSpawnLocation(0, y, 0);
+
             WorldBorder border = world.getWorldBorder();
             border.setCenter(0, 0);
             border.setSize(700);

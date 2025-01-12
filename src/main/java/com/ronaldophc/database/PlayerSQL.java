@@ -1,5 +1,6 @@
 package com.ronaldophc.database;
 
+import com.ronaldophc.constant.CooldownType;
 import com.ronaldophc.constant.MySQL.PlayerField;
 import com.ronaldophc.constant.MySQL.Tables;
 import com.ronaldophc.constant.Scores;
@@ -26,8 +27,9 @@ public class PlayerSQL {
             String scoreboard = String.valueOf(Scores.COMPLETE);
             String tag = String.valueOf(Tags.NORMAL);
             String ip = String.valueOf(player.getAddress().getAddress().getHostAddress());
-            String query = "INSERT INTO players (uuid, name, password, kills, deaths, wins, scoreboard, tag, chat, tell, ip_address) VALUES (?, ?, ?, 0, 0, 0, ?, ?, ?, ?, ?)";
-            String loginQuery = "INSERT INTO player_login (uuid, name, logged_in) VALUES (?, ?, true)";
+            String cooldown_type = String.valueOf(CooldownType.ACTION_BAR);
+            String query = "INSERT INTO players (uuid, name, password, kills, deaths, wins, scoreboard, tag, chat, tell, cooldown_type, ip_address) VALUES (?, ?, ?, 0, 0, 0, ?, ?, ?, ?, ?, ?)";
+            String loginQuery = "INSERT INTO player_login (uuid, logged_in) VALUES (?, true)";
 
             try {
                 assert connection != null;
@@ -40,15 +42,13 @@ public class PlayerSQL {
                     preparedStatement.setString(5, tag);
                     preparedStatement.setBoolean(6, true);
                     preparedStatement.setBoolean(7, true);
-                    preparedStatement.setString(8, ip);
+                    preparedStatement.setString(8, cooldown_type);
+                    preparedStatement.setString(9, ip);
                     preparedStatement.executeUpdate();
 
                     loginStatement.setString(1, uuid);
-                    loginStatement.setString(2, name);
                     loginStatement.executeUpdate();
 
-                    preparedStatement.close();
-                    loginStatement.close();
                     Logger.debugMySql("Registered new player: " + player.getName());
                 }
             } catch (SQLException e) {
@@ -220,6 +220,29 @@ public class PlayerSQL {
         }
     }
 
+    public static CooldownType getPlayerCooldownType(Player player) throws SQLException {
+        String query = "SELECT cooldown_type FROM players WHERE uuid = ?";
+        String uuid = player.getUniqueId().toString();
+        Connection connection = MySQLManager.getConnection();
+
+        try {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, uuid);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    return CooldownType.valueOf(resultSet.getString("cooldown_type"));
+                }
+                preparedStatement.close();
+                return CooldownType.ACTION_BAR;
+            }
+        } catch (SQLException e) {
+            Logger.logError("Failed to retrieve player cooldown_type: " + e.getMessage());
+            throw e;
+        }
+    }
+
     public static Tags getPlayerTag(Player player) throws SQLException {
         if (!MySQLManager.isActive()) return Tags.NORMAL;
         String query = "SELECT tag FROM players WHERE uuid = ?";
@@ -261,6 +284,24 @@ public class PlayerSQL {
             Logger.debugMySql("Updated Score for player: " + player.getName());
         } catch (SQLException e) {
             Logger.logError("Failed to update player score: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public static void setPlayerCooldownType(Player player, CooldownType cooldown_type) throws SQLException {
+        if (!MySQLManager.isActive()) return;
+        String query = "UPDATE players SET cooldown_type = ? WHERE uuid = ?";
+        String uuid = player.getUniqueId().toString();
+        Connection connection = MySQLManager.getConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, cooldown_type.toString());
+            preparedStatement.setString(2, uuid);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            Logger.debugMySql("Updated cooldown_type for player: " + player.getName());
+        } catch (SQLException e) {
+            Logger.logError("Failed to update player cooldown_type: " + e.getMessage());
             throw e;
         }
     }

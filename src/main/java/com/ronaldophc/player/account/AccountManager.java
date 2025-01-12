@@ -49,6 +49,8 @@ public class AccountManager {
         return playersAlive;
     }
 
+
+
     public static AccountManager getInstance() {
         if (instance == null) {
             instance = new AccountManager();

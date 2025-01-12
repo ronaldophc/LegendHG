@@ -3,7 +3,6 @@ package com.ronaldophc.register;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.command.*;
 import com.ronaldophc.feature.report.*;
-import com.viaversion.viaversion.libs.kyori.adventure.sound.Sound;
 
 public class RegisterCommands extends LegendHG {
 
@@ -47,7 +46,9 @@ public class RegisterCommands extends LegendHG {
         instance.getCommand("profile").setExecutor(new ProfileCommand());
         instance.getCommand("kills").setExecutor(new KillsCommand());
         instance.getCommand("sound").setExecutor(new SoundCommand());
-        instance.getCommand("schematic").setExecutor(new SchematicCommand());
+        instance.getCommand("lschematic").setExecutor(new SchematicCommand());
+        instance.getCommand("rdc").setExecutor(new BattleOnTheSummitCommand());
+        instance.getCommand("build").setExecutor(new BuildCommand());
     }
 
 }

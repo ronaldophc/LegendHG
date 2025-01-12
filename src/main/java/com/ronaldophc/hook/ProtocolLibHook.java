@@ -3,6 +3,7 @@ package com.ronaldophc.hook;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
@@ -13,6 +14,7 @@ import com.comphenix.protocol.wrappers.WrappedSignedProperty;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.constant.MCVersion;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
@@ -29,7 +31,7 @@ public class ProtocolLibHook {
 
         // ----------------- Tag --------------------- //
 
-        protocolManager.addPacketListener(new PacketAdapter(LegendHG.getInstance(), PacketType.Play.Server.PLAYER_INFO) {
+        protocolManager.addPacketListener(new PacketAdapter(LegendHG.getInstance(), ListenerPriority.HIGHEST, PacketType.Play.Server.PLAYER_INFO) {
 
             @Override
             public void onPacketSending(PacketEvent event) {
@@ -71,6 +73,20 @@ public class ProtocolLibHook {
             }
         });
 
+        // ----------------- BUG PLACA --------------------- //
+
+        protocolManager.addPacketListener(new PacketAdapter(LegendHG.getInstance(), ListenerPriority.HIGHEST, PacketType.Play.Server.UPDATE_SIGN) {
+            @Override
+            public void onPacketSending(PacketEvent event) {
+                // Verifica se o jogador está usando a versão 1.7
+                Player player = event.getPlayer();
+                Account account = AccountManager.getInstance().getOrCreateAccount(player);
+                if (account.getVersion() == MCVersion.MC_1_7) {
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+        });
     }
 
 }

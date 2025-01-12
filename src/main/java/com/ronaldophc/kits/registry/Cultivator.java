@@ -37,6 +37,7 @@ public class Cultivator extends Kit {
 
         Block eventBlock = event.getBlock();
         Material eventItem = event.getBlock().getType();
+
         if (eventItem == Material.SAPLING) {
             eventBlock.getWorld().generateTree(eventBlock.getLocation(), TreeType.TREE);
             eventBlock.setType(Material.LOG);
@@ -48,6 +49,15 @@ public class Cultivator extends Kit {
         }
         if (eventItem == Material.COCOA) {
             eventBlock.setData((byte) 8);
+            return;
+        }
+        if (eventItem == Material.RED_MUSHROOM) {
+            eventBlock.setType(Material.AIR);
+            boolean grew = eventBlock.getWorld().generateTree(eventBlock.getLocation(), TreeType.RED_MUSHROOM);
+        }
+        if (eventItem == Material.BROWN_MUSHROOM) {
+            eventBlock.setType(Material.AIR);
+            boolean grew = eventBlock.getWorld().generateTree(eventBlock.getLocation(), TreeType.RED_MUSHROOM);
         }
     }
 }

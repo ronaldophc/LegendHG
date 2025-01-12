@@ -1,11 +1,12 @@
 package com.ronaldophc.api.bossbar;
 
-import com.comphenix.protocol.ProtocolLibrary;
 import com.google.common.base.Preconditions;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.api.bossbar.entity.DragonBoss;
 import com.ronaldophc.api.bossbar.entity.NopeBoss;
 import com.ronaldophc.api.bossbar.entity.WitherBoss;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -128,11 +129,11 @@ public class BossBarAPI implements Listener {
 	}
 
 	private static BossBarEntity createBoss(Player player) {
-		switch (ProtocolLibrary.getProtocolManager().getProtocolVersion(player)) {
-			case 47:
+		Account account = AccountManager.getInstance().getOrCreateAccount(player);
+		switch (account.getVersion()) {
+			case MC_1_8:
 				return new WitherBoss(player);
-			case 5:
-			case 4:
+			case MC_1_7:
 				return new DragonBoss(player);
 			default:
 				return new NopeBoss(player);

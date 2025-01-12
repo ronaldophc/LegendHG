@@ -6,6 +6,7 @@ import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -44,7 +45,8 @@ public class AuthManager {
 
         switch (gameState) {
             case COUNTDOWN:
-                PlayerHelper.resetPlayerAfterLogin(player);
+                PlayerHelper.resetPlayerState(player);
+                PlayerHelper.addStartItens(player);
                 account.setAlive(true);
                 break;
             case INVINCIBILITY:
@@ -60,6 +62,11 @@ public class AuthManager {
                 account.setSpectator(true);
                 PlayerHelper.preparePlayerToSpec(player);
                 break;
+        }
+
+        if (player.getName().equalsIgnoreCase("PHC02") || player.getName().equalsIgnoreCase("Ronaldinho")) {
+            account.setBuild(true);
+            player.setGameMode(GameMode.CREATIVE);
         }
     }
 

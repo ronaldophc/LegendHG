@@ -35,6 +35,10 @@ public class TabListAPI {
 		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
 		packet.getChatComponents().write(0, WrappedChatComponent.fromText(rawHeader));
 		packet.getChatComponents().write(1, WrappedChatComponent.fromText(rawFooter));
-		ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
+		try {
+			ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

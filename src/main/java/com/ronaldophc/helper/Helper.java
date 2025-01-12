@@ -11,8 +11,12 @@ import io.netty.channel.ChannelPromise;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 public class Helper {
@@ -94,20 +98,36 @@ public class Helper {
         });
     }
 
-    public static void loadAllChunks() {
-        LegendHG.logger.info("Loading chunks where 400 & -400");
+    public static void loadChunks(int minZ, int maxZ, int minX, int maxX) {
         World world = Bukkit.getWorld("world");
-        int minX = -400;
-        int maxX = 400;
-        int minZ = -400;
-        int maxZ = 400;
-
         for (int x = minX; x <= maxX; x += 16) {
             for (int z = minZ; z <= maxZ; z += 16) {
                 Chunk chunk = world.getChunkAt(x >> 4, z >> 4);
                 world.loadChunk(chunk);
             }
         }
-        LegendHG.logger.info("Chunks loaded");
+    }
+
+    public static void clearBlocks(int minZ, int maxZ, int minX, int maxX, int minY, int maxY) {
+        World world = Bukkit.getWorld("world");
+        for (int x = minX; x <= maxX; x++) {
+            for (int z = minZ; z <= maxZ; z++) {
+                for (int y = minY; y <= maxY; y++) {
+                    Block block = world.getBlockAt(x, y, z);
+                    if (block.isEmpty()) continue;
+                    if (block.getType() == Material.AIR) continue;
+                    block.setType(Material.AIR);
+                }
+            }
+        }
+    }
+
+    public static void killEntitysNewVersion() {
+        for (Entity entity : Bukkit.getWorld("world").getEntities()) {
+            if (entity.getType() == EntityType.ARMOR_STAND || entity.getType() == EntityType.GUARDIAN || entity.getType() == EntityType.ENDERMITE ||
+                    entity.getType() == EntityType.RABBIT) {
+                entity.remove();
+            }
+        }
     }
 }

@@ -51,12 +51,7 @@ public class PlayerHelper {
         player.updateInventory();
     }
 
-    public static void preparePlayerToStart(Player player) {
-        resetPlayerState(player);
-        addItemsToStart(player);
-    }
-
-    private static void addItemsToStart(Player player) {
+    public static void addItemsToStartGame(Player player) {
         Account account = AccountManager.getInstance().getOrCreateAccount(player);
         player.getInventory().clear();
         if (!player.getInventory().contains(Material.COMPASS)) {
@@ -82,15 +77,14 @@ public class PlayerHelper {
         player.setFlying(true);
     }
 
-    public static void resetPlayerAfterLogin(Player player) {
-        resetPlayerState(player);
-        addKitsChest(player);
-    }
-
-    private static void addKitsChest(Player player) {
-        player.getInventory().addItem(new ItemManager(Material.CHEST, "Kit 1").addEnchantment(Enchantment.DURABILITY, 1).build());
+    public static void addStartItens(Player player) {
+        player.getInventory().addItem(new ItemManager(Material.CHEST, ChatColor.YELLOW + "Kit 1").addEnchantment(Enchantment.DURABILITY, 1).build());
         if (GameHelper.getInstance().getKits() == 2) {
-            player.getInventory().addItem(new ItemManager(Material.CHEST, "Kit 2").addEnchantment(Enchantment.DURABILITY, 2).build());
+            player.getInventory().addItem(new ItemManager(Material.CHEST, ChatColor.YELLOW + "Kit 2").addEnchantment(Enchantment.DURABILITY, 2).build());
         }
+
+        player.getInventory().setItem(6, new ItemManager(Material.BLAZE_ROD, ChatColor.YELLOW + "Minigame").build());
+
+        player.getInventory().setItem(8, new ItemManager(Material.NAME_TAG, ChatColor.YELLOW + "Ajustes").build());
     }
 }

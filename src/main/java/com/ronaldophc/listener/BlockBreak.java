@@ -26,14 +26,16 @@ public class BlockBreak implements Listener {
             Material.STONE
     );
 
+
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         if (event.isCancelled()) {
             return;
         }
-
         Player player = event.getPlayer();
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
+        if (account.isBuild()) return;
 
         if (!LegendHG.getGameStateManager().getGameState().canBreakBlocks()) {
             event.setCancelled(true);
@@ -74,6 +76,5 @@ public class BlockBreak implements Listener {
 
         }
     }
-
 
 }

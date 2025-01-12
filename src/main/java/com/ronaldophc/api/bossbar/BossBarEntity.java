@@ -55,7 +55,11 @@ public abstract class BossBarEntity {
     }
 
     protected void sendPacket(Player player, PacketContainer packet) {
-        ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
+        try {
+            ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isAlive() {

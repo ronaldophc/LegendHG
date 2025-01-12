@@ -42,7 +42,7 @@ public class Launcher extends Kit {
 
         if (!(block.hasMetadata("launcher"))) return;
 
-        double strength = 4D;
+        double strength = 3D;
 
         BlockFace face = (BlockFace) block.getMetadata("launcher").get(0).value();
         double y = face.getModY() * strength;

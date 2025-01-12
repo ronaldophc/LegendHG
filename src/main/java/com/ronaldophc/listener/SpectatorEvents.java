@@ -1,6 +1,5 @@
 package com.ronaldophc.listener;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Entity;
@@ -70,7 +69,7 @@ public class SpectatorEvents implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         Account account = AccountManager.getInstance().getOrCreateAccount(player);
-        if (account.isSpectator()) {
+        if (account.isSpectator() && !account.isBuild()) {
             event.setCancelled(true);
         }
     }
@@ -79,7 +78,7 @@ public class SpectatorEvents implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
         Account account = AccountManager.getInstance().getOrCreateAccount(player);
-        if (account.isSpectator()) {
+        if (account.isSpectator() && !account.isBuild()) {
             event.setCancelled(true);
         }
     }

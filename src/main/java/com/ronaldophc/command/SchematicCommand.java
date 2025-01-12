@@ -11,9 +11,16 @@ public class SchematicCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (command.getName().equalsIgnoreCase("schematic")) {
+        if (command.getName().equalsIgnoreCase("lschematic")) {
             if (!(commandSender instanceof Player)) {
                 commandSender.sendMessage(Util.noConsole);
+                return true;
+            }
+
+            Player player = (Player) commandSender;
+
+            if (!(player.isOp())) {
+                player.sendMessage(Util.noPermission);
                 return true;
             }
 
@@ -22,10 +29,8 @@ public class SchematicCommand implements CommandExecutor {
                 return true;
             }
 
-            Player player = (Player) commandSender;
             Schematic.getInstance().createSchematic(player.getWorld(), player.getLocation(), strings[0]);
             player.sendMessage("§aSchematic loaded!");
-
 
             return true;
         }

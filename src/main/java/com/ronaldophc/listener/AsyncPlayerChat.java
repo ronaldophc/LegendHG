@@ -5,6 +5,7 @@ import com.ronaldophc.constant.Tags;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,12 +52,18 @@ public class AsyncPlayerChat implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         Account account = AccountManager.getInstance().getOrCreateAccount(player);
+        event.setCancelled(true);
 
-        if (!account.isLoggedIn()) {
-            event.setCancelled(true);
+        if (!account.isChat()) {
+            player.sendMessage(Util.error + "Você está com o chat desativado!");
+            return;
         }
 
-        if (cooldown.contains(player)) {
+        if (!account.isLoggedIn()) {
+            return;
+        }
+
+        if (cooldown.contains(player) && !player.hasPermission("legendhg.chat.flood")) {
             player.sendMessage(Util.error + "Espere um pouco para mandar mensagem novamente");
             event.setCancelled(true);
         }
@@ -73,11 +80,12 @@ public class AsyncPlayerChat implements Listener {
         String message = event.getMessage();
 
         for (String word : blockedWords) {
-            message = message.replaceAll("(?i)" + word, new String(new char[word.length()]).replace("\0", "*"));
+            message = message.replaceAll("(?i)\\b" + word + "\\b", new String(new char[word.length()]).replace("\0", "*"));
         }
 
         Tags tag = account.getTag();
-        event.setFormat(tag.getColor() + tag.name() + " §7" + account.getActualName() + " §8» §f" + message);
-
+        Bukkit.broadcastMessage(tag.getColor() + tag.name() + " §7" + account.getActualName() + " §8» §f" + message);
     }
+
+
 }

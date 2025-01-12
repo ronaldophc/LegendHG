@@ -4,6 +4,7 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.feature.MiniFeastManager;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.player.PlayerHelper;
+import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.setting.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -96,9 +97,9 @@ public class CountDown implements Runnable {
     }
 
     private void handleRunning() {
-//        if(!PlayerAliveManager.getInstance().hasMoreThanOnePlayerAlive()) {
-//            plugin.gameStateManager.startFinished();
-//        }
+        if(AccountManager.getInstance().getPlayersAlive().size() == 1) {
+            plugin.gameStateManager.startFinished();
+        }
         if (countdownRemaining >= feast) {
             LegendHG.getFeast().start();
         }

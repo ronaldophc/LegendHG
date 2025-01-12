@@ -1,4 +1,4 @@
-package com.ronaldophc.kits.registry.kangaroo;
+package com.ronaldophc.kits.registry;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.helper.ItemManager;

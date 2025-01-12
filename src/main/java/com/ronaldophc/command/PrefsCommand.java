@@ -1,12 +1,11 @@
 package com.ronaldophc.command;
 
+import com.ronaldophc.feature.prefs.PrefsService;
 import com.ronaldophc.helper.Util;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 
 public class PrefsCommand implements CommandExecutor {
 
@@ -21,17 +20,11 @@ public class PrefsCommand implements CommandExecutor {
 
             Player player = (Player) commandSender;
 
-            openMenu(player);
+            PrefsService.openPrefsMenu(player);
 
             return true;
         }
         return false;
     }
 
-    private static void openMenu(Player player) {
-        // Score, tell, chat
-        Inventory prefs = Bukkit.createInventory(null, 6 * 9, Util.title + Util.color2 + " Ajustes");
-
-        player.openInventory(prefs);
-    }
 }

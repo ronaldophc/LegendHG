@@ -89,7 +89,8 @@ public class GameStateHelper {
             player.sendMessage(Util.color1 + "O jogo começou!");
             PlayerHelper.teleportPlayerToSpawnLocation(player);
 
-            PlayerHelper.preparePlayerToStart(player);
+            PlayerHelper.resetPlayerState(player);
+            PlayerHelper.addItemsToStartGame(player);
         }
     }
 

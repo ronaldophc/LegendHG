@@ -40,6 +40,12 @@ public class TellCommand implements CommandExecutor, TabCompleter {
 
             Player player = (Player) commandSender;
 
+            Account accountPlayer = AccountManager.getInstance().getOrCreateAccount(player);
+            if (!accountPlayer.isTell()) {
+                player.sendMessage(Util.error + "Você desativou as mensagens privadas.");
+                return true;
+            }
+
             if (strings.length < 2) {
                 player.sendMessage(Util.usage("/tell <player> <message>"));
                 return true;
@@ -61,6 +67,11 @@ public class TellCommand implements CommandExecutor, TabCompleter {
             StringBuilder message = new StringBuilder();
             for (int i = 1; i < strings.length; i++) {
                 message.append(strings[i]).append(" ");
+            }
+
+            if (!account.isTell()) {
+                player.sendMessage(Util.error + "Este jogador desativou as mensagens privadas.");
+                return true;
             }
 
             player.sendMessage("§8[§7Você §8» §7" + account.getActualName() + "§8] §f" + message);

@@ -10,7 +10,7 @@ public class InventoryClick implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         Inventory inventory = event.getInventory();
-        if (inventory.getName().contains("Status") || inventory.getName().contains("Ajustes")) {
+        if (inventory.getName().contains("Status")) {
             event.setCancelled(true);
         }
     }

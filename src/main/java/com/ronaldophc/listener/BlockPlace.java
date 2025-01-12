@@ -1,6 +1,7 @@
 package com.ronaldophc.listener;
 
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,12 +15,22 @@ public class BlockPlace implements Listener {
         if (event.isCancelled()) {
             return;
         }
-        if (!LegendHG.getGameStateManager().getGameState().canPlaceBlocks()) {
+        Player player = event.getPlayer();
+
+        if (event.getBlock().getY() > 128 && !player.isOp()) {
+            event.setCancelled(true);
+            player.sendMessage("§cVocê não pode construir acima de 128 blocos.");
+            return;
+        }
+
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
+
+        if (!account.isBuild() && !LegendHG.getGameStateManager().getGameState().canPlaceBlocks()) {
             event.setCancelled(true);
         }
-        Player player = event.getPlayer();
         if (AccountManager.getInstance().getOrCreateAccount(player).isSpectator()) {
             event.setCancelled(true);
         }
     }
+
 }

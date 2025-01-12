@@ -4,8 +4,9 @@ import com.ronaldophc.helper.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+
+import java.lang.reflect.Field;
 
 public class PingCommand implements CommandExecutor {
 
@@ -20,7 +21,7 @@ public class PingCommand implements CommandExecutor {
                     return true;
                 }
                 Player player = (Player) commandSender;
-                int ping = ((CraftPlayer) player).getHandle().ping;
+                int ping = getPing(player);
                 player.sendMessage(Util.color1 + "Seu ping é: " + Util.color3 + ping + Util.color1 + "ms");
                 return true;
             }
@@ -31,7 +32,7 @@ public class PingCommand implements CommandExecutor {
                 }
                 try {
                     Player target = commandSender.getServer().getPlayer(strings[0]);
-                    int ping = ((CraftPlayer) target).getHandle().ping;
+                    int ping = getPing(target);
                     commandSender.sendMessage(Util.color1 + "Ping de " + Util.color3 + target.getName() + Util.color1 + " é: " + Util.color3 + ping + Util.color1 + "ms");
                 } catch (Exception e) {
                     commandSender.sendMessage(Util.error + "Algo aconteceu errado.");
@@ -41,5 +42,15 @@ public class PingCommand implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    public static int getPing(Player player) {
+        try {
+            Object entityPlayer = player.getClass().getMethod("getHandle").invoke(player);
+            Field pingField = entityPlayer.getClass().getDeclaredField("ping");
+            return pingField.getInt(entityPlayer);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.helper.Util;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -57,7 +58,8 @@ public class TeleportCommand implements CommandExecutor {
                 float target2 = Float.parseFloat(strings[1]);
                 float target3 = Float.parseFloat(strings[2]);
 
-                player.teleport(player.getLocation().add(target, target2, target3));
+                Location location = new Location(player.getWorld(), target, target2, target3);
+                player.teleport(location);
                 player.sendMessage("§7Teleportado para §f" + target + " " + target2 + " " + target3);
                 return true;
             }

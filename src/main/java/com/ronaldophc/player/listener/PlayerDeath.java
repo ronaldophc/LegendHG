@@ -1,9 +1,10 @@
 package com.ronaldophc.player.listener;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.constant.Scores;
-import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.api.scoreboard.Board;
+import com.ronaldophc.constant.Scores;
+import com.ronaldophc.constant.Tags;
+import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.helper.GameHelper;
 import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kit;
@@ -17,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -25,24 +27,24 @@ import java.sql.SQLException;
 public class PlayerDeath implements Listener {
 
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerDeath(PlayerDeathEvent event) {
-        String teste = event.getDeathMessage();
-        Bukkit.broadcastMessage("Death essage: " + teste);
         event.setDeathMessage(null);
 
         Player died = event.getEntity();
-        Account account = AccountManager.getInstance().getOrCreateAccount(died);
+        Account diedAccount = AccountManager.getInstance().getOrCreateAccount(died);
 
         died.getWorld().strikeLightningEffect(died.getLocation());
 
-        Kit diedKit = account.getKits().getPrimary();
-        Kit diedKit2 = account.getKits().getSecondary();
+        Kit diedKit = diedAccount.getKits().getPrimary();
+        Kit diedKit2 = diedAccount.getKits().getSecondary();
 
         event.getDrops().removeIf(diedKit::isItemKit);
         event.getDrops().removeIf(diedKit2::isItemKit);
 
-        String message = "O player " + Util.color3 + died.getName() + " morreu";
+        Tags diedTag = diedAccount.getTag();
+
+        String message = "§fO player " + diedTag.getColor() + diedTag.name() + " §f" + diedAccount.getActualName() + " §fmorreu.";
         Player killer = event.getEntity().getKiller();
 
         if (killer == null) {
@@ -58,10 +60,15 @@ public class PlayerDeath implements Listener {
             Kit killerKit = killerAccount.getKits().getPrimary();
             Kit killerKit2 = killerAccount.getKits().getSecondary();
 
+            Tags killerTag = killerAccount.getTag();
             if (GameHelper.getInstance().isTwoKits()) {
-                message = Util.color1 + died.getName() + "(" + diedKit.getName() + " e " + diedKit2.getName() + ") foi para a próxima vida, cortesia de " + killer.getName() + "(" + killerKit.getName() + " e " + killerKit2.getName() + ")";
+                message = diedTag.getColor() + diedTag.name() + " §f" + diedAccount.getActualName() + Util.color1 + "(" + diedKit.getName() + " e " + diedKit2.getName() + ")" +
+                        " foi para a próxima vida, cortesia de " +
+                        killerTag.getColor() + killerTag.name() + " §f" + killerAccount.getActualName() + Util.color1 + "(" + killerKit.getName() + " e " + killerKit2.getName() + ")";
             } else {
-                message = Util.color1 + died.getName() + "(" + diedKit.getName() + ") foi para a próxima vida, cortesia de " + killer.getName() + "(" + killerKit.getName() + ")";
+                message = diedTag.getColor() + diedTag.name() + " §f" + diedAccount.getActualName() + Util.color1 + "(" + diedKit.getName() + ")" +
+                        " foi para a próxima vida, cortesia de " +
+                        killerTag.getColor() + killerTag.name() + " §f" + killerAccount.getActualName() + Util.color1 + "(" + killerKit.getName() + ")";
             }
 
             try {
@@ -70,10 +77,12 @@ public class PlayerDeath implements Listener {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        } else if (event.getEntity().getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
+            message = diedTag.getColor() + diedTag.name() + " §f" + diedAccount.getActualName() + Util.color1 + "(" + diedKit.getName() + ")" + " morreu de queda.";
         }
 
-        if (account.isAlive()) {
-            account.setAlive(false);
+        if (diedAccount.isAlive()) {
+            diedAccount.setAlive(false);
         }
 
         Bukkit.broadcastMessage(message);
@@ -96,7 +105,7 @@ public class PlayerDeath implements Listener {
                     PlayerHelper.teleportPlayerToSpawnLocation(died);
                 }
                 PlayerHelper.preparePlayerToSpec(died);
-                account.setSpectator(true);
+                diedAccount.setSpectator(true);
                 try {
                     Board.getInstance().removeScoreboard(died);
                     Board.setPlayerScore(died, Scores.SPEC);

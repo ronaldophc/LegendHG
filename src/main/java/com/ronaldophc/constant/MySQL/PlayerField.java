@@ -14,7 +14,8 @@ public enum PlayerField {
     TAG("tag"),
     CHAT("chat"),
     TELL("tell"),
-    IP("ip_address");
+    IP("ip_address"),
+    COOLDOWN_TYPE("cooldown_type");
 
     @Getter
     private final String fieldName;

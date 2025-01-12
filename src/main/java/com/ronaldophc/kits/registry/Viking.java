@@ -21,9 +21,7 @@ public class Viking extends Kit {
                 new ItemManager(Material.STONE_AXE, Util.color3 + "Viking")
                         .setLore(Arrays.asList(Util.success + "Batalhe como um", Util.success + "verdadeiro viking."))
                         .build(),
-                new ItemManager(Material.STONE_AXE, Util.color3 + "Viking")
-                        .setUnbreakable()
-                        .build(),
+                null,
                 false);
     }
 
