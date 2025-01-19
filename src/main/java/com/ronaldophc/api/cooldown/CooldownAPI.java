@@ -4,13 +4,16 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.api.actionbar.ActionBarAPI;
 import com.ronaldophc.constant.CooldownType;
 import com.ronaldophc.constant.MCVersion;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.task.NormalServerTickEvent;
 import lombok.Getter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,10 +21,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class CooldownAPI implements Runnable {
+public class CooldownAPI implements Listener {
 
-    @Getter
-    private static final CooldownAPI instance = new CooldownAPI();
+    private static CooldownAPI instance;
 
     private static Map<UUID, Map<Kit, Long>> cooldowns;
     private static Map<UUID, CombatLogInfo> combatLogCooldowns;
@@ -31,8 +33,12 @@ public class CooldownAPI implements Runnable {
         combatLogCooldowns = new HashMap<>();
     }
 
-    @Override
-    public void run() {
+    @EventHandler
+    public void onServerTick(NormalServerTickEvent event) {
+        tick();
+    }
+
+    public void tick() {
         long currentTime = System.currentTimeMillis();
         for (Iterator<Map.Entry<UUID, Map<Kit, Long>>> it = cooldowns.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<UUID, Map<Kit, Long>> playerEntry = it.next();
@@ -43,7 +49,6 @@ public class CooldownAPI implements Runnable {
             }
         }
 
-        // Use an iterator to safely remove entries from combatLogCooldowns
         combatLogCooldowns.entrySet().removeIf(entry -> entry.getValue().getEndTime() < currentTime);
     }
 
@@ -133,5 +138,12 @@ public class CooldownAPI implements Runnable {
             return;
         }
         sendActionBar(player, message);
+    }
+
+    public static synchronized CooldownAPI getInstance() {
+        if (instance == null) {
+            instance = new CooldownAPI();
+        }
+        return instance;
     }
 }

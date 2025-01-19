@@ -4,7 +4,7 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
 import com.ronaldophc.constant.Scores;
 import com.ronaldophc.constant.Tags;
-import com.ronaldophc.helper.GameHelper;
+import com.ronaldophc.game.GameHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import lombok.Getter;

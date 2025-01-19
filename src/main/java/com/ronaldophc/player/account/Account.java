@@ -9,9 +9,9 @@ import com.ronaldophc.constant.Scores;
 import com.ronaldophc.constant.Tags;
 import com.ronaldophc.database.MySQLManager;
 import com.ronaldophc.database.PlayerSQL;
-import com.ronaldophc.helper.Logger;
-import com.ronaldophc.helper.Util;
 import com.ronaldophc.kits.Kits;
+import com.ronaldophc.util.Logger;
+import com.ronaldophc.util.Util;
 import com.viaversion.viaversion.api.Via;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +44,7 @@ public class Account {
     private Scores score;
     private boolean build;
     private CooldownType cooldownType;
+    private boolean seeSpecs;
 
     public Account(Player player) {
         this.player = player;
@@ -55,9 +56,10 @@ public class Account {
         this.loggedIn = false;
         this.alive = false;
         this.spectator = false;
-        this.vanish = false;
         this.kills = 0;
         this.build = false;
+        this.vanish = false;
+        this.seeSpecs = false;
         initializeTag();
         initializeTell();
         initializeChat();
@@ -101,7 +103,7 @@ public class Account {
 
     public void initializeChat() {
         try {
-            this.chat =  MySQLManager.getBoolean(UUID.toString(), Tables.PLAYER.getTableName(), PlayerField.CHAT.getFieldName());
+            this.chat = MySQLManager.getBoolean(UUID.toString(), Tables.PLAYER.getTableName(), PlayerField.CHAT.getFieldName());
         } catch (SQLException e) {
             Logger.logError("Erro ao setar o chat do profile do jogador: " + e.getMessage());
         }
@@ -205,6 +207,14 @@ public class Account {
     public int getTotalKills() {
         try {
             return MySQLManager.getInt(UUID.toString(), Tables.PLAYER.getTableName(), PlayerField.KILLS.getFieldName());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getDeaths() {
+        try {
+            return MySQLManager.getInt(UUID.toString(), Tables.PLAYER.getTableName(), PlayerField.DEATHS.getFieldName());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

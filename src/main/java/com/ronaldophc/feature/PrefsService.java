@@ -1,8 +1,8 @@
-package com.ronaldophc.feature.prefs;
+package com.ronaldophc.feature;
 
 import com.ronaldophc.constant.CooldownType;
-import com.ronaldophc.helper.ItemManager;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.ItemManager;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
@@ -27,7 +27,7 @@ public class PrefsService {
             .setLore(Collections.singletonList(ChatColor.GRAY + "Clique para desativar as mensagem privadas")).build();
 
     public static ItemStack chatItem = new ItemManager(Material.BOOK, Util.color3 + "Chat")
-            .setLore(Collections.singletonList(ChatColor.GRAY + "Mostrar o chat")).build();
+            .setLore(Collections.singletonList(ChatColor.GRAY + "Ativar/desativar o chat")).build();
 
     public static ItemStack chatActive = new ItemManager(Material.SULPHUR, ChatColor.RED + "Chat")
             .setLore(Collections.singletonList(ChatColor.GRAY + "Clique para ativar o chat")).build();

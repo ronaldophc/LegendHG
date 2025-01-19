@@ -1,4 +1,4 @@
-package com.ronaldophc.helper;
+package com.ronaldophc.util;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.player.PlayerHelper;

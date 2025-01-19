@@ -42,11 +42,19 @@ public class BlockBreak implements Listener {
             return;
         }
 
-        if (player.getInventory().firstEmpty() == -1) {
+        Block block = event.getBlock();
+        int x = block.getX();
+        int z = block.getZ();
+
+        // Verifica se o bloco está fora dos limites do mapa
+        if (x <= -375 || x >= 375 || z <= -375 || z >= 375 && !player.isOp()) {
+            event.setCancelled(true);
             return;
         }
 
-        Block block = event.getBlock();
+        if (player.getInventory().firstEmpty() == -1) {
+            return;
+        }
         Material blockType = block.getType();
         int data = block.getData() / 4;
 

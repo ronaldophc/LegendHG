@@ -1,8 +1,8 @@
 package com.ronaldophc.database;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.helper.GameHelper;
-import com.ronaldophc.helper.Logger;
+import com.ronaldophc.game.GameHelper;
+import com.ronaldophc.util.Logger;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;

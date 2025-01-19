@@ -1,6 +1,5 @@
 package com.ronaldophc.feature;
 
-import com.ronaldophc.LegendHG;
 import com.ronaldophc.api.jnbt.*;
 import lombok.Getter;
 import org.bukkit.Location;
@@ -16,48 +15,24 @@ public class Schematic {
     private short[] blocks;
     private byte[] data;
     private short width, length, height;
+    private int weOffsetX, weOffsetY, weOffsetZ;
+    private int weOriginX, weOriginY, weOriginZ;
 
     @Getter
     private static final Schematic instance = new Schematic();
 
     private Schematic() {}
 
-    private Schematic(short[] blocks, byte[] data, short width, short length, short height) {
-        this.blocks = blocks;
-        this.data = data;
-        this.width = width;
-        this.length = length;
-        this.height = height;
-    }
-
-    public void createSchematic(World world, Location loc, String schematicName) {
+    public void createSchematic(World world, Location loc, File schematicFile) {
         try {
-            Schematic schematic = loadSchematics(new File(LegendHG.getInstance().getDataFolder(), schematicName + ".schematic"));
-            generateSchematic(world, loc, schematic);
+            loadSchematics(schematicFile);
+            generateSchematic(world, loc);
         } catch (IOException | DataException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void generateSchematic(World world, Location loc, Schematic schematic) {
-        short[] blocks = schematic.blocks;
-        byte[] blockData = schematic.data;
-        short length = schematic.length;
-        short width = schematic.width;
-        short height = schematic.height;
-
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                for (int z = 0; z < length; z++) {
-                    int index = y * width * length + z * width + x;
-                    Block block = new Location(world, x + loc.getX(), y + loc.getY(), z + loc.getZ()).getBlock();
-                    block.setTypeIdAndData(blocks[index], blockData[index], true);
-                }
-            }
-        }
-    }
-
-    private Schematic loadSchematics(File file) throws IOException, DataException {
+    private void loadSchematics(File file) throws IOException, DataException {
         Map<String, Tag> schematic = getMap(file);
         short width = (getChildTag(schematic, "Width", ShortTag.class)).getValue();
         short length = (getChildTag(schematic, "Length", ShortTag.class)).getValue();
@@ -76,7 +51,18 @@ public class Schematic {
                 blocks[index] = (short) (((addId[index >> 1] & 0xF0) << 4) + (blockId[index] & 0xFF));
             }
         }
-        return new Schematic(blocks, blockData, width, length, height);
+
+        this.blocks = blocks;
+        this.data = blockData;
+        this.width = width;
+        this.length = length;
+        this.height = height;
+        this.weOffsetX = (getChildTag(schematic, "WEOffsetX", IntTag.class)).getValue();
+        this.weOffsetY = (getChildTag(schematic, "WEOffsetY", IntTag.class)).getValue();
+        this.weOffsetZ = (getChildTag(schematic, "WEOffsetZ", IntTag.class)).getValue();
+        this.weOriginX = (getChildTag(schematic, "WEOriginX", IntTag.class)).getValue();
+        this.weOriginY = (getChildTag(schematic, "WEOriginY", IntTag.class)).getValue();
+        this.weOriginZ = (getChildTag(schematic, "WEOriginZ", IntTag.class)).getValue();
     }
 
     private static Map<String, Tag> getMap(File file) throws IOException {
@@ -90,6 +76,27 @@ public class Schematic {
                 throw new IllegalArgumentException("Schematic file is missing a \"Blocks\" tag");
             }
             return schematic;
+        }
+    }
+
+    private void generateSchematic(World world, Location loc) {
+        short[] blocks = this.blocks;
+        byte[] blockData = this.data;
+        short length = this.length;
+        short width = this.width;
+        short height = this.height;
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                for (int z = 0; z < length; z++) {
+                    int index = y * width * length + z * width + x;
+                    Block block = new Location(world, x + loc.getX() + weOffsetX, y + loc.getY() + weOffsetY, z + loc.getZ() + weOffsetZ).getBlock();
+                    if (blocks[index] == 0) {
+                        continue;
+                    }
+                    block.setTypeIdAndData(blocks[index], blockData[index], true);
+                }
+            }
         }
     }
 

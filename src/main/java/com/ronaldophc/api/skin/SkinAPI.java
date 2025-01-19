@@ -2,7 +2,7 @@ package com.ronaldophc.api.skin;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import com.ronaldophc.hook.MojangHook;
+import com.ronaldophc.player.PlayerService;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -26,7 +26,7 @@ public class SkinAPI {
     }
 
     public static boolean updatePlayerSkinFinal(Player player, String skinName) throws Exception {
-        Property texture = MojangHook.getSkinProperty(skinName);
+        Property texture = PlayerService.getSkinProperty(skinName);
         if (texture == null) {
             return false;
         }

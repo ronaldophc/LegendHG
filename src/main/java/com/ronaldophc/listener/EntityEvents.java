@@ -15,7 +15,9 @@ public class EntityEvents implements Listener {
     public void onDamage(EntityDamageEvent event) {
         if (event.isCancelled()) return;
 
-        if (!(event.getEntity() instanceof Player)) return;
+        if (!(event.getEntity() instanceof Player)) {
+            return;
+        }
 
         Player player = (Player) event.getEntity();
         Account playerAccount = AccountManager.getInstance().getOrCreateAccount(player);

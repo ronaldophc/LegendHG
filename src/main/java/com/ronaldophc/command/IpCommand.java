@@ -3,7 +3,7 @@ package com.ronaldophc.command;
 import com.ronaldophc.constant.MySQL.PlayerField;
 import com.ronaldophc.constant.MySQL.Tables;
 import com.ronaldophc.database.MySQLManager;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,7 +35,7 @@ public class IpCommand implements CommandExecutor {
                     return true;
                 }
 
-                commandSender.sendMessage(Util.color1 + "Ultimo IP usado por " + Util.color2 + name + Util.color1 + ": " + Util.color2 + ip);
+                commandSender.sendMessage(Util.admin + "Ultimo IP usado por " + Util.color2 + name + Util.admin + ": " + Util.color2 + ip);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

@@ -1,7 +1,7 @@
 package com.ronaldophc.kits.manager.guis;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.helper.ItemManager;
+import com.ronaldophc.util.ItemManager;
 import com.ronaldophc.kits.manager.KitManager;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.libs.jline.internal.Log;

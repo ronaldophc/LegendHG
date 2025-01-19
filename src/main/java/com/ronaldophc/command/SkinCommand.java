@@ -1,9 +1,9 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.api.skin.SkinAPI;
-import com.ronaldophc.helper.Helper;
-import com.ronaldophc.helper.Logger;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Helper;
+import com.ronaldophc.util.Logger;
+import com.ronaldophc.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

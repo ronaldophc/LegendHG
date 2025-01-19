@@ -8,7 +8,6 @@ public class RegisterCommands extends LegendHG {
 
     public static void registerCommands() {
         LegendHG instance = getInstance();
-        instance.getCommand("test").setExecutor(new TestCommand());
         instance.getCommand("gm").setExecutor(new GameModeCommand());
         instance.getCommand("countdown").setExecutor(new CountdownCommand());
         instance.getCommand("invincibility").setExecutor(new InvincibilityCommand());
@@ -16,11 +15,6 @@ public class RegisterCommands extends LegendHG {
         instance.getCommand("kick").setExecutor(new KickCommand());
         instance.getCommand("ping").setExecutor(new PingCommand());
         instance.getCommand("report").setExecutor(new ReportCommand());
-        instance.getCommand("reporthack").setExecutor(new ReportHack());
-        instance.getCommand("reportchat").setExecutor(new ReportChat());
-        instance.getCommand("reportfreekill").setExecutor(new ReportFreekill());
-        instance.getCommand("reportbugs").setExecutor(new ReportBugs());
-        instance.getCommand("reportother").setExecutor(new ReportOther());
         instance.getCommand("reports").setExecutor(new ReportMenus());
         instance.getCommand("kit").setExecutor(new KitCommand());
         instance.getCommand("kit2").setExecutor(new Kit2Command());
@@ -49,6 +43,9 @@ public class RegisterCommands extends LegendHG {
         instance.getCommand("lschematic").setExecutor(new SchematicCommand());
         instance.getCommand("rdc").setExecutor(new BattleOnTheSummitCommand());
         instance.getCommand("build").setExecutor(new BuildCommand());
+        instance.getCommand("vanish").setExecutor(new VanishCommand());
+        instance.getCommand("admin").setExecutor(new AdminCommand());
+        instance.getCommand("say").setExecutor(new SayCommand());
     }
 
 }

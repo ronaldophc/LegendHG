@@ -3,7 +3,8 @@ package com.ronaldophc.command;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
 import com.ronaldophc.feature.battleonthesummit.SummitManager;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.game.CountDown;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
@@ -23,7 +24,7 @@ public class BattleOnTheSummitCommand implements CommandExecutor {
 
             Player player = (Player) commandSender;
             GameState gameState = LegendHG.getGameStateManager().getGameState();
-            if (gameState != GameState.COUNTDOWN) {
+            if (gameState != GameState.COUNTDOWN || CountDown.getInstance().getRemainingTime() < 5) {
                 player.sendMessage("§cMinigame disponível apenas antes da partida iniciar!");
                 return true;
             }

@@ -2,8 +2,8 @@ package com.ronaldophc.command;
 
 import com.ronaldophc.database.PlayerSQL;
 import com.ronaldophc.feature.auth.AuthManager;
-import com.ronaldophc.helper.Logger;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Logger;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

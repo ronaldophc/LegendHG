@@ -1,6 +1,6 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,19 +24,19 @@ public class SoundCommand implements CommandExecutor, TabCompleter {
             }
 
             Player player = (Player) commandSender;
-            if (!commandSender.isOp() && !commandSender.hasPermission("legendhg.sounds")) {
+            if (!commandSender.isOp() && !commandSender.hasPermission("legendhg.admin.sounds")) {
                 commandSender.sendMessage(Util.noPermission);
                 return true;
             }
 
             if (strings.length == 0) {
-                player.sendMessage(Util.error + "Use /sound <som>");
+                player.sendMessage(Util.usage("Use /sound <som>"));
                 return true;
             }
 
             Sound sound = Sound.valueOf(strings[0]);
             player.playSound(player.getLocation(), sound, 1.0f, 1.0f);
-            player.sendMessage(Util.success + "Som " + sound + " tocado com sucesso!");
+            player.sendMessage(Util.admin + "Som " + sound + " tocado com sucesso!");
 
             return true;
         }

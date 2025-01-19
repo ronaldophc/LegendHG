@@ -5,7 +5,7 @@
 
     <groupId>com.ronaldophc</groupId>
     <artifactId>legendhg</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,6 +14,10 @@
     </properties>
 
     <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
         <repository>
             <id>enginehub-maven</id>
             <url>https://maven.enginehub.org/repo/</url>
@@ -33,13 +37,11 @@
     </repositories>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>LibsDisguises</groupId>-->
-<!--            <artifactId>LibsDisguises</artifactId>-->
-<!--            <version>8.6.7</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${project.basedir}/src/main/resources/LibsDisguises.jar</systemPath>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.9</version>
+        </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
@@ -69,6 +71,11 @@
             <version>1.18.22</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.9.3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -86,7 +93,7 @@
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.0.2</version>
                     <configuration>
-                        <outputDirectory>/home/ronaldo/Documents/IntelliJ/DockerLegendHG/servers/sportpaper/plugins
+                        <outputDirectory>/home/ronaldo/Documents/LegendPlugins/DockerLegendHG/servers/sportpaper/plugins
                         </outputDirectory>
                     </configuration>
                 </plugin>

@@ -1,7 +1,7 @@
 package com.ronaldophc.setting;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.helper.Logger;
+import com.ronaldophc.util.Logger;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

@@ -1,6 +1,6 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
@@ -66,7 +66,7 @@ public class TellCommand implements CommandExecutor, TabCompleter {
 
             StringBuilder message = new StringBuilder();
             for (int i = 1; i < strings.length; i++) {
-                message.append(strings[i]).append(" ");
+                message.append(strings[i].replaceAll("&", "§")).append(" ");
             }
 
             if (!account.isTell()) {

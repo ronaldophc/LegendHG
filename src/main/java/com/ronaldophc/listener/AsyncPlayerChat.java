@@ -2,7 +2,7 @@ package com.ronaldophc.listener;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.Tags;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
@@ -81,6 +81,10 @@ public class AsyncPlayerChat implements Listener {
 
         for (String word : blockedWords) {
             message = message.replaceAll("(?i)\\b" + word + "\\b", new String(new char[word.length()]).replace("\0", "*"));
+        }
+
+        if (player.hasPermission("legendhg.chat.color")) {
+            message = message.replaceAll("&", "§");
         }
 
         Tags tag = account.getTag();

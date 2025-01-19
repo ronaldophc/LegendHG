@@ -1,14 +1,17 @@
 package com.ronaldophc.register;
 
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.api.cooldown.CooldownAPI;
+import com.ronaldophc.feature.admin.AdminListener;
 import com.ronaldophc.feature.battleonthesummit.SummitListener;
-import com.ronaldophc.listener.PrefsInventoryListener;
+import com.ronaldophc.game.CountDown;
 import com.ronaldophc.kits.manager.guis.KitGuiListener;
 import com.ronaldophc.listener.*;
 import com.ronaldophc.listener.states.CountdownListener;
 import com.ronaldophc.listener.states.FinishedListener;
 import com.ronaldophc.listener.states.InvicibilityListener;
 import com.ronaldophc.listener.states.RunningListener;
+import com.ronaldophc.player.PlayerPreLogin;
 import com.ronaldophc.player.listener.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -49,6 +52,10 @@ public class RegisterEvents extends LegendHG {
         pm.registerEvents(new BlockNewVersionListener(), getInstance());
         pm.registerEvents(new PrefsInventoryListener(), getInstance());
         pm.registerEvents(new SummitListener(), getInstance());
+        pm.registerEvents(CooldownAPI.getInstance(), getInstance());
+        pm.registerEvents(CountDown.getInstance(), getInstance());
+        pm.registerEvents(new AdminListener(), getInstance());
+        pm.registerEvents(new PlayerPreLogin(), getInstance());
     }
 
     public static void registerRecipes() {
@@ -66,6 +73,7 @@ public class RegisterEvents extends LegendHG {
         cactus.addIngredient(1, Material.CACTUS);
         cactus.addIngredient(1, Material.BOWL);
 
+        // Cocoa Bean
         ShapelessRecipe cocoa = new ShapelessRecipe(soup);
         cocoa.addIngredient(1, new MaterialData(Material.INK_SACK, (byte) 3));
         cocoa.addIngredient(1, Material.BOWL);

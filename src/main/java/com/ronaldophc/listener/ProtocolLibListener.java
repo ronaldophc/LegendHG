@@ -1,4 +1,4 @@
-package com.ronaldophc.hook;
+package com.ronaldophc.listener;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -24,7 +24,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.UUID;
 
-public class ProtocolLibHook {
+public class ProtocolLibListener {
 
     public static void register() {
         ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();

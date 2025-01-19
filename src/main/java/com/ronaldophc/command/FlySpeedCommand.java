@@ -1,6 +1,6 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,7 +36,7 @@ public class FlySpeedCommand implements CommandExecutor {
                     return true;
                 }
                 player.setFlySpeed(speed);
-                player.sendMessage(Util.success + "Velocidade de voo alterada para " + speed);
+                player.sendMessage(Util.admin + "Velocidade de voo alterada para " + speed);
                 return true;
             } catch (NumberFormatException e) {
                 player.sendMessage(Util.error + "A velocidade deve ser um número");

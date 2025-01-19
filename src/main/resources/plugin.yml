@@ -6,6 +6,11 @@ api-version: 1.8.8
 load: POSTWORLD
 softdepend: [ ProtocolLib ]
 commands:
+    say:
+    admin:
+    vanish:
+        description: Command to vanish
+        usage: /vanish
     build:
         description: Command to change the build
         usage: /build
@@ -28,9 +33,6 @@ commands:
         description: Command to control state invincibility
         usage: /invincibility <set:start> <seconds>
         aliases: [invi]
-    test:
-        description: Command to test
-        usage: /test
     invsee:
         description: Command to see inventory of player
         usage: /invsee <player>

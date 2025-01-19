@@ -27,11 +27,6 @@ public class RegisterKitsEvents {
                 if (!clazz.isInterface() && !Modifier.isAbstract(clazz.getModifiers())) {
                     Kit kit = clazz.getDeclaredConstructor().newInstance();
 
-                    if (kitManager == null) {
-                        LegendHG.logger.severe("KitManager is null");
-                        continue;
-                    }
-
                     kitManager.registerKit(kit, plugin);
                 }
             }

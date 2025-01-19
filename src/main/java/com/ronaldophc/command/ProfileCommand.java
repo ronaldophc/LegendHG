@@ -1,6 +1,6 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
@@ -32,14 +32,17 @@ public class ProfileCommand implements CommandExecutor {
             player.sendMessage("§aisSpec: §f" + account.isSpectator());
             player.sendMessage("§aVersion: §f" + account.getVersion());
             player.sendMessage("§aScore: §f" + account.getScore());
-            player.sendMessage("§aKit 1: §f" + account.getKits().getPrimary());
-            player.sendMessage("§aKit 2: §f" + account.getKits().getSecondary());
+            player.sendMessage("§aKit 1: §f" + account.getKits().getPrimary().getName());
+            player.sendMessage("§aKit 2: §f" + account.getKits().getSecondary().getName());
             player.sendMessage("§aChat: §f" + account.isChat());
             player.sendMessage("§aTell: §f" + account.isTell());
+            player.sendMessage("§aVanish: §f" + account.isVanish());
+            player.sendMessage("§aBuild: §f" + account.isBuild());
+            player.sendMessage("§aSeeSpecs: §f" + account.isSeeSpecs());
             player.sendMessage(AccountManager.getInstance().getPlayersAlive().toString());
 
             return true;
         }
-        return false;
+        return true;
     }
 }

@@ -1,6 +1,6 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -31,12 +31,12 @@ public class GameModeCommand implements CommandExecutor {
             if (strings.length == 1) {
                 if (strings[0].equalsIgnoreCase("0")) {
                     player.setGameMode(GameMode.SURVIVAL);
-                    player.sendMessage(Util.success + "Alterado para sobrevivencia");
+                    player.sendMessage(Util.admin + "Alterado para sobrevivencia");
                     return true;
                 }
                 if (strings[0].equalsIgnoreCase("1")) {
                     player.setGameMode(GameMode.CREATIVE);
-                    player.sendMessage(Util.success + "Alterado para criativo");
+                    player.sendMessage(Util.admin + "Alterado para criativo");
                     return true;
                 }
                 player.sendMessage(Util.usage("/gm <0|1> <player>"));
@@ -51,12 +51,12 @@ public class GameModeCommand implements CommandExecutor {
                 try {
                     if (strings[0].equalsIgnoreCase("0")) {
                         target.setGameMode(GameMode.SURVIVAL);
-                        player.sendMessage(Util.success + "Alterado " + Util.color3 + target.getName() + Util.success + "para sobrevivencia");
+                        player.sendMessage(Util.admin + "Alterado " + Util.color3 + target.getName() + Util.success + "para sobrevivencia");
                         return true;
                     }
                     if (strings[0].equalsIgnoreCase("1")) {
                         target.setGameMode(GameMode.CREATIVE);
-                        player.sendMessage(Util.success + "Alterado " + Util.color3 + target.getName() + Util.success + " para criativo");
+                        player.sendMessage(Util.admin + "Alterado " + Util.color3 + target.getName() + Util.success + " para criativo");
                         return true;
                     }
                 } catch (Exception e) {

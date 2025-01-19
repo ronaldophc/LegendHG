@@ -2,7 +2,7 @@ package com.ronaldophc.command;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.feature.FeastManager;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -53,6 +53,7 @@ public class FeastCommand implements CommandExecutor {
             if (strings.length == 1) {
                 if (strings[0].equalsIgnoreCase("redo")) {
                     feast.createBlocks();
+                    commandSender.sendMessage(Util.admin + "Feast refeito");
                     return true;
                 }
             }

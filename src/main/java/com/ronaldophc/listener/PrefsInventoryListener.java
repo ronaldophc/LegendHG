@@ -1,7 +1,7 @@
 package com.ronaldophc.listener;
 
 import com.ronaldophc.constant.CooldownType;
-import com.ronaldophc.feature.prefs.PrefsService;
+import com.ronaldophc.feature.PrefsService;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;

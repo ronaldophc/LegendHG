@@ -2,11 +2,10 @@ package com.ronaldophc.feature.auth;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -64,10 +63,6 @@ public class AuthManager {
                 break;
         }
 
-        if (player.getName().equalsIgnoreCase("PHC02") || player.getName().equalsIgnoreCase("Ronaldinho")) {
-            account.setBuild(true);
-            player.setGameMode(GameMode.CREATIVE);
-        }
     }
 
     public static void kickPlayersNotLoggedIn() {

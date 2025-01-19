@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ronaldophc</groupId>
   <artifactId>legendhg</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.1-SNAPSHOT</version>
   <build>
     <pluginManagement>
       <plugins>
@@ -19,7 +19,7 @@
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
           <configuration>
-            <outputDirectory>/home/ronaldo/Documents/IntelliJ/DockerLegendHG/servers/sportpaper/plugins</outputDirectory>
+            <outputDirectory>/home/ronaldo/Documents/LegendPlugins/DockerLegendHG/servers/sportpaper/plugins</outputDirectory>
           </configuration>
         </plugin>
       </plugins>
@@ -40,6 +40,10 @@
     </plugins>
   </build>
   <repositories>
+    <repository>
+      <id>central</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
     <repository>
       <id>enginehub-maven</id>
       <url>https://maven.enginehub.org/repo/</url>

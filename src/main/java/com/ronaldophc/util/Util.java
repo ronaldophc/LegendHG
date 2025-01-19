@@ -1,4 +1,4 @@
-package com.ronaldophc.helper;
+package com.ronaldophc.util;
 
 import com.ronaldophc.LegendHG;
 import org.bukkit.Bukkit;
@@ -31,6 +31,7 @@ public class Util {
     public static String color2 = "§f";
     public static String color3 = "§e";
     public static String success = "§a";
+    public static String admin = "§d";
     public static String error = "§c";
     public static String errorServer = "§4";
     public static String title = "§b§lLegendHG";

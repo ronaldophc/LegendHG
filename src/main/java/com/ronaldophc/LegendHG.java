@@ -1,18 +1,16 @@
 package com.ronaldophc;
 
 import com.ronaldophc.api.border.BorderAPI;
-import com.ronaldophc.api.cooldown.CooldownAPI;
 import com.ronaldophc.api.scoreboard.Board;
 import com.ronaldophc.database.GameSQL;
 import com.ronaldophc.database.MySQLManager;
 import com.ronaldophc.feature.FeastManager;
 import com.ronaldophc.feature.battleonthesummit.SummitManager;
-import com.ronaldophc.game.CountDown;
 import com.ronaldophc.game.GameStateManager;
-import com.ronaldophc.hook.ProtocolLibHook;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.kits.registry.gladiator.GladiatorController;
 import com.ronaldophc.listener.Motd;
+import com.ronaldophc.listener.ProtocolLibListener;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.register.RegisterCommands;
@@ -20,10 +18,11 @@ import com.ronaldophc.register.RegisterEvents;
 import com.ronaldophc.register.RegisterKitsEvents;
 import com.ronaldophc.setting.Debug;
 import com.ronaldophc.setting.Settings;
-import com.ronaldophc.task.MainTask;
+import com.ronaldophc.task.FastTask;
+import com.ronaldophc.task.NormalTask;
+import com.ronaldophc.util.Helper;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -35,14 +34,14 @@ public class LegendHG extends JavaPlugin {
     public static Logger logger;
     public GameStateManager gameStateManager;
     public KitManager kitManager;
-    private BukkitTask mainTask;
-    private BukkitTask countDownTask;
-    private BukkitTask cooldownKits;
+    private BukkitTask fastTask;
+    private BukkitTask normalTask;
     private MySQLManager mySQLManager;
     private GladiatorController gladiatorController;
     public FeastManager feast;
     private Board board;
     public boolean started = false;
+    public boolean devMode = false;
     @Getter
     private static int gameId;
 
@@ -59,17 +58,20 @@ public class LegendHG extends JavaPlugin {
         Settings.getInstance().load();
         Debug.getInstance().load();
 
-        if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
-            ProtocolLibHook.register();
-            logger.info("ProtocolLib is enabled.");
+        if (Settings.getInstance().getString("Environment").equalsIgnoreCase("dev")) {
+            devMode = true;
         }
 
-        PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new Motd(), getInstance());
+        ProtocolLibListener.register();
+        logger.info("ProtocolLib is enabled.");
 
-        logger.info("Loading Chunks -400 | 400");
-//        Helper.killEntitysNewVersion();
-//        Helper.loadChunks(-400, 400, -400, 400);
+        Bukkit.getPluginManager().registerEvents(new Motd(), getInstance());
+
+        if (!devMode) {
+            logger.info("Loading Chunks -400 | 400");
+            Helper.killEntitysNewVersion();
+            Helper.loadChunks(-400, 400, -400, 400);
+        }
 
         kitManager = new KitManager();
         mySQLManager = new MySQLManager();
@@ -91,28 +93,25 @@ public class LegendHG extends JavaPlugin {
 
         gameStateManager = new GameStateManager();
         board = new Board();
-        countDownTask = getServer().getScheduler().runTaskTimer(this, CountDown.getInstance(), 0, 20);
-        mainTask = getServer().getScheduler().runTaskTimer(this, MainTask.getInstance(), 0, 10);
-        cooldownKits = getServer().getScheduler().runTaskTimer(this, CooldownAPI.getInstance(), 0, 20);
+        fastTask = getServer().getScheduler().runTaskTimer(this, FastTask.getInstance(), 0, 10);
+        normalTask = getServer().getScheduler().runTaskTimer(this, NormalTask.getInstance(), 0, 20);
         feast = new FeastManager();
         gladiatorController = new GladiatorController();
 
         BorderAPI.setWorldBorder();
         SummitManager.getInstance().initialize();
+
         started = true;
         logger.info("LegendHG enabled");
     }
 
     @Override
     public void onDisable() {
-        if (countDownTask != null) {
-            countDownTask.cancel();
+        if (normalTask != null) {
+            normalTask.cancel();
         }
-        if (mainTask != null) {
-            mainTask.cancel();
-        }
-        if (cooldownKits != null) {
-            cooldownKits.cancel();
+        if (fastTask != null) {
+            fastTask.cancel();
         }
         AccountManager.getInstance().getAccounts().forEach(Account::quitPlayer);
         logger.info("LegendHG disabled");

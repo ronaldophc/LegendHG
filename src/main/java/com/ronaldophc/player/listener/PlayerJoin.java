@@ -3,9 +3,9 @@ package com.ronaldophc.player.listener;
 import com.ronaldophc.api.skin.SkinAPI;
 import com.ronaldophc.api.title.TitleAPI;
 import com.ronaldophc.database.PlayerSQL;
-import com.ronaldophc.helper.Helper;
-import com.ronaldophc.helper.Logger;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Helper;
+import com.ronaldophc.util.Logger;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
@@ -23,8 +23,8 @@ public class PlayerJoin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) throws SQLException {
         Player player = event.getPlayer();
 
-        UUID uuid = player.getUniqueId();
         Account account = AccountManager.getInstance().getOrCreateAccount(player);
+        UUID uuid = account.getUUID();
 
         if (!(player.isOp())) {
             Helper.injectPlayerNotTabComplete(player);
@@ -48,7 +48,7 @@ public class PlayerJoin implements Listener {
             PlayerHelper.teleportPlayerToSpawnLocation(player);
         }
 
-        event.setJoinMessage(Util.color2 + "[+] " + Util.color1 + account.getActualName());
+        event.setJoinMessage(Util.color3 + account.getActualName() + " entrou!");
 
         if (account.isLoggedIn()) {
             return;

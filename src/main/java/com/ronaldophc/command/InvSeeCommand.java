@@ -1,6 +1,6 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -52,7 +52,7 @@ public class InvSeeCommand implements CommandExecutor, TabCompleter {
             if (strings.length == 1) {
                 try {
                     Player target = player.getServer().getPlayer(strings[0]);
-                    player.sendMessage(Util.color1 + "Abrindo inventario de " + Util.color2 + target.getName());
+                    player.sendMessage(Util.admin + "Abrindo inventario de " + Util.color2 + target.getName());
                     player.openInventory(target.getInventory());
                 } catch (Exception e) {
                     player.sendMessage(Util.noPlayer);

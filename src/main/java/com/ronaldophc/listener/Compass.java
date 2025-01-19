@@ -1,6 +1,7 @@
 package com.ronaldophc.listener;
 
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
+import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,9 +16,11 @@ public class Compass implements Listener {
     public void onInteractCompass(PlayerInteractEvent event) {
         if (event.getItem() == null) return;
         if (event.getItem().getType() != Material.COMPASS) return;
+        Player player = event.getPlayer();
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
+        if (!account.isAlive() || account.isVanish()) return;
         if (event.getAction() != Action.PHYSICAL) {
             Player target = getTarget(event.getPlayer());
-            Player player = event.getPlayer();
             if (target == null) {
                 player.sendMessage(Util.color1 + "Nenhum jogador foi encontrado.");
                 return;

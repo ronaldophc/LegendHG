@@ -3,7 +3,7 @@ package com.ronaldophc.player.listener;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.api.bossbar.BossBarAPI;
 import com.ronaldophc.feature.battleonthesummit.SummitManager;
-import com.ronaldophc.helper.GameHelper;
+import com.ronaldophc.game.GameHelper;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.player.account.Account;

@@ -2,23 +2,22 @@ package com.ronaldophc.feature.battleonthesummit;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.feature.Schematic;
-import com.ronaldophc.helper.Helper;
-import com.ronaldophc.helper.ItemManager;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Helper;
+import com.ronaldophc.util.ItemManager;
+import com.ronaldophc.util.Util;
+import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 @Getter
 public class SummitManager {
@@ -40,32 +39,18 @@ public class SummitManager {
 
     public void initialize() {
         LegendHG.logger.info("Initializing SummitManager");
-//        Helper.loadChunks(750, 1250, 750, 1250);
-//        Helper.clearBlocks(750, 1250, 750, 1250, 0, 120);
+        if (!LegendHG.getInstance().devMode) {
+            Helper.loadChunks(750, 1250, 750, 1250);
+//            Helper.clearBlocks(750, 1250, 750, 1250, 0, 120);
+        }
         createSchematic();
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                Iterator<Account> iterator = accounts.iterator();
-                while (iterator.hasNext()) {
-                    Account account = iterator.next();
-                    Player player = account.getPlayer();
-                    if (!player.isOnline()) {
-                        iterator.remove();
-                        continue;
-                    }
-                    if (player.getLocation().getY() < 20) {
-                        playerLose(player);
-                    }
-                }
-            }
-        }.runTaskTimer(LegendHG.getInstance(), 0L, 20L);
         LegendHG.logger.info("Initialized SummitManager successfully");
     }
 
     public void createSchematic() {
-        Schematic.getInstance().createSchematic(location.getWorld(), location, "RDC");
+        File schematicFile = new File(LegendHG.getInstance().getDataFolder(), "RDC.schematic");
+        Schematic.getInstance().createSchematic(location.getWorld(), location, schematicFile);
     }
 
     public void playerJoin(Player player) {
@@ -79,15 +64,24 @@ public class SummitManager {
         player.getInventory().addItem(kangarooItem, switcherItem, grandpaItem);
         player.updateInventory();
         accounts.add(account);
-        player.teleport(location.clone().add(37, 82, 38));
+        int random = new Random().nextInt(14);
+        player.teleport(location.clone().add(random, 0, random));
+
+        player.playSound(player.getLocation(), Sound.CAT_MEOW, 1.0f, 1.0f);
+        player.getWorld().playEffect(player.getLocation(), Effect.HAPPY_VILLAGER,  1, 2);
+
+        player.sendMessage(Util.color3 + "Você entrou no minigame RDC, derrube os outros e ganhe pontos!");
+        player.sendMessage(Util.color3 + "Para sair digite /rdc");
     }
 
     public void playerLose(Player player) {
         Account account = AccountManager.getInstance().getOrCreateAccount(player);
-        if (!accounts.contains(account)) {
+        if (!this.accounts.contains(account)) {
             return;
         }
 
+        PlayerHelper.resetPlayerState(player);
+        PlayerHelper.addStartItens(player);
         accounts.remove(account);
         player.teleport(Bukkit.getWorld("world").getSpawnLocation());
     }

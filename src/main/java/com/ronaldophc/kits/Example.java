@@ -1,7 +1,7 @@
 package com.ronaldophc.kits;
 
-import com.ronaldophc.helper.ItemManager;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.ItemManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.Material;
 
 import java.util.Arrays;

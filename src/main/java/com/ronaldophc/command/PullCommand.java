@@ -1,6 +1,6 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,7 +24,7 @@ public class PullCommand implements CommandExecutor {
 
             Player player = (Player) commandSender;
 
-            if (!commandSender.isOp() && !commandSender.hasPermission("legendhg.admin.flyspeed")) {
+            if (!commandSender.isOp() && !commandSender.hasPermission("legendhg.admin.pull")) {
                 commandSender.sendMessage(Util.noPermission);
                 return true;
             }
@@ -50,8 +50,8 @@ public class PullCommand implements CommandExecutor {
                 }
 
                 target.teleport(player);
-                target.sendMessage(Util.success + "Você foi puxado por " + player.getName());
-                player.sendMessage(Util.success + "Jogador puxado");
+                target.sendMessage(Util.admin + "Você foi puxado por " + player.getName());
+                player.sendMessage(Util.admin + "Jogador puxado");
 
             } catch (NumberFormatException e) {
                 player.sendMessage(Util.error + "Jogador não encontrado");

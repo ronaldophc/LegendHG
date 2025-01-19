@@ -1,7 +1,7 @@
 package com.ronaldophc.database;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.helper.Logger;
+import com.ronaldophc.util.Logger;
 import com.ronaldophc.setting.Settings;
 import lombok.Getter;
 
@@ -35,7 +35,7 @@ public class MySQLManager {
     public static Connection getConnection() throws SQLException {
         try {
 
-            if (connection != null && !connection.isClosed()) {
+            if (connection != null && !connection.isClosed() && connection.isValid(0)) {
                 return connection;
             }
 
@@ -78,9 +78,37 @@ public class MySQLManager {
 
             sql = "UPDATE player_login SET logged_in = false";
             statement.execute(sql);
+
+            // Create bans table with additional columns
+            // Create bans table with additional columns
+            sql = "CREATE TABLE IF NOT EXISTS bans (" +
+                    "uuid VARCHAR(36) PRIMARY KEY, " +
+                    "end_time BIGINT NOT NULL, " +
+                    "banned_by VARCHAR(36), " +
+                    "reason TEXT, " +
+                    "banned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+            statement.execute(sql);
+
+            // Create mutes table with additional columns
+            sql = "CREATE TABLE IF NOT EXISTS mutes (" +
+                    "uuid VARCHAR(36) PRIMARY KEY, " +
+                    "end_time BIGINT NOT NULL, " +
+                    "muted_by VARCHAR(36), " +
+                    "reason TEXT, " +
+                    "muted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+            statement.execute(sql);
+
+            // Create IP bans table
+            sql = "CREATE TABLE IF NOT EXISTS ip_bans (" +
+                    "ip_address VARCHAR(45) PRIMARY KEY, " +
+                    "end_time BIGINT NOT NULL, " +
+                    "banned_by VARCHAR(36), " +
+                    "reason TEXT, " +
+                    "banned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+            statement.execute(sql);
         } catch (SQLException e) {
             Logger.logError(e.getMessage());
-            LegendHG.logger.info("Failed to create table MYSQL");
+            LegendHG.logger.info("Failed to create tables MYSQL");
         }
     }
 

@@ -30,11 +30,6 @@ public class BlockNewVersionListener implements Listener {
             event.getPlayer().sendMessage("§cBlocos da 1.8 não é permitido no servidor!");
         }
 
-        // Cancelar funcionalidade de esponja absorvendo água
-//        if (block == Material.SPONGE) {
-//            event.setCancelled(true);
-//            event.getPlayer().sendMessage("§cA funcionalidade da esponja foi desativada!");
-//        }
     }
 
     // Bloquear entidades exclusivas da 1.8

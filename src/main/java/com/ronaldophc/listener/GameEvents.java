@@ -3,6 +3,7 @@ package com.ronaldophc.listener;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.setting.Settings;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,12 +36,15 @@ public class GameEvents implements Listener {
     public void onInventoryOpen(InventoryOpenEvent event) {
         if (LegendHG.getGameStateManager().getGameState() == GameState.COUNTDOWN
                 || AccountManager.getInstance().getOrCreateAccount((Player) event.getPlayer()).isSpectator()) {
-            String[] titles = {"Kit", "Ajustes", "Status"};
             if (event.getInventory().getType() == InventoryType.CHEST) {
+                String[] titles = {"Kit", "Ajustes", "Status", "Players"};
                 for (String title : titles) {
                     if (event.getInventory().getTitle().contains(title)) {
                         return;
                     }
+                }
+                if (Settings.getInstance().getString("Environment").equalsIgnoreCase("dev")) {
+                    event.getPlayer().sendMessage("§c§l[!] Dev mode on: §cVocê não pode abrir este inventário agora.");
                 }
                 event.setCancelled(true);
             }

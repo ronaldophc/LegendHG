@@ -2,7 +2,8 @@ package com.ronaldophc.listener.states;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
-import com.ronaldophc.feature.prefs.PrefsService;
+import com.ronaldophc.feature.PrefsService;
+import com.ronaldophc.feature.battleonthesummit.SummitManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,6 +33,10 @@ public class CountdownListener implements Listener {
             if (item.getType() == Material.NAME_TAG && item.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Ajustes")) {
                 PrefsService.openPrefsMenu(player);
             }
+            if (item.getType() == Material.BLAZE_ROD && item.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Minigame")) {
+                SummitManager.getInstance().playerJoin(player);
+            }
         }
     }
+
 }

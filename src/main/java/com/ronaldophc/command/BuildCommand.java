@@ -1,6 +1,6 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
@@ -30,7 +30,7 @@ public class BuildCommand implements CommandExecutor {
             account.setBuild(!isBuilding);
 
             String active = isBuilding ? "desativou" : "ativou";
-            player.sendMessage(Util.title + " §8» §fVocê " + active + " a construção.");
+            player.sendMessage(Util.admin + "Você " + active + " a construção.");
 
             return true;
         }

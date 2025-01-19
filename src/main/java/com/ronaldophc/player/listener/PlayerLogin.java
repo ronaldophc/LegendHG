@@ -2,7 +2,7 @@ package com.ronaldophc.player.listener;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.setting.Settings;
 import org.bukkit.entity.Player;
@@ -25,19 +25,19 @@ public class PlayerLogin implements Listener {
         switch (gameState) {
             case COUNTDOWN:
                 if (playersOn >= maxPlayers && (!player.hasPermission(permMax)) && !player.isOp())
-                    event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Util.color1 + "Apenas" + Util.color2 + " VIP " + Util.color1 + "pode entrar com o servidor cheio!!");
+                    event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Util.title + "\n\n" + Util.success + Util.bold + "Apenas" + Util.color2 + Util.bold + " VIP " + Util.success + Util.bold + "pode entrar com o servidor cheio!!");
                 break;
 
             case INVINCIBILITY:
                 if (player.isOp()) return;
                 if (player.hasPermission(permLogin)) return;
-                event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Util.color1 + "Apenas" + Util.color2 + " VIP " + Util.color1 + "pode entrar depois que a partida iniciou!");
+                event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Util.title + "\n\n" + Util.success + Util.bold + "Apenas" + Util.color2 + Util.bold + " VIP " + Util.success + Util.bold + "pode entrar depois que a partida iniciou!");
                 break;
 
             default:
                 if (player.isOp()) return;
                 if (!player.hasPermission(permSpec)) {
-                    event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Util.color1 + " O jogo já começou, para assistir se torne VIP!");
+                    event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Util.title + "\n\n" + Util.success + Util.bold + " O jogo já começou, para assistir se torne VIP!");
                 }
                 break;
         }

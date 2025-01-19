@@ -1,7 +1,7 @@
 package com.ronaldophc.game;
 
 import com.ronaldophc.constant.GameState;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.setting.Settings;
 import lombok.Getter;
 import org.bukkit.Bukkit;

@@ -1,7 +1,7 @@
 package com.ronaldophc.feature;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.kits.registry.gladiator.GladiatorController;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -71,6 +71,7 @@ public class FeastManager {
                 }
                 if (time <= 0) {
                     spawnChests();
+                    cancel();
                 }
             }
         }.runTaskTimer(LegendHG.getInstance(), 0, 20);

@@ -1,8 +1,8 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.constant.Tags;
-import com.ronaldophc.helper.Helper;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Helper;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import net.md_5.bungee.api.ChatColor;

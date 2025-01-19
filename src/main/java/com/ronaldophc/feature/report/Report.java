@@ -1,7 +1,7 @@
 package com.ronaldophc.feature.report;
 
 import com.ronaldophc.constant.ReportEnum;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
@@ -19,10 +19,11 @@ public class Report {
         connection.sendPacket(new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(json)));
     }
 
-    public static void sendNotification() {
-        for(Player player : Bukkit.getOnlinePlayers()) {
-            if(player.hasPermission("legendhg.admin.report")) {
-                player.sendMessage(Util.success + "Chegou um novo Report, use /reports para ver!");
+    public static void sendNotification(Player reported, String reason) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (player.hasPermission("legendhg.admin.report")) {
+//                player.sendMessage(Util.success + "Chegou um novo Report, use /reports para ver!");
+                player.sendMessage(Util.success + "Chegou um novo Report!");
             }
         }
     }

@@ -1,6 +1,9 @@
 package com.ronaldophc.api.border;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 
 public class BorderAPI {
 
@@ -53,9 +56,10 @@ public class BorderAPI {
             int y = world.getHighestBlockYAt(0, 0);
             world.setSpawnLocation(0, y, 0);
 
-            WorldBorder border = world.getWorldBorder();
-            border.setCenter(0, 0);
-            border.setSize(700);
+//            WorldBorder border = world.getWorldBorder();
+//            border.setCenter(0, 0);
+//            border.setSize(700);
+            generateBorder(world, -376, 375);
         }
     }
 }

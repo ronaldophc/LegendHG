@@ -6,13 +6,16 @@ import com.ronaldophc.constant.MySQL.Tables;
 import com.ronaldophc.constant.Scores;
 import com.ronaldophc.constant.Tags;
 import com.ronaldophc.feature.auth.AuthManager;
-import com.ronaldophc.helper.Logger;
+import com.ronaldophc.util.Logger;
+import com.ronaldophc.player.account.Account;
+import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class PlayerSQL {
 
@@ -20,8 +23,10 @@ public class PlayerSQL {
         if (!MySQLManager.isActive()) return;
         if (!isPlayerRegistered(player)) {
 
+            Account account = AccountManager.getInstance().getOrCreateAccount(player);
+
             Connection connection = MySQLManager.getConnection();
-            String uuid = player.getUniqueId().toString();
+            String uuid = account.getUUID().toString();
             String name = player.getName();
             String hashedPassword = AuthManager.hashPassword(password);
             String scoreboard = String.valueOf(Scores.COMPLETE);
@@ -261,6 +266,31 @@ public class PlayerSQL {
 
                 preparedStatement.close();
                 return Tags.NORMAL;
+            }
+        } catch (SQLException e) {
+            Logger.logError("Failed to retrieve player kills: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public static UUID getPlayerUUID(Player player) throws SQLException {
+        if (!MySQLManager.isActive()) return null;
+        String query = "SELECT uuid FROM players WHERE name = ?";
+        String name = player.getName();
+        Connection connection = MySQLManager.getConnection();
+
+        try {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, name);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    return UUID.fromString(resultSet.getString("uuid"));
+                }
+
+                preparedStatement.close();
+                return null;
             }
         } catch (SQLException e) {
             Logger.logError("Failed to retrieve player kills: " + e.getMessage());

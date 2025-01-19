@@ -1,8 +1,8 @@
 package com.ronaldophc.kits.registry;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.helper.ItemManager;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.ItemManager;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.registry.gladiator.GladiatorController;
 import com.ronaldophc.player.account.Account;

@@ -17,6 +17,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
@@ -50,9 +51,16 @@ public class SummitListener implements Listener {
         if (!SummitManager.getInstance().getAccounts().contains(account)) {
             return;
         }
-        if (player.getLocation().getY() < 20) {
+        if (player.getLocation().getY() < 90) {
             SummitManager.getInstance().playerLose(player);
         }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
+        SummitManager.getInstance().getAccounts().remove(account);
     }
 
     // ------------- KANGAROO ---------------- //

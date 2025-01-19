@@ -1,8 +1,8 @@
 package com.ronaldophc.player;
 
-import com.ronaldophc.helper.GameHelper;
-import com.ronaldophc.helper.ItemManager;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.game.GameHelper;
+import com.ronaldophc.util.ItemManager;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.setting.Settings;
@@ -53,6 +53,9 @@ public class PlayerHelper {
 
     public static void addItemsToStartGame(Player player) {
         Account account = AccountManager.getInstance().getOrCreateAccount(player);
+        account.setVanish(false);
+        account.setBuild(false);
+        account.setSeeSpecs(false);
         player.getInventory().clear();
         if (!player.getInventory().contains(Material.COMPASS)) {
             player.getInventory().addItem(new ItemStack(Material.COMPASS));

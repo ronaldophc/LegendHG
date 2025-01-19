@@ -1,7 +1,7 @@
 package com.ronaldophc.listener;
 
 import com.ronaldophc.api.tablist.TabListAPI;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,7 +17,7 @@ public class TabListener implements Listener {
 
     public void build(Player player) {
         TabListAPI.setHeaderAndFooter(player,
-                Util.bold + Util.color1 + "LegendHG\n" + Util.color1 + "legendhg.com.br",
-                Util.color2 + "Discord: " + Util.color1 + "Discord.gg\n" + Util.color2 + "Site: " + Util.color1 + "§bLegendhg.com.br");
+                Util.bold + Util.color1 + "LegendHG\n" + Util.color1 + "legendmc.com.br",
+                Util.color2 + "Discord: " + Util.color1 + "Discord.gg\n" + Util.color2 + "Site: " + Util.color1 + "§bLegendmc.com.br");
     }
 }

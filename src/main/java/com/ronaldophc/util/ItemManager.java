@@ -1,4 +1,4 @@
-package com.ronaldophc.helper;
+package com.ronaldophc.util;
 
 import lombok.Getter;
 import lombok.Setter;

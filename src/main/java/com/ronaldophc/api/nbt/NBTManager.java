@@ -1,6 +1,5 @@
 package com.ronaldophc.api.nbt;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class NBTManager {
@@ -29,7 +28,7 @@ public class NBTManager {
 
     // -------------- Example ------------------ //
 
-        ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
+//        ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
 
 //        // Adicionar uma tag NBT
 //        item = NBTManager.addNBTTag(item, "CustomTag", "MyCustomValue");

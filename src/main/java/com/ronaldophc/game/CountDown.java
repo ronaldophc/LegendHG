@@ -2,16 +2,21 @@ package com.ronaldophc.game;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.feature.MiniFeastManager;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.feature.battleonthesummit.SummitManager;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.setting.Settings;
+import com.ronaldophc.task.NormalServerTickEvent;
+import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
-public class CountDown implements Runnable {
+public class CountDown implements Listener {
 
-    private static final CountDown instance = new CountDown();
+    private static CountDown instance;
     private int countdownRemaining;
     private final int feast;
     private final LegendHG plugin;
@@ -22,8 +27,12 @@ public class CountDown implements Runnable {
         this.feast = Settings.getInstance().getInt("Feast");
     }
 
-    @Override
-    public void run() {
+    @EventHandler
+    public void onServerTick(NormalServerTickEvent event) {
+        tick();
+    }
+
+    private void tick() {
         switch (LegendHG.getGameStateManager().getGameState()) {
             case COUNTDOWN:
                 handleCountDown();
@@ -72,13 +81,19 @@ public class CountDown implements Runnable {
             case 5:
             case 4:
             case 3:
-            case 2:
-            case 1:
                 Util.playSoundForAll(Sound.CLICK);
                 if (!PlayerHelper.verifyMinPlayers()) {
                     countdownRemaining = 30;
                 }
                 break;
+            case 2:
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (SummitManager.getInstance().getAccounts().contains(AccountManager.getInstance().getOrCreateAccount(player))) {
+                        SummitManager.getInstance().playerLose(player);
+                    }
+                }
+                break;
+            case 1:
             case 0:
             default:
                 if (countdownRemaining <= 0) {
@@ -97,9 +112,9 @@ public class CountDown implements Runnable {
     }
 
     private void handleRunning() {
-        if(AccountManager.getInstance().getPlayersAlive().size() == 1) {
-            plugin.gameStateManager.startFinished();
-        }
+//        if(AccountManager.getInstance().getPlayersAlive().size() == 1) {
+//            plugin.gameStateManager.startFinished();
+//        }
         if (countdownRemaining >= feast) {
             LegendHG.getFeast().start();
         }
@@ -120,7 +135,11 @@ public class CountDown implements Runnable {
         countdownRemaining = time;
     }
 
-    public static CountDown getInstance() {
+    public static synchronized CountDown getInstance() {
+        if (instance == null) {
+            instance = new CountDown();
+        }
         return instance;
     }
+
 }

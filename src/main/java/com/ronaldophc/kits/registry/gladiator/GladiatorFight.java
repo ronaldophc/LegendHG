@@ -1,7 +1,7 @@
 package com.ronaldophc.kits.registry.gladiator;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.helper.Util;
+import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import lombok.Getter;
