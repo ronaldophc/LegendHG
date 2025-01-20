@@ -48,6 +48,7 @@
 - Impedir combinações de kits.
 - Testar e balancear danos.
 - Sistema como o gulag do Warzone.
+- Sistema de Ban e Mute.
 
 ## Kits
 
