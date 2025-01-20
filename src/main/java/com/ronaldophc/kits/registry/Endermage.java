@@ -1,12 +1,12 @@
 package com.ronaldophc.kits.registry;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.util.ItemManager;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.registry.gladiator.GladiatorController;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.ItemManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;

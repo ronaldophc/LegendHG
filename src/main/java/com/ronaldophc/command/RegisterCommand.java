@@ -1,10 +1,10 @@
 package com.ronaldophc.command;
 
-import com.ronaldophc.database.PlayerSQL;
+import com.ronaldophc.database.PlayerRepository;
 import com.ronaldophc.feature.auth.AuthManager;
+import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.util.Logger;
 import com.ronaldophc.util.Util;
-import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,11 +29,11 @@ public class RegisterCommand implements CommandExecutor {
             if (strings.length == 1) {
                 String password = strings[0];
                 try {
-                    if (PlayerSQL.isPlayerRegistered(player)) {
+                    if (PlayerRepository.isPlayerRegistered(player)) {
                         player.sendMessage(Util.title + " > " +  Util.color2 + "Você já esta registrado.");
                         return true;
                     }
-                    PlayerSQL.registerPlayer(player, password);
+                    PlayerRepository.registerPlayer(player, password);
 
                     AccountManager.getInstance().getOrCreateAccount(player).setLoggedIn(true);
                     AuthManager.loginPlayer(player);

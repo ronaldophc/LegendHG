@@ -15,13 +15,13 @@ public class Motd implements Listener {
     @EventHandler
     public void onMotd(ServerListPingEvent event) {
         List<String> motd = new ArrayList<>();
-        motd.add(Settings.getInstance().getString("Msg1"));
-        motd.add(Settings.getInstance().getString("Msg2"));
+        motd.add(Settings.getInstance().getString("Line1"));
+        motd.add(Settings.getInstance().getString("Line2"));
         StringBuilder message = new StringBuilder();
         for (String line : motd)
             message.append(centerText(line)).append("\n");
         if (!LegendHG.getInstance().started) {
-            message = new StringBuilder(centerText(Settings.getInstance().getString("Msg1")) + "\n" + centerText("§cServidor iniciando"));
+            message = new StringBuilder(centerText(Settings.getInstance().getString("Line1")) + "\n" + centerText("§cServidor iniciando"));
         }
         event.setMotd(message.toString());
     }

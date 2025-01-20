@@ -1,9 +1,9 @@
 package com.ronaldophc.task;
 
 import com.ronaldophc.api.bossbar.BossBarAPI;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Util;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

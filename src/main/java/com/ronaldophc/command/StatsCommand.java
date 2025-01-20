@@ -3,7 +3,7 @@ package com.ronaldophc.command;
 import com.ronaldophc.constant.MySQL.PlayerField;
 import com.ronaldophc.constant.MySQL.Tables;
 import com.ronaldophc.database.MySQLManager;
-import com.ronaldophc.database.PlayerSQL;
+import com.ronaldophc.database.PlayerRepository;
 import com.ronaldophc.util.ItemManager;
 import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
@@ -39,7 +39,7 @@ public class StatsCommand implements CommandExecutor {
                 try {
                     String name = strings[0];
 
-                    boolean isRegistered = PlayerSQL.isPlayerRegisteredByName(name);
+                    boolean isRegistered = PlayerRepository.isPlayerRegisteredByName(name);
                     if (!isRegistered) {
                         player.sendMessage(Util.error + "Jogador não encontrado.");
                         return true;

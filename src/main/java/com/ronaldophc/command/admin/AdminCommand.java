@@ -1,15 +1,14 @@
-package com.ronaldophc.command;
+package com.ronaldophc.command.admin;
 
 import com.ronaldophc.feature.admin.AdminManager;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 public class AdminCommand implements CommandExecutor {
 

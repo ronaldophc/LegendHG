@@ -2,9 +2,10 @@ package com.ronaldophc.player.listener;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
-import com.ronaldophc.util.Util;
+import com.ronaldophc.constant.Tags;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,7 +36,8 @@ public class PlayerQuit implements Listener {
             return;
         }
 
-        event.setQuitMessage(Util.color3 + account.getActualName() + " saiu do jogo");
+        Tags tag = account.getTag();
+        event.setQuitMessage(tag.getColor() + tag.name() + " §7" + account.getActualName() + Util.color3 + " saiu do jogo!");
 
         GameState gameState = LegendHG.getGameStateManager().getGameState();
 

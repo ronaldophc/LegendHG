@@ -2,10 +2,11 @@ package com.ronaldophc;
 
 import com.ronaldophc.api.border.BorderAPI;
 import com.ronaldophc.api.scoreboard.Board;
-import com.ronaldophc.database.GameSQL;
+import com.ronaldophc.database.GameRepository;
 import com.ronaldophc.database.MySQLManager;
 import com.ronaldophc.feature.FeastManager;
 import com.ronaldophc.feature.battleonthesummit.SummitManager;
+import com.ronaldophc.feature.punish.banip.BanIPManager;
 import com.ronaldophc.game.GameStateManager;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.kits.registry.gladiator.GladiatorController;
@@ -79,7 +80,7 @@ public class LegendHG extends JavaPlugin {
         if (MySQLManager.isActive()) {
             try {
                 mySQLManager.initializeDatabase();
-                gameId = GameSQL.createGame();
+                gameId = GameRepository.createGame();
                 logger.info("Game ID: " + gameId);
             } catch (SQLException e) {
                 logger.info("Could not initialize database.");
@@ -101,18 +102,25 @@ public class LegendHG extends JavaPlugin {
         BorderAPI.setWorldBorder();
         SummitManager.getInstance().initialize();
 
+        BanIPManager banIPManager = new BanIPManager();
+        banIPManager.startUnbanTask();
+
         started = true;
         logger.info("LegendHG enabled");
     }
 
     @Override
     public void onDisable() {
+        BanIPManager banIPManager = new BanIPManager();
+        Runtime.getRuntime().addShutdownHook(new Thread(banIPManager::stopUnbanTask));
+
         if (normalTask != null) {
             normalTask.cancel();
         }
         if (fastTask != null) {
             fastTask.cancel();
         }
+
         AccountManager.getInstance().getAccounts().forEach(Account::quitPlayer);
         logger.info("LegendHG disabled");
     }

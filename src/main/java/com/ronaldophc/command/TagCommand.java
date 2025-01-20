@@ -1,10 +1,10 @@
 package com.ronaldophc.command;
 
 import com.ronaldophc.constant.Tags;
-import com.ronaldophc.util.Helper;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Helper;
+import com.ronaldophc.util.Util;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;

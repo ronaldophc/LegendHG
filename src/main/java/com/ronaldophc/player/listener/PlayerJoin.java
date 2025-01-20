@@ -2,13 +2,14 @@ package com.ronaldophc.player.listener;
 
 import com.ronaldophc.api.skin.SkinAPI;
 import com.ronaldophc.api.title.TitleAPI;
-import com.ronaldophc.database.PlayerSQL;
-import com.ronaldophc.util.Helper;
-import com.ronaldophc.util.Logger;
-import com.ronaldophc.util.Util;
+import com.ronaldophc.constant.Tags;
+import com.ronaldophc.database.PlayerRepository;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Helper;
+import com.ronaldophc.util.Logger;
+import com.ronaldophc.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,7 +49,8 @@ public class PlayerJoin implements Listener {
             PlayerHelper.teleportPlayerToSpawnLocation(player);
         }
 
-        event.setJoinMessage(Util.color3 + account.getActualName() + " entrou!");
+        Tags tag = account.getTag();
+        event.setJoinMessage(tag.getColor() + tag.name() + " §7" + account.getActualName() + Util.color3 + " entrou!");
 
         if (account.isLoggedIn()) {
             return;
@@ -57,7 +59,7 @@ public class PlayerJoin implements Listener {
         String message = Util.title + " > " + Util.usage("/register <password>");
         String title = Util.usage("/register");
 
-        if (PlayerSQL.isPlayerRegistered(player)) {
+        if (PlayerRepository.isPlayerRegistered(player)) {
             message = Util.title + " > " + Util.usage("/login <password>");
             title = Util.usage("/login");
         }

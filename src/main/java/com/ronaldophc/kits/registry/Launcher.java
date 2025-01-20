@@ -1,9 +1,9 @@
 package com.ronaldophc.kits.registry;
 
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.kits.Kit;
 import com.ronaldophc.util.ItemManager;
 import com.ronaldophc.util.Util;
-import com.ronaldophc.kits.Kit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;

@@ -2,9 +2,9 @@ package com.ronaldophc.database;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.game.GameHelper;
-import com.ronaldophc.util.Logger;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Logger;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GameSQL {
+public class GameRepository {
 
     public static int createGame() throws SQLException {
         String query = "INSERT INTO games (winner, kit1_winner, kit2_winner, kills, players, type) VALUES (?, ?, ?, ?, ?, ?)";

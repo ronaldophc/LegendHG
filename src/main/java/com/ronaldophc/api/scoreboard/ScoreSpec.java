@@ -1,9 +1,9 @@
 package com.ronaldophc.api.scoreboard;
 
 import com.ronaldophc.game.CountDown;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;

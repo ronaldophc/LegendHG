@@ -1,5 +1,6 @@
 package com.ronaldophc.listener;
 
+import com.ronaldophc.util.Util;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
@@ -27,7 +28,7 @@ public class BlockNewVersionListener implements Listener {
         // Lista de blocos exclusivos da 1.8
         if (blockedMaterials.contains(block)) {
             event.setCancelled(true);
-            event.getPlayer().sendMessage("§cBlocos da 1.8 não é permitido no servidor!");
+            event.getPlayer().sendMessage(Util.error + "Blocos da 1.8 não é permitido no servidor!");
         }
 
     }
@@ -40,6 +41,7 @@ public class BlockNewVersionListener implements Listener {
         // Lista de entidades exclusivas da 1.8
         if (entity == EntityType.ARMOR_STAND || entity == EntityType.GUARDIAN || entity == EntityType.ENDERMITE ||
                 entity == EntityType.RABBIT) {
+            event.getEntity().remove();
             event.setCancelled(true);
         }
     }
@@ -51,6 +53,7 @@ public class BlockNewVersionListener implements Listener {
 
         // Lista de criaturas exclusivas da 1.8
         if (entity == EntityType.GUARDIAN || entity == EntityType.ENDERMITE || entity == EntityType.RABBIT) {
+            event.getEntity().remove();
             event.setCancelled(true);
         }
     }

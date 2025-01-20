@@ -2,10 +2,10 @@ package com.ronaldophc.feature.auth;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

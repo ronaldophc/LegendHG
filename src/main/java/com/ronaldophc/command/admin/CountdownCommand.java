@@ -1,4 +1,4 @@
-package com.ronaldophc.command;
+package com.ronaldophc.command.admin;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
@@ -45,10 +45,12 @@ public class CountdownCommand implements CommandExecutor, TabCompleter {
                     commandSender.sendMessage(Util.usage("/countdown <set> <seconds>"));
                     return true;
                 }
+
                 if (!(LegendHG.getGameStateManager().getGameState() == GameState.COUNTDOWN)) {
                     commandSender.sendMessage(Util.error + ("O HG nao esta no estado contagem."));
                     return true;
                 }
+
                 try {
                     int seconds = Integer.parseInt(strings[1]);
                     if (seconds < 5) {

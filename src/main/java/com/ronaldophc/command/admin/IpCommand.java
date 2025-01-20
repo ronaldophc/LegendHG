@@ -1,4 +1,4 @@
-package com.ronaldophc.command;
+package com.ronaldophc.command.admin;
 
 import com.ronaldophc.constant.MySQL.PlayerField;
 import com.ronaldophc.constant.MySQL.Tables;

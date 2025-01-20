@@ -1,11 +1,11 @@
 package com.ronaldophc.kits.registry;
 
 import com.ronaldophc.feature.CustomEnchant;
-import com.ronaldophc.util.ItemManager;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.ItemManager;
+import com.ronaldophc.util.Util;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;

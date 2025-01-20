@@ -1,12 +1,12 @@
 package com.ronaldophc.kits.registry;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.util.ItemManager;
-import com.ronaldophc.util.Logger;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.ItemManager;
+import com.ronaldophc.util.Logger;
+import com.ronaldophc.util.Util;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

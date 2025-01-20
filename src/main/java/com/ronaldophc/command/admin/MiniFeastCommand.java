@@ -1,4 +1,4 @@
-package com.ronaldophc.command;
+package com.ronaldophc.command.admin;
 
 import com.ronaldophc.feature.MiniFeastManager;
 import com.ronaldophc.util.Util;

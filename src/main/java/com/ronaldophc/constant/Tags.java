@@ -11,8 +11,8 @@ public enum Tags {
     OWNER(ChatColor.DARK_RED, "legendhg.tag.owner"),
     MOD(ChatColor.BLUE, "legendhg.tag.mod"),
     HELPER(ChatColor.GREEN, "legendhg.tag.helper"),
-    YOUTUBER(ChatColor.LIGHT_PURPLE, "legendhg.tag.youtuber"),
-    BUILDER(ChatColor.AQUA, "legendhg.tag.builder"),
+    CREATOR(ChatColor.AQUA, "legendhg.tag.youtuber"),
+    BUILDER(ChatColor.LIGHT_PURPLE, "legendhg.tag.builder"),
     DEV(ChatColor.DARK_PURPLE, "legendhg.tag.dev"),
     TESTER(ChatColor.YELLOW, "legendhg.tag.tester"),
     BETA(ChatColor.DARK_GREEN, "legendhg.tag.beta");

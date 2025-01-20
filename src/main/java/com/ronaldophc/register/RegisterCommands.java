@@ -2,7 +2,9 @@ package com.ronaldophc.register;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.command.*;
-import com.ronaldophc.feature.report.*;
+import com.ronaldophc.command.admin.*;
+import com.ronaldophc.feature.report.ReportCommand;
+import com.ronaldophc.feature.report.ReportMenus;
 
 public class RegisterCommands extends LegendHG {
 
@@ -46,6 +48,9 @@ public class RegisterCommands extends LegendHG {
         instance.getCommand("vanish").setExecutor(new VanishCommand());
         instance.getCommand("admin").setExecutor(new AdminCommand());
         instance.getCommand("say").setExecutor(new SayCommand());
+        instance.getCommand("banip").setExecutor(new BanIpCommand());
+        instance.getCommand("hour").setExecutor(new HourCommand());
+        instance.getCommand("unbanip").setExecutor(new UnbanIPCommand());
     }
 
 }

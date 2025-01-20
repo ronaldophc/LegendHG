@@ -1,8 +1,8 @@
 package com.ronaldophc.player.listener;
 
-import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

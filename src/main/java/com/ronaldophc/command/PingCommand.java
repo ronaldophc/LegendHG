@@ -1,28 +1,30 @@
 package com.ronaldophc.command;
 
+import com.ronaldophc.Reflection;
 import com.ronaldophc.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 public class PingCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (command.getName().equalsIgnoreCase("ping")) {
-            if (commandSender == null)
+            if (commandSender == null) {
                 return true;
+            }
             if (strings.length == 0) {
                 if (!(commandSender instanceof Player)) {
                     commandSender.sendMessage(Util.noConsole);
                     return true;
                 }
-                Player player = (Player) commandSender;
-                int ping = getPing(player);
-                player.sendMessage(Util.color1 + "Seu ping é: " + Util.color3 + ping + Util.color1 + "ms");
+
+                Player target = (Player) commandSender;
+                sendMessage(commandSender, target);
                 return true;
             }
             if (strings.length == 1) {
@@ -30,27 +32,35 @@ public class PingCommand implements CommandExecutor {
                     commandSender.sendMessage(Util.noPermission);
                     return true;
                 }
-                try {
-                    Player target = commandSender.getServer().getPlayer(strings[0]);
-                    int ping = getPing(target);
-                    commandSender.sendMessage(Util.color1 + "Ping de " + Util.color3 + target.getName() + Util.color1 + " é: " + Util.color3 + ping + Util.color1 + "ms");
-                } catch (Exception e) {
-                    commandSender.sendMessage(Util.error + "Algo aconteceu errado.");
-                    Util.errorCommand("ping", e);
+
+                Player target = commandSender.getServer().getPlayer(strings[0]);
+                if (target == null) {
+                    commandSender.sendMessage(Util.error + "Jogador não encontrado.");
+                    return true;
                 }
+
+                sendMessage(commandSender, target);
                 return true;
             }
         }
-        return false;
+        return true;
     }
 
-    public static int getPing(Player player) {
-        try {
-            Object entityPlayer = player.getClass().getMethod("getHandle").invoke(player);
-            Field pingField = entityPlayer.getClass().getDeclaredField("ping");
-            return pingField.getInt(entityPlayer);
-        } catch (Exception e) {
-            return -1;
+    private void sendMessage(CommandSender commandSender, Player target) {
+        int ping = getPing(target);
+        String message = Util.color3 + ping + Util.color1 + "ms";
+        if (commandSender != target) {
+            message = Util.color3 + target.getName() + Util.color1 + ": " + message;
         }
+        commandSender.sendMessage(Util.color1 + message);
+    }
+
+    private int getPing(Player player) {
+        try {
+            return (int) Reflection.getField(player, "ping");
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | NoSuchFieldException e) {
+            Util.errorCommand("ping", e);
+        }
+        return 0;
     }
 }

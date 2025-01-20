@@ -6,25 +6,17 @@ api-version: 1.8.8
 load: POSTWORLD
 softdepend: [ ProtocolLib ]
 commands:
+    unbanip:
+    hour:
+    banip:
     say:
     admin:
     vanish:
-        description: Command to vanish
-        usage: /vanish
     build:
-        description: Command to change the build
-        usage: /build
     rdc:
     lschematic:
-        description: Command to load schematic
-        usage: /lschematic
     sound:
-        description: Command to play sound
-        usage: /sound <sound>
     gm:
-        description: Command to change gamemode
-        usage: /gm <0,1> <player>
-        aliases: [gamemode]
     countdown:
         description: Command to set time of countdown
         usage: /countdown set <seconds>
@@ -34,57 +26,19 @@ commands:
         usage: /invincibility <set:start> <seconds>
         aliases: [invi]
     invsee:
-        description: Command to see inventory of player
-        usage: /invsee <player>
-        aliases: [inv]
     kick:
-        description: Command to kick player
-        usage: /kick <player> <motivo>
     ping:
-        description: Command to see ping of player
-        usage: /ping <player>
     report:
-        description: Command to report player
-        usage: /report <player>
-    reporthack:
-        description: Command to report hacker
-        usage: /reporthack <player>
-    reportbugs:
-        description: Command to report bug abuser
-        usage: /reportbugs <player>
-    reportfreekill:
-        description: Command to report freekill
-        usage: /reportfreekill <player>
-    reportchat:
-        description: Command to report chat abuser
-        usage: /reportchat <player>
-    reportother:
-        description: Command to report player for other reasons
-        usage: /reportother <player>
     reports:
-        description: Command to see reports
-        usage: /reports
     kit:
-        description: Command to set your kit
-        usage: /kit <kit>
     kit2:
-        description: Command to set your kit 2
-        usage: /kit2 <kit>
     pull:
         description: Command to pull player
         usage: /pull <player>
     flyspeed:
-        description: Command to set fly speed
-        usage: /flyspeed <speed>
     lfeast:
-        description: Command manage the feast
-        usage: /lfeast
     feast:
-        description: Set compass to feast
-        usage: /feast
     minifeast:
-        description: Create a minifeast
-        usage: /minifeast
     register:
         description: Register in the server
         usage: /register <password>

@@ -1,10 +1,10 @@
 package com.ronaldophc.kits.manager.guis;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.util.ItemManager;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
+import com.ronaldophc.util.ItemManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

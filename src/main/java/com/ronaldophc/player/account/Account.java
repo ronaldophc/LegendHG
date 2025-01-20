@@ -8,7 +8,7 @@ import com.ronaldophc.constant.MySQL.Tables;
 import com.ronaldophc.constant.Scores;
 import com.ronaldophc.constant.Tags;
 import com.ronaldophc.database.MySQLManager;
-import com.ronaldophc.database.PlayerSQL;
+import com.ronaldophc.database.PlayerRepository;
 import com.ronaldophc.kits.Kits;
 import com.ronaldophc.util.Logger;
 import com.ronaldophc.util.Util;
@@ -71,7 +71,7 @@ public class Account {
 
     public boolean login(String password) {
         try {
-            return PlayerSQL.loginPlayer(player, password);
+            return PlayerRepository.loginPlayer(player, password);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -79,7 +79,7 @@ public class Account {
 
     private void initializeCooldownType() {
         try {
-            this.cooldownType = PlayerSQL.getPlayerCooldownType(player);
+            this.cooldownType = PlayerRepository.getPlayerCooldownType(player);
         } catch (SQLException e) {
             Logger.logError("Erro ao setar as cooldown_type do profile do jogador: " + e.getMessage());
         }
@@ -95,7 +95,7 @@ public class Account {
 
     public void initializeScore() {
         try {
-            this.score = PlayerSQL.getPlayerScore(player);
+            this.score = PlayerRepository.getPlayerScore(player);
         } catch (SQLException e) {
             Logger.logError("Erro ao setar as wins do profile do jogador: " + e.getMessage());
         }
@@ -119,7 +119,7 @@ public class Account {
 
     public void initializeTag() {
         try {
-            this.tag = PlayerSQL.getPlayerTag(player);
+            this.tag = PlayerRepository.getPlayerTag(player);
         } catch (SQLException e) {
             Logger.logError("Erro ao setar o tag do profile do jogador: " + e.getMessage());
         }
@@ -153,7 +153,7 @@ public class Account {
     public void logout() {
         this.loggedIn = false;
         try {
-            PlayerSQL.logoutPlayer(player);
+            PlayerRepository.logoutPlayer(player);
         } catch (SQLException e) {
             Logger.logError("Erro ao deslogar jogador: " + e.getMessage());
         }
@@ -180,7 +180,7 @@ public class Account {
     public void setCooldownType(CooldownType cooldown_type) {
         this.cooldownType = cooldown_type;
         try {
-            PlayerSQL.setPlayerCooldownType(player, cooldown_type);
+            PlayerRepository.setPlayerCooldownType(player, cooldown_type);
         } catch (SQLException error) {
             Logger.logError("Erro ao atualizar informações do jogador: " + error.getMessage());
         }
@@ -189,7 +189,7 @@ public class Account {
     public void setScore(Scores score) {
         try {
             this.score = score;
-            PlayerSQL.setPlayerScore(player, score);
+            PlayerRepository.setPlayerScore(player, score);
         } catch (SQLException e) {
             Logger.logError("Erro ao recuperar Score do jogador: " + e.getMessage());
         }
@@ -198,7 +198,7 @@ public class Account {
     public void setTag(Tags tag) {
         try {
             this.tag = tag;
-            PlayerSQL.setPlayerTag(player, tag);
+            PlayerRepository.setPlayerTag(player, tag);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

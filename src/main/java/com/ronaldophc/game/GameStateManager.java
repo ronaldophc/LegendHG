@@ -1,8 +1,8 @@
 package com.ronaldophc.game;
 
 import com.ronaldophc.constant.GameState;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.setting.Settings;
+import com.ronaldophc.util.Util;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;

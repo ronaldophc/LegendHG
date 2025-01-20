@@ -2,9 +2,9 @@ package com.ronaldophc.listener;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.Tags;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

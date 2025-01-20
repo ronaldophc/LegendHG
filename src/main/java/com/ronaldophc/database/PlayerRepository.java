@@ -6,9 +6,9 @@ import com.ronaldophc.constant.MySQL.Tables;
 import com.ronaldophc.constant.Scores;
 import com.ronaldophc.constant.Tags;
 import com.ronaldophc.feature.auth.AuthManager;
-import com.ronaldophc.util.Logger;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Logger;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -17,7 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class PlayerSQL {
+public class PlayerRepository {
 
     public static void registerPlayer(Player player, String password) throws SQLException {
         if (!MySQLManager.isActive()) return;

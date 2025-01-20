@@ -4,14 +4,14 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.api.scoreboard.Board;
 import com.ronaldophc.constant.Scores;
 import com.ronaldophc.constant.Tags;
-import com.ronaldophc.database.PlayerSQL;
+import com.ronaldophc.database.PlayerRepository;
 import com.ronaldophc.game.GameHelper;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.kits.Kit;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -73,7 +73,7 @@ public class PlayerDeath implements Listener {
 
             try {
                 killerAccount.addKill();
-                PlayerSQL.addPlayerDeath(died);
+                PlayerRepository.addPlayerDeath(died);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

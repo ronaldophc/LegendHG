@@ -2,12 +2,12 @@ package com.ronaldophc.feature.battleonthesummit;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.feature.Schematic;
-import com.ronaldophc.util.Helper;
-import com.ronaldophc.util.ItemManager;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Helper;
+import com.ronaldophc.util.ItemManager;
+import com.ronaldophc.util.Util;
 import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -38,14 +38,14 @@ public class SummitManager {
     }
 
     public void initialize() {
-        LegendHG.logger.info("Initializing SummitManager");
+        LegendHG.logger.info("Loading SummitManager");
         if (!LegendHG.getInstance().devMode) {
             Helper.loadChunks(750, 1250, 750, 1250);
 //            Helper.clearBlocks(750, 1250, 750, 1250, 0, 120);
         }
         createSchematic();
 
-        LegendHG.logger.info("Initialized SummitManager successfully");
+        LegendHG.logger.info("Loaded SummitManager successfully");
     }
 
     public void createSchematic() {

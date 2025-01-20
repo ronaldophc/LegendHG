@@ -3,13 +3,13 @@ package com.ronaldophc.game;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.MySQL.PlayerField;
 import com.ronaldophc.constant.MySQL.Tables;
-import com.ronaldophc.database.GameSQL;
+import com.ronaldophc.database.GameRepository;
 import com.ronaldophc.database.MySQLManager;
 import com.ronaldophc.feature.auth.AuthManager;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -36,7 +36,7 @@ public class GameStateHelper {
                     Account account = AccountManager.getInstance().getOrCreateAccount(player);
                     int wins = account.getWins();
                     MySQLManager.setInt(player.getUniqueId().toString(), Tables.PLAYER.getTableName(), PlayerField.WINS.getFieldName(), wins + 1);
-                    GameSQL.updateGameWinner(player);
+                    GameRepository.updateGameWinner(player);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

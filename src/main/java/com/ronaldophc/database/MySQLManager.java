@@ -1,8 +1,8 @@
 package com.ronaldophc.database;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.util.Logger;
 import com.ronaldophc.setting.Settings;
+import com.ronaldophc.util.Logger;
 import lombok.Getter;
 
 import java.sql.*;
@@ -39,7 +39,7 @@ public class MySQLManager {
                 return connection;
             }
 
-            String jdbcUrl = "jdbc:mysql://" + host + ":" + port + "/" + database + "?characterEncoding=UTF-8&connectTimeout=10000";
+            String jdbcUrl = "jdbc:mysql://" + host + ":" + port + "/" + database + "?characterEncoding=UTF-8&connectTimeout=10000&serverTimezone=America/Sao_Paulo";
 
 //             Logger.debugMySql("Attempting to connect to database with URL: " + jdbcUrl);
 
@@ -84,8 +84,9 @@ public class MySQLManager {
             sql = "CREATE TABLE IF NOT EXISTS bans (" +
                     "uuid VARCHAR(36) PRIMARY KEY, " +
                     "end_time BIGINT NOT NULL, " +
-                    "banned_by VARCHAR(36), " +
-                    "reason TEXT, " +
+                    "banned_by VARCHAR(36) NOT NULL, " +
+                    "reason TEXT NOT NULL, " +
+                    "active BOOLEAN DEFAULT FALSE, " +
                     "banned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
             statement.execute(sql);
 
@@ -93,18 +94,22 @@ public class MySQLManager {
             sql = "CREATE TABLE IF NOT EXISTS mutes (" +
                     "uuid VARCHAR(36) PRIMARY KEY, " +
                     "end_time BIGINT NOT NULL, " +
-                    "muted_by VARCHAR(36), " +
-                    "reason TEXT, " +
+                    "muted_by VARCHAR(36) NOT NULL, " +
+                    "reason TEXT NOT NULL, " +
+                    "active BOOLEAN DEFAULT FALSE, " +
                     "muted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
             statement.execute(sql);
 
             // Create IP bans table
             sql = "CREATE TABLE IF NOT EXISTS ip_bans (" +
-                    "ip_address VARCHAR(45) PRIMARY KEY, " +
+                    "id INT PRIMARY KEY AUTO_INCREMENT, " +
+                    "ip_address VARCHAR(45) NOT NULL, " +
                     "end_time BIGINT NOT NULL, " +
-                    "banned_by VARCHAR(36), " +
-                    "reason TEXT, " +
-                    "banned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+                    "banned_by VARCHAR(36) NOT NULL, " +
+                    "reason TEXT NOT NULL, " +
+                    "active BOOLEAN DEFAULT TRUE, " +
+                    "banned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                    "unbanned_at TIMESTAMP)";
             statement.execute(sql);
         } catch (SQLException e) {
             Logger.logError(e.getMessage());

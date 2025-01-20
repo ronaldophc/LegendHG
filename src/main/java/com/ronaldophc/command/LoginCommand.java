@@ -3,12 +3,12 @@ package com.ronaldophc.command;
 import com.ronaldophc.constant.MySQL.PlayerField;
 import com.ronaldophc.constant.MySQL.Tables;
 import com.ronaldophc.database.MySQLManager;
-import com.ronaldophc.database.PlayerSQL;
+import com.ronaldophc.database.PlayerRepository;
 import com.ronaldophc.feature.auth.AuthManager;
-import com.ronaldophc.util.Logger;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
+import com.ronaldophc.util.Logger;
+import com.ronaldophc.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,7 +39,7 @@ public class LoginCommand implements CommandExecutor {
                         player.sendMessage(Util.title + " > " + Util.color2 + "Você já entrou.");
                         return true;
                     }
-                    if (!PlayerSQL.isPlayerRegistered(player)) {
+                    if (!PlayerRepository.isPlayerRegistered(player)) {
                         player.sendMessage(Util.title + " > " + Util.color2 + "Você não está registrado.");
                         return true;
                     }

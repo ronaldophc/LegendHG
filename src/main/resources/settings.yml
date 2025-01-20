@@ -22,7 +22,7 @@ MaxPlayers: 50
 # Database
 Database:
   # Host: 'mysql' se for local(nome do container do MYSQL)
-  Host: localhost
+  Host: mysql
   Port: 3306
   User: sqluser
   Password: root
@@ -32,5 +32,8 @@ Database:
 Kits: 2
 #
 # Mensagens da lista de servidores
-Msg1: "§b§lLegendMC§f§l >> §f§l1.7x 1.8x"
-Msg2: "§a§lEm desenvolvimento!"
+Line1: "§b§lLegendMC §f§l» §f§l1.7x 1.8x"
+Line2: "§a§lEm desenvolvimento!"
+#
+# Link de convite do Discord
+Discord: "https://discord.gg/f4FWwA33BQ"

@@ -1,11 +1,11 @@
 package com.ronaldophc.player;
 
 import com.ronaldophc.game.GameHelper;
-import com.ronaldophc.util.ItemManager;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.setting.Settings;
+import com.ronaldophc.util.ItemManager;
+import com.ronaldophc.util.Util;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;

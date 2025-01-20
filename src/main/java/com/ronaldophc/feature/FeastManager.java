@@ -1,8 +1,8 @@
 package com.ronaldophc.feature;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.util.Util;
 import com.ronaldophc.kits.registry.gladiator.GladiatorController;
+import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

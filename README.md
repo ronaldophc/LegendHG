@@ -65,5 +65,5 @@
 - Kit ? - Jogador pode usar menos espaços do inventário mas ganha mais corações em troca.
 - Kit ? - Toma mais dano e da mais dano.
 - Kit ? - Ver as coordenadas exatas do player ao clicar na bussola.
-- Kit Expansao(Jujutsu Kaizen) - Podera escolher entre 3 expansões, ao usar criar uma area em volta dos jogadores, onde o player que usou ganha beneficios, a arena criada em volta é feita com blocos possíveis de quebrar para o jogador poder fugir, mas para quem está de fora é mais facil de quebrar.
+- Kit Expansao(Jujutsu Kaizen) - Podera escolher entre 3 expansões, ao usar criar uma area em volta dos jogadores, onde o player que usou ganha beneficios(talvez acertar critico todos os hits), a arena criada em volta é feita com blocos possíveis de quebrar para o jogador poder fugir, mas para quem está de fora é mais facil de quebrar.
 - Switcher - Trocar com os animais.

@@ -1,4 +1,4 @@
-package com.ronaldophc.command;
+package com.ronaldophc.command.admin;
 
 import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
@@ -12,14 +12,17 @@ public class KickCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (command.getName().equalsIgnoreCase("kick")) {
+
             if (!commandSender.isOp() && !commandSender.hasPermission("legendhg.admin.kick")) {
                 commandSender.sendMessage(Util.noPermission);
                 return true;
             }
+
             if (strings.length == 0) {
                 commandSender.sendMessage(Util.usage("/kick <player> <motivo>"));
                 return true;
             }
+
             if(strings.length == 1) {
                 try {
                     Player targetPlayer = Bukkit.getServer().getPlayer(strings[0]);
@@ -31,6 +34,7 @@ public class KickCommand implements CommandExecutor {
                 }
                 return true;
             }
+
             try {
                 Player targetPlayer = Bukkit.getServer().getPlayer(strings[0]);
                 String message = "";
@@ -42,6 +46,7 @@ public class KickCommand implements CommandExecutor {
                 commandSender.sendMessage(Util.error + "Jogador nao encontrado.");
                 Util.errorCommand("kick", e);
             }
+
             return true;
         }
         return false;
