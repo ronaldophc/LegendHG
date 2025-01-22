@@ -5,7 +5,6 @@ import com.ronaldophc.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -41,7 +40,7 @@ public class UnbanIPCommand implements CommandExecutor {
                     return true;
                 }
 
-                commandSender.sendMessage(Util.errorServer + "Erro ao banir IP. Contate o DEV");
+                commandSender.sendMessage(Util.errorServer + "Erro ao desbanir IP. Contate o DEV");
             } catch (UnknownHostException e) {
                 commandSender.sendMessage(Util.error + "IP inválido.");
                 return true;

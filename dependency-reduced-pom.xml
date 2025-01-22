@@ -56,10 +56,6 @@
       <id>inventive-repo</id>
       <url>https://repo.inventivetalent.org/content/groups/public/</url>
     </repository>
-    <repository>
-      <id>viaversion-repo</id>
-      <url>https://repo.viaversion.com</url>
-    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -77,14 +73,31 @@
     <dependency>
       <groupId>app.ashcon</groupId>
       <artifactId>sportpaper</artifactId>
-      <version>1.8.8-R0.1-SNAPSHOT</version>
+      <version>latest-SNAPSHOT</version>
       <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/sportpaper.jar</systemPath>
+      <systemPath>${dependent.jar}</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.github.spigot</groupId>
+      <artifactId>spigot</artifactId>
+      <version>1.7.10</version>
+      <scope>system</scope>
+      <systemPath>${spigot.jar}</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.viaversion</groupId>
+      <artifactId>viaversion</artifactId>
+      <version>5.2.1-SNAPSHOT</version>
+      <scope>system</scope>
+      <systemPath>${viaversion.jar}</systemPath>
     </dependency>
   </dependencies>
   <properties>
+    <dependent.jar>/home/ronaldo/Documents/LegendPlugins/DockerLegendHG/servers/sportpaper/sportpaper.jar</dependent.jar>
     <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <viaversion.jar>/home/ronaldo/Documents/LegendPlugins/DockerLegendHG/servers/sportpaper/plugins/ViaVersion-5.2.1-java-8.jar</viaversion.jar>
+    <spigot.jar>/home/ronaldo/Documents/Jars/ServerJars/spigot-1.7.10.jar</spigot.jar>
   </properties>
 </project>

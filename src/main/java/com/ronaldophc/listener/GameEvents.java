@@ -37,7 +37,7 @@ public class GameEvents implements Listener {
         if (LegendHG.getGameStateManager().getGameState() == GameState.COUNTDOWN
                 || AccountManager.getInstance().getOrCreateAccount((Player) event.getPlayer()).isSpectator()) {
             if (event.getInventory().getType() == InventoryType.CHEST) {
-                String[] titles = {"Kit", "Ajustes", "Status", "Players", "BanIP"};
+                String[] titles = {"Kit", "Ajustes", "Status", "Players", "BanIP", "Mute", "Ban"};
                 for (String title : titles) {
                     if (event.getInventory().getTitle().contains(title)) {
                         return;

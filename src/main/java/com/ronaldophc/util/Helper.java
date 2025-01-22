@@ -1,7 +1,10 @@
 package com.ronaldophc.util;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.player.PlayerHelper;
+import com.ronaldophc.player.PlayerService;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import io.netty.channel.Channel;
@@ -9,10 +12,10 @@ import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
@@ -22,9 +25,14 @@ import org.bukkit.entity.Player;
 public class Helper {
 
     public static void refreshPlayer(Player player) {
-        Bukkit.getScheduler().runTask(LegendHG.getInstance(), () -> {
+        Account account = AccountManager.getInstance().getOrCreateAccount(player);
+        Bukkit.getScheduler().runTaskLater(LegendHG.getInstance(), () -> {
             try {
+                if (!player.isOnline()) {
+                    return;
+                }
                 EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+                Location originalLocation = player.getLocation();
 
                 for (Player online : Bukkit.getOnlinePlayers()) {
                     PlayerConnection connection = ((CraftPlayer) online).getHandle().playerConnection;
@@ -49,7 +57,19 @@ public class Helper {
                 );
                 CraftPlayer craftOnlinePlayer = (CraftPlayer) player;
                 craftOnlinePlayer.getHandle().playerConnection.sendPacket(respawn);
-                player.teleport(player.getLocation());
+
+
+                // Teleport the player back to their original location
+                PacketPlayOutPosition pos = new PacketPlayOutPosition(
+                        originalLocation.getX(), originalLocation.getY(), originalLocation.getZ(),
+                        originalLocation.getYaw(), originalLocation.getPitch(),
+                        java.util.EnumSet.noneOf(PacketPlayOutPosition.EnumPlayerTeleportFlags.class)
+                );
+                craftOnlinePlayer.getHandle().playerConnection.sendPacket(pos);
+
+                PacketPlayOutHeldItemSlot slot = new PacketPlayOutHeldItemSlot(player.getInventory().getHeldItemSlot());
+                craftOnlinePlayer.getHandle().playerConnection.sendPacket(slot);
+
                 player.updateInventory();
 
                 // Atualizar a aparência para todos
@@ -62,7 +82,19 @@ public class Helper {
                     }
                 }, 5L);
 
-                Account account = AccountManager.getInstance().getOrCreateAccount(player);
+                Bukkit.getScheduler().runTaskLater(LegendHG.getInstance(), () -> {
+                    player.hidePlayer(player);
+                    player.showPlayer(player);
+                }, 5L);
+
+                if (player.isOp()) {
+                    Bukkit.getScheduler().runTask(LegendHG.getInstance(), () -> {
+                        // Workaround..
+                        player.setOp(false);
+                        player.setOp(true);
+                    });
+                }
+
                 if (account.isSpectator()) {
                     PlayerHelper.preparePlayerToSpec(player);
                 }
@@ -70,7 +102,7 @@ public class Helper {
                 Logger.logError("Erro ao atualizar player (SkinFix, refreshPlayer): " + e.getMessage());
                 throw new RuntimeException(e);
             }
-        });
+        }, 5L);
     }
 
     public static void injectPlayerNotTabComplete(Player player) {

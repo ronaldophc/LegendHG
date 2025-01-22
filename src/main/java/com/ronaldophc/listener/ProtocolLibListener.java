@@ -15,14 +15,12 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.MCVersion;
-import com.ronaldophc.feature.punish.banip.BanIPService;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import java.net.InetAddress;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,17 +43,18 @@ public class ProtocolLibListener {
                     for (int i = 0; i < list.size(); i++) {
                         PlayerInfoData data = list.get(i);
 
-                        if (data == null)
+                        if (data == null) {
                             continue;
+                        }
 
                         UUID uniqueId = data.getProfile().getUUID();
                         Player player = Bukkit.getPlayer(uniqueId);
 
-                        if (player == null)
+                        if (player == null) {
                             continue;
+                        }
 
                         GameProfile gameProfile = ((CraftPlayer) player).getProfile();
-
                         Account account = AccountManager.getInstance().getOrCreateAccount(player);
                         WrappedGameProfile wrappedProfile = new WrappedGameProfile(uniqueId, account.getActualName());
 
@@ -64,10 +63,9 @@ public class ProtocolLibListener {
                             wrappedProfile.getProperties().put("textures", new WrappedSignedProperty(textures.getName(), textures.getValue(), textures.getSignature()));
                         }
 
+
                         PlayerInfoData playerInfoData = new PlayerInfoData(wrappedProfile, data.getLatency(), data.getGameMode(), data.getDisplayName());
-
                         list.set(i, playerInfoData);
-
                     }
 
                     packet.getPlayerInfoDataLists().write(0, list);

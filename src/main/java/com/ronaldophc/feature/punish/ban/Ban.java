@@ -1,18 +1,17 @@
-package com.ronaldophc.feature.punish.banip;
+package com.ronaldophc.feature.punish.ban;
 
-import com.ronaldophc.database.BanIPRepository;
 import com.ronaldophc.feature.punish.PunishHelper;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.net.InetAddress;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Getter
 @Setter
-public class BanIP {
+public class Ban {
 
-    private InetAddress ip_address;
+    private UUID uuid;
     private long end_time;
     private String banned_by;
     private String reason;
@@ -20,15 +19,15 @@ public class BanIP {
     private Timestamp banned_at;
     private Timestamp unbanned_at;
 
-    public BanIP(InetAddress ip_address, long end_time, String banned_by, String reason) {
-        this.ip_address = ip_address;
+    public Ban(UUID uuid, long end_time, String banned_by, String reason) {
+        this.uuid = uuid;
         this.end_time = end_time;
         this.banned_by = banned_by;
         this.reason = reason;
     }
 
-    public BanIP(InetAddress ip_address, long end_time, String banned_by, String reason, boolean active, Timestamp banned_at, Timestamp unbanned_at) {
-        this.ip_address = ip_address;
+    public Ban(UUID uuid, long end_time, String banned_by, String reason, boolean active, Timestamp banned_at, Timestamp unbanned_at) {
+        this.uuid = uuid;
         this.end_time = end_time;
         this.banned_by = banned_by;
         this.reason = reason;
@@ -49,7 +48,7 @@ public class BanIP {
         return PunishHelper.formatTimeYear(end_time);
     }
 
-    public String getBanIPTimeLeftFormated(InetAddress ipAddress) {
+    public String getBanTimeLeftFormated(UUID uuid) {
         long duration = end_time - System.currentTimeMillis();
         return PunishHelper.formatTime(duration);
     }

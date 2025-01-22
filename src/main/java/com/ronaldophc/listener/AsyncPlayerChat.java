@@ -2,6 +2,7 @@ package com.ronaldophc.listener;
 
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.Tags;
+import com.ronaldophc.feature.punish.mute.MuteService;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.util.Util;
@@ -63,9 +64,18 @@ public class AsyncPlayerChat implements Listener {
             return;
         }
 
+        MuteService muteService = new MuteService();
+
+        if (muteService.isMuted(player.getUniqueId())) {
+            player.sendMessage(Util.error + "Você está mutado! Digite /mute para mais informações!");
+            event.setCancelled(true);
+            return;
+        }
+
         if (cooldown.contains(player) && !player.hasPermission("legendhg.chat.flood")) {
             player.sendMessage(Util.error + "Espere um pouco para mandar mensagem novamente");
             event.setCancelled(true);
+            return;
         }
 
         cooldown.add(player);
@@ -88,7 +98,14 @@ public class AsyncPlayerChat implements Listener {
         }
 
         Tags tag = account.getTag();
-        Bukkit.broadcastMessage(tag.getColor() + tag.name() + " §7" + account.getActualName() + " §8» §f" + message);
+
+        for (Player online : player.getServer().getOnlinePlayers()) {
+            Account accountOnline = AccountManager.getInstance().getOrCreateAccount(online);
+
+            if (accountOnline.isChat()) {
+                online.sendMessage(tag.getColor() + tag.name() + " §7" + account.getActualName() + " §8» §f" + message);
+            }
+        }
     }
 
 

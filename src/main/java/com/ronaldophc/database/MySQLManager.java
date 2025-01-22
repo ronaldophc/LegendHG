@@ -41,7 +41,9 @@ public class MySQLManager {
 
             String jdbcUrl = "jdbc:mysql://" + host + ":" + port + "/" + database + "?characterEncoding=UTF-8&connectTimeout=10000&serverTimezone=America/Sao_Paulo";
 
-//             Logger.debugMySql("Attempting to connect to database with URL: " + jdbcUrl);
+            if (LegendHG.getInstance().devMode) {
+                Logger.debugMySql("Attempting to connect to database with URL: " + jdbcUrl);
+            }
 
             connection = DriverManager.getConnection(jdbcUrl, username, password);
 
@@ -80,24 +82,27 @@ public class MySQLManager {
             statement.execute(sql);
 
             // Create bans table with additional columns
-            // Create bans table with additional columns
             sql = "CREATE TABLE IF NOT EXISTS bans (" +
-                    "uuid VARCHAR(36) PRIMARY KEY, " +
+                    "id INT PRIMARY KEY AUTO_INCREMENT, " +
+                    "uuid VARCHAR(36), " +
                     "end_time BIGINT NOT NULL, " +
                     "banned_by VARCHAR(36) NOT NULL, " +
                     "reason TEXT NOT NULL, " +
-                    "active BOOLEAN DEFAULT FALSE, " +
-                    "banned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+                    "active BOOLEAN DEFAULT TRUE, " +
+                    "banned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                    "unbanned_at TIMESTAMP)";
             statement.execute(sql);
 
             // Create mutes table with additional columns
             sql = "CREATE TABLE IF NOT EXISTS mutes (" +
-                    "uuid VARCHAR(36) PRIMARY KEY, " +
+                    "id INT PRIMARY KEY AUTO_INCREMENT, " +
+                    "uuid VARCHAR(36), " +
                     "end_time BIGINT NOT NULL, " +
                     "muted_by VARCHAR(36) NOT NULL, " +
                     "reason TEXT NOT NULL, " +
-                    "active BOOLEAN DEFAULT FALSE, " +
-                    "muted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+                    "active BOOLEAN DEFAULT TRUE, " +
+                    "muted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                    "unmuted_at TIMESTAMP)";
             statement.execute(sql);
 
             // Create IP bans table

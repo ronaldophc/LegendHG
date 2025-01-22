@@ -6,7 +6,7 @@ import com.ronaldophc.database.GameRepository;
 import com.ronaldophc.database.MySQLManager;
 import com.ronaldophc.feature.FeastManager;
 import com.ronaldophc.feature.battleonthesummit.SummitManager;
-import com.ronaldophc.feature.punish.banip.BanIPManager;
+import com.ronaldophc.feature.punish.PunishManager;
 import com.ronaldophc.game.GameStateManager;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.kits.registry.gladiator.GladiatorController;
@@ -102,8 +102,8 @@ public class LegendHG extends JavaPlugin {
         BorderAPI.setWorldBorder();
         SummitManager.getInstance().initialize();
 
-        BanIPManager banIPManager = new BanIPManager();
-        banIPManager.startUnbanTask();
+        PunishManager punishManager = new PunishManager();
+        punishManager.startUnbanTask();
 
         started = true;
         logger.info("LegendHG enabled");
@@ -111,8 +111,8 @@ public class LegendHG extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        BanIPManager banIPManager = new BanIPManager();
-        Runtime.getRuntime().addShutdownHook(new Thread(banIPManager::stopUnbanTask));
+        PunishManager banIPManager = new PunishManager();
+        Runtime.getRuntime().addShutdownHook(new Thread(banIPManager::stopPunishTask));
 
         if (normalTask != null) {
             normalTask.cancel();

@@ -1,11 +1,14 @@
 package com.ronaldophc.command.admin;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class ProfileCommand implements CommandExecutor {
@@ -23,6 +26,11 @@ public class ProfileCommand implements CommandExecutor {
                 commandSender.sendMessage(Util.noPermission);
                 return true;
             }
+            GameProfile gameProfile = ((CraftPlayer) player).getProfile();
+            Property textures = gameProfile.getProperties().get("textures").iterator().next();
+            player.sendMessage("Name: " + textures.getName());
+            player.sendMessage("Value: " + textures.getValue());
+            player.sendMessage("Signature: " + textures.getSignature());
 
             Account account = AccountManager.getInstance().getOrCreateAccount(player);
             player.sendMessage("Profile Infomation:");

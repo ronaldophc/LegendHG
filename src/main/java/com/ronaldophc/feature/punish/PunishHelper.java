@@ -1,20 +1,10 @@
 package com.ronaldophc.feature.punish;
 
-import com.ronaldophc.feature.punish.banip.BanIP;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-public class BanHelper {
+public class PunishHelper {
 
     public static String formatTime(long duration) {
         long days = TimeUnit.MILLISECONDS.toDays(duration);

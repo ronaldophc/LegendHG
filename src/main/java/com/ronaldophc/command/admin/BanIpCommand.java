@@ -1,7 +1,7 @@
 package com.ronaldophc.command.admin;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.feature.punish.BanHelper;
+import com.ronaldophc.feature.punish.PunishHelper;
 import com.ronaldophc.feature.punish.banip.BanIP;
 import com.ronaldophc.feature.punish.banip.BanIPService;
 import com.ronaldophc.setting.Settings;
@@ -11,7 +11,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -88,7 +87,7 @@ public class BanIpCommand implements CommandExecutor {
 
                 char unit = durationStr.charAt(durationStr.length() - 1);
                 long duration = parseDuration(durationStr, unit);
-                String formatedDuration = BanHelper.formatTime(duration);
+                String formatedDuration = PunishHelper.formatTime(duration);
 
                 String reason = "";
                 for (int i = 2; i < strings.length; i++) {

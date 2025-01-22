@@ -1,22 +1,23 @@
 package com.ronaldophc.database;
 
-import com.ronaldophc.feature.punish.ban.Ban;
+import com.ronaldophc.feature.punish.banip.BanIP;
 import com.ronaldophc.util.Logger;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-public class BanRepository {
+public class BanIPRepository {
 
-    public static boolean ban(UUID uuid, long duration, String bannedBy, String reason) {
+    public static boolean banIP(String ipAddress, long duration, String bannedBy, String reason) {
         if (!MySQLManager.isActive) return false;
         try (Connection conn = MySQLManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO bans (uuid, end_time, banned_by, reason)" +
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO ip_bans (ip_address, end_time, banned_by, reason)" +
                      " VALUES (?, ?, ?, ?)")) {
 
-            stmt.setString(1, uuid.toString());
+            stmt.setString(1, ipAddress);
             stmt.setLong(2, duration);
             stmt.setString(3, bannedBy);
             stmt.setString(4, reason);
@@ -24,31 +25,31 @@ public class BanRepository {
 
             return true;
         } catch (SQLException e) {
-            Logger.logError("Erro ao banir: " + e.getMessage());
+            Logger.logError("Erro ao banir IP: " + e.getMessage());
             return false;
         }
     }
 
-    public static boolean unban(UUID uuid) {
+    public static boolean unbanIP(String ipAddress) {
         if (!MySQLManager.isActive) return false;
         try (Connection conn = MySQLManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("UPDATE bans SET active = false, unbanned_at = CURRENT_TIMESTAMP WHERE uuid = ? AND active = true")) {
+             PreparedStatement stmt = conn.prepareStatement("UPDATE ip_bans SET active = false, unbanned_at = CURRENT_TIMESTAMP WHERE ip_address = ? AND active = true")) {
 
-            stmt.setString(1, uuid.toString());
+            stmt.setString(1, ipAddress);
             stmt.executeUpdate();
 
             return true;
         } catch (SQLException e) {
-            Logger.logError("Erro ao desbanir: " + e.getMessage());
+            Logger.logError("Erro ao desbanir IP: " + e.getMessage());
             return false;
         }
     }
 
-    public static long getBanEndTime(UUID uuid) {
+    public static long getBanIPEndTime(String ipAddress) {
         if (!MySQLManager.isActive) return 0;
         try (Connection conn = MySQLManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT end_time FROM bans WHERE uuid = ? AND active = true")) {
-            stmt.setString(1, uuid.toString());
+             PreparedStatement stmt = conn.prepareStatement("SELECT end_time FROM ip_bans WHERE ip_address = ? AND active = true")) {
+            stmt.setString(1, ipAddress);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getLong("end_time");
@@ -59,46 +60,46 @@ public class BanRepository {
         return 0;
     }
 
-    public static boolean isBanned(UUID uuid) {
+    public static boolean isIPBanned(String ipAddress) {
         if (!MySQLManager.isActive) return false;
         try (Connection conn = MySQLManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT end_time FROM bans WHERE uuid = ? AND active = true")) {
-            stmt.setString(1, uuid.toString());
+             PreparedStatement stmt = conn.prepareStatement("SELECT end_time FROM ip_bans WHERE ip_address = ? AND active = true")) {
+            stmt.setString(1, ipAddress);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 long time = rs.getLong("end_time");
                 if (time < System.currentTimeMillis()) {
-                    unban(uuid);
+                    unbanIP(ipAddress);
                     return false;
                 }
                 return true;
             }
         } catch (SQLException e) {
-            Logger.logError("Erro ao verificar ban: " + e.getMessage());
+            Logger.logError("Erro ao verificar banIP: " + e.getMessage());
         }
         return false;
     }
 
-    public static void unbanExpired() {
+    public static void unbanExpiredIPs() {
         if (!MySQLManager.isActive) return;
-        String query = "UPDATE bans SET active = false, unbanned_at = CURRENT_TIMESTAMP WHERE end_time <= ? AND active = true";
+        String query = "UPDATE ip_bans SET active = false, unbanned_at = CURRENT_TIMESTAMP WHERE end_time <= ? AND active = true";
 
         try (Connection conn = MySQLManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setLong(1, System.currentTimeMillis());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            Logger.logError("Erro ao desbanir expirados: " + e.getMessage());
+            Logger.logError("Erro ao desbanir IPs expirados: " + e.getMessage());
         }
     }
 
     // Pegar histórico de banimentos
-    public static List<Ban> getBanHistory(UUID uuid) {
+    public static List<BanIP> getBanIPHistory(String ipAddress) {
         if (!MySQLManager.isActive) return new ArrayList<>();
-        List<Ban> bans = new ArrayList<>();
+        List<BanIP> bans = new ArrayList<>();
         try (Connection conn = MySQLManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM bans WHERE uuid = ? ORDER BY banned_at DESC")) {
-            stmt.setString(1, uuid.toString());
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ip_bans WHERE ip_address = ? ORDER BY banned_at DESC")) {
+            stmt.setString(1, ipAddress);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String bannedBy = rs.getString("banned_by");
@@ -107,20 +108,23 @@ public class BanRepository {
                 boolean active = rs.getBoolean("active");
                 Timestamp banned_at = rs.getTimestamp("banned_at");
                 Timestamp unbanned_at = rs.getTimestamp("unbanned_at");
-                Ban newBan = new Ban(uuid, end_time, bannedBy, reason, active, banned_at, unbanned_at);
+                BanIP newBan = new BanIP(InetAddress.getByName(ipAddress), end_time, bannedBy, reason, active, banned_at, unbanned_at);
                 bans.add(newBan);
             }
         } catch (SQLException e) {
-            Logger.logError("Erro ao carregar histórico ban: " + e.getMessage());
+            Logger.logError("Erro ao carregar histórico banIP: " + e.getMessage());
+        } catch (UnknownHostException e) {
+            Logger.logError("Erro ao carregar histórico banIP: " + e.getMessage());
+            throw new RuntimeException(e);
         }
         return bans;
     }
 
-    public static Ban getActiveBan(UUID uuid) {
+    public static BanIP getActiveBanIP(String ipAddress) {
         if (!MySQLManager.isActive) return null;
         try (Connection conn = MySQLManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM bans WHERE uuid = ? AND active = true")) {
-            stmt.setString(1, uuid.toString());
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ip_bans WHERE ip_address = ? AND active = true")) {
+            stmt.setString(1, ipAddress);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 String bannedBy = rs.getString("banned_by");
@@ -129,12 +133,14 @@ public class BanRepository {
                 boolean active = rs.getBoolean("active");
                 Timestamp banned_at = rs.getTimestamp("banned_at");
                 Timestamp unbanned_at = rs.getTimestamp("unbanned_at");
-                return new Ban(uuid, end_time, bannedBy, reason, active, banned_at, unbanned_at);
+                return new BanIP(InetAddress.getByName(ipAddress), end_time, bannedBy, reason, active, banned_at, unbanned_at);
             }
         } catch (SQLException e) {
             Logger.logError("Erro ao carregar banIP ativo: " + e.getMessage());
+        } catch (UnknownHostException e) {
+            Logger.logError("Erro ao carregar banIP ativo: " + e.getMessage());
+            throw new RuntimeException(e);
         }
-
         return null;
     }
 }

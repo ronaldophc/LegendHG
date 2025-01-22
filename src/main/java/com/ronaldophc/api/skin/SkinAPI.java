@@ -21,7 +21,7 @@ public class SkinAPI {
         return updatePlayerSkinFinal(player, skinName);
     }
 
-    public static void changePlayerSkin(Player player, Property property) throws Exception {
+    public static void changePlayerSkin(Player player, Property property) {
         setProfileTextures(player, property);
     }
 

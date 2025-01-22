@@ -3,6 +3,7 @@ package com.ronaldophc.register;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.command.*;
 import com.ronaldophc.command.admin.*;
+import com.ronaldophc.feature.punish.mute.Mute;
 import com.ronaldophc.feature.report.ReportCommand;
 import com.ronaldophc.feature.report.ReportMenus;
 
@@ -51,6 +52,9 @@ public class RegisterCommands extends LegendHG {
         instance.getCommand("banip").setExecutor(new BanIpCommand());
         instance.getCommand("hour").setExecutor(new HourCommand());
         instance.getCommand("unbanip").setExecutor(new UnbanIPCommand());
+        instance.getCommand("mute").setExecutor(new MuteCommand());
+        instance.getCommand("unmute").setExecutor(new UnMuteCommand());
+        instance.getCommand("ban").setExecutor(new BanCommand());
     }
 
 }

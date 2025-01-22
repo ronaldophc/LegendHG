@@ -25,6 +25,10 @@ public class PlayerHelper {
 
     public static void teleportPlayerToSpawnLocation(Player player) {
         World world = Bukkit.getWorld("world");
+        if (world == null) {
+            Bukkit.getLogger().severe("World 'world' not found. Cannot teleport player to spawn location.");
+            return;
+        }
         Location spawnLocation = getRandomSpawnLocation(world);
         player.teleport(spawnLocation);
     }

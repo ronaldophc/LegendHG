@@ -1,7 +1,8 @@
-package com.ronaldophc.feature.punish.banip;
+package com.ronaldophc.feature.punish.ban;
 
-import com.ronaldophc.database.BanIPRepository;
+import com.ronaldophc.database.BanRepository;
 import com.ronaldophc.feature.punish.PunishHelper;
+import com.ronaldophc.player.PlayerService;
 import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -11,45 +12,46 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
-public class BanIPService {
+public class BanService {
 
-    public BanIPService() {
+    public BanService() {
     }
 
-    public boolean banIP(BanIP ban) {
-        return BanIPRepository.banIP(ban.getIp_address().getHostAddress(), ban.getEnd_time(), ban.getBanned_by(), ban.getReason());
+    public boolean ban(Ban ban) {
+        return BanRepository.ban(ban.getUuid(), ban.getEnd_time(), ban.getBanned_by(), ban.getReason());
     }
 
-    public boolean unbanIP(InetAddress ipAddress) {
-        return BanIPRepository.unbanIP(ipAddress.getHostAddress());
+    public boolean unban(UUID uuid) {
+        return BanRepository.unban(uuid);
     }
 
-    public boolean isIPBanned(InetAddress ipAddress) {
-        return BanIPRepository.isIPBanned(ipAddress.getHostAddress());
+    public boolean isBanned(UUID uuid) {
+        return BanRepository.isBanned(uuid);
     }
 
-    public String getExpire_atFormated(InetAddress ipAddress) {
-        long duration = BanIPRepository.getBanIPEndTime(ipAddress.getHostAddress());
+    public String getExpire_atFormated(UUID uuid) {
+        long duration = BanRepository.getBanEndTime(uuid);
         return PunishHelper.formatTimeYear(duration);
     }
 
-    public List<BanIP> getBanIPHistory(InetAddress ipAddress) {
-        return BanIPRepository.getBanIPHistory(ipAddress.getHostAddress());
+    public List<Ban> getBanHistory(UUID uuid) {
+        return BanRepository.getBanHistory(uuid);
     }
 
-    public BanIP getActiveBanIP(InetAddress ipAddress) {
-        return BanIPRepository.getActiveBanIP(ipAddress.getHostAddress());
+    public Ban getActiveBan(UUID uuid) {
+        return BanRepository.getActiveBan(uuid);
     }
 
-    public void openBanIpHistoryInventory(Player player, InetAddress ipAddress) {
-        List<BanIP> banHistory = getBanIPHistory(ipAddress);
-        Inventory inventory = Bukkit.createInventory(null, 54, Util.color3 + "§lBanIP " + ipAddress.getHostAddress());
+    public void openBanHistoryInventory(Player player, UUID uuid) {
+        List<Ban> banHistory = getBanHistory(uuid);
+        String name = PlayerService.getNameByUUID(uuid);
+        Inventory inventory = Bukkit.createInventory(null, 54, Util.color3 + "§lBan " + name);
 
-        for (BanIP ban : banHistory) {
+        for (Ban ban : banHistory) {
             ItemStack paper = new ItemStack(Material.EMPTY_MAP);
             if (ban.isActive()) {
                 paper = new ItemStack(Material.MAP);
@@ -63,7 +65,7 @@ public class BanIPService {
     }
 
     @NotNull
-    private static ItemMeta getItemMeta(BanIP ban, ItemStack paper) {
+    private static ItemMeta getItemMeta(Ban ban, ItemStack paper) {
         ItemMeta meta = paper.getItemMeta();
         meta.setDisplayName("Ban Info");
         List<String> lore = Arrays.asList(
