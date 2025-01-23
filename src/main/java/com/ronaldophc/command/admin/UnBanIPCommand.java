@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class UnbanIPCommand implements CommandExecutor {
+public class UnBanIPCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
