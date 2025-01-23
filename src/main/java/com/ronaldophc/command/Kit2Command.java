@@ -4,6 +4,7 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
 import com.ronaldophc.game.GameHelper;
 import com.ronaldophc.kits.Kit;
+import com.ronaldophc.kits.manager.KitCombinationManager;
 import com.ronaldophc.kits.manager.KitManager;
 import com.ronaldophc.kits.manager.guis.KitGui;
 import com.ronaldophc.player.account.Account;
@@ -111,13 +112,13 @@ public class Kit2Command implements CommandExecutor, TabExecutor {
                         return true;
                     }
 
-//                    if (GameHelper.getInstance().isTwoKits()) {
-//                        Kits currentKit1 = kitManager.getPlayerKit(player);
-//                        if (currentKit1 != null && KitCombinationManager.getInstance().isProhibitedCombination(currentKit1, kit)) {
-//                            player.sendMessage(Util.error + "Essa combinação de kits é bloqueada!");
-//                            return true;
-//                        }
-//                    }
+                    if (GameHelper.getInstance().isTwoKits()) {
+                        Kit currentKit1 = account.getKits().getPrimary();
+                        if (currentKit1 != null && KitCombinationManager.getInstance().isProhibitedCombination(currentKit1, kit)) {
+                            player.sendMessage(Util.error + "Essa combinação de kits é bloqueada!");
+                            return true;
+                        }
+                    }
 
 
                     account.getKits().setSecondary(kit);

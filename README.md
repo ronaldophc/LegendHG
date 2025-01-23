@@ -1,6 +1,6 @@
 # LegendHG
 
-![Support](https://img.shields.io/badge/Minecraft-1.7--1.8-green.svg)
+[![Support](https://img.shields.io/badge/Minecraft-1.7--1.8-green.svg)]()
 [![Spigot](https://img.shields.io/badge/PaperSport-1.8.8-yellow.svg)](https://www.spigotmc.org/resources/nametagedit.3836/)
 [![JDK](https://img.shields.io/badge/JDK-1.8-blue.svg)](https://jdk.java.net/java-se-ri/8-MR3)
 
@@ -25,7 +25,7 @@
 ## Features
 
 - [ ] Terminar de fazer sistema de armazenar as informações de cada game no GamesSQL.
-- [ ] Documentar permissoes do plugin.
+- [ ] Documentar permissões do plugin.
 - [ ] Sistema de renascer os players em até 5 minutos após o jogo começar(Se tiver a permissão).
 - [ ] Arena final.
 - [ ] Sistema de compras - Compra via Pix dentro do minecraft OU CentralCart.
@@ -45,7 +45,7 @@
 - [ ] Sistema de report.
 - [ ] Integrar sistema de report com Discord.
 - [ ] Terminar menu de players do /admin para suportar mais que o tamanho do inventario(paginas).
-- [ ] Impedir combinações de kits.
+- [X] Impedir combinações de kits.
 - [ ] Testar e balancear danos.
 - [ ] Sistema como o gulag do Warzone.
 - [X] Sistema de Ban e Mute.
