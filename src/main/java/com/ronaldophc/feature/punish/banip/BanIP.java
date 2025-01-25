@@ -1,6 +1,5 @@
 package com.ronaldophc.feature.punish.banip;
 
-import com.ronaldophc.database.BanIPRepository;
 import com.ronaldophc.feature.punish.PunishHelper;
 import lombok.Getter;
 import lombok.Setter;

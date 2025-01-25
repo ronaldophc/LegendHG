@@ -1,9 +1,9 @@
 package com.ronaldophc.player;
 
+import com.ronaldophc.LegendHG;
 import com.ronaldophc.game.GameHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
-import com.ronaldophc.setting.Settings;
 import com.ronaldophc.util.ItemManager;
 import com.ronaldophc.util.Util;
 import org.bukkit.*;
@@ -16,7 +16,7 @@ import java.util.Random;
 public class PlayerHelper {
 
     public static boolean verifyMinPlayers() {
-        if (AccountManager.getInstance().getPlayersAlive().size() >= Settings.getInstance().getInt("MinPlayers")) {
+        if (AccountManager.getInstance().getPlayersAlive().size() >= LegendHG.settings.getInt("MinPlayers")) {
             return true;
         }
         Bukkit.broadcastMessage(Util.errorServer + "Jogadores insuficientes para começar, reiniciando a contagem");

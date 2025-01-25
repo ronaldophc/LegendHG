@@ -4,7 +4,6 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.feature.punish.PunishHelper;
 import com.ronaldophc.feature.punish.banip.BanIP;
 import com.ronaldophc.feature.punish.banip.BanIPService;
-import com.ronaldophc.setting.Settings;
 import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -125,7 +124,7 @@ public class BanIpCommand implements CommandExecutor {
     private static String getKickMessage(BanIP banIP) {
         String expireAt = "§aIP banido até: " + Util.color3 + banIP.getExpire_atFormated();
         String reason = "§aMotivo: " + Util.color3 + banIP.getReason();
-        String linkDiscord = Settings.getInstance().getString("Discord");
+        String linkDiscord = LegendHG.settings.getString("Discord");
 
         return Util.title + "\n\n"
                 + "§a§lSeu IP foi banido!\n"

@@ -1,6 +1,6 @@
 package com.ronaldophc.game;
 
-import com.ronaldophc.setting.Settings;
+import com.ronaldophc.LegendHG;
 import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.entity.Firework;
@@ -17,7 +17,7 @@ public class GameHelper {
     private int kits;
 
     private GameHelper() {
-        this.kits = Settings.getInstance().getInt("Kits");
+        this.kits = LegendHG.settings.getInt("Kits");
         defineType();
     }
 

@@ -1,10 +1,7 @@
 package com.ronaldophc.util;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.player.PlayerHelper;
-import com.ronaldophc.player.PlayerService;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
 import io.netty.channel.Channel;

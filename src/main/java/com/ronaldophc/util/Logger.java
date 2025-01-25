@@ -1,7 +1,7 @@
 package com.ronaldophc.util;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.setting.Debug;
+import com.ronaldophc.yaml.Yaml;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -49,7 +49,8 @@ public class Logger {
     }
 
     public static void debugMySql(String message) {
-        if (Debug.getInstance().getString("MySQL").equalsIgnoreCase("off")) return;
+        Yaml debug = LegendHG.debug;
+        if (debug.getString("MySQL").equalsIgnoreCase("off")) return;
         try (FileWriter fw = new FileWriter(LOG_FILE_DEBUG, true);
              PrintWriter pw = new PrintWriter(fw)) {
             String timestamp = dtf.format(LocalDateTime.now());

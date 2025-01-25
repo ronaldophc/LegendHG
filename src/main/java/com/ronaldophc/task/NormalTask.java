@@ -1,15 +1,27 @@
 package com.ronaldophc.task;
 
-import lombok.Getter;
+import com.ronaldophc.LegendHG;
 
-public class NormalTask implements Runnable {
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-    @Getter
-    private static final NormalTask instance = new NormalTask();
+public class NormalTask {
 
-    @Override
-    public void run() {
-        new NormalServerTickEvent().callEvent();
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+    public void startTask() {
+        scheduler.scheduleAtFixedRate(this::tick, 0, 1, TimeUnit.SECONDS);
     }
 
+    private int secondsOnline = 0;
+
+    public void tick() {
+        secondsOnline += 1;
+        new NormalServerTickEvent(secondsOnline).callEvent();
+    }
+
+    public void stopTask() {
+        scheduler.shutdown();
+    }
 }

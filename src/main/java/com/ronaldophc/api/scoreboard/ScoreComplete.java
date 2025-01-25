@@ -6,7 +6,6 @@ import com.ronaldophc.game.CountDown;
 import com.ronaldophc.game.GameHelper;
 import com.ronaldophc.player.account.Account;
 import com.ronaldophc.player.account.AccountManager;
-import com.ronaldophc.setting.Settings;
 import com.ronaldophc.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
@@ -23,7 +22,7 @@ public class ScoreComplete extends Board {
         addScore(objective, "§5", 5);
         addTeam(scoreboard, "team4", "§4", "§f", Util.color1 + "Iniciando", 4);
         addScore(objective, "§3 ", 3);
-        addTeam(scoreboard, "team2", "§2", Util.color2 + "Começa em: ", Util.color1 + Settings.getInstance().getInt("Countdown"), 2);
+        addTeam(scoreboard, "team2", "§2", Util.color2 + "Começa em: ", Util.color1 + LegendHG.settings.getInt("Countdown"), 2);
         addScore(objective, "§1 ", 1);
         addScore(objective, Util.color1 + "Legendmc.com.br", 0);
 
@@ -39,7 +38,7 @@ public class ScoreComplete extends Board {
         addScore(objective, "§5", 5);
         addTeam(scoreboard, "team4", "§4", "§f", Util.color1 + "Iniciando", 4);
         addScore(objective, "§3 ", 3);
-        addTeam(scoreboard, "team2", "§2", Util.color2 + "Começa em: ", Util.color1 + Settings.getInstance().getInt("Countdown"), 2);
+        addTeam(scoreboard, "team2", "§2", Util.color2 + "Começa em: ", Util.color1 + LegendHG.settings.getInt("Countdown"), 2);
         addScore(objective, "§1 ", 1);
         addScore(objective, Util.color1 + "Legendmc.com.br", 0);
 

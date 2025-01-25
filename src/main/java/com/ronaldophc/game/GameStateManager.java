@@ -1,8 +1,9 @@
 package com.ronaldophc.game;
 
+import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
-import com.ronaldophc.setting.Settings;
 import com.ronaldophc.util.Util;
+import com.ronaldophc.yaml.Yaml;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -11,17 +12,18 @@ import org.bukkit.entity.Player;
 @Getter
 public class GameStateManager {
     private GameState gameState;
+    private final Yaml settings = LegendHG.settings;
 
     public GameStateManager() {
         startCountdown();
     }
 
     public void startCountdown() {
-        setGameState(GameState.COUNTDOWN, Settings.getInstance().getInt("Countdown"));
+        setGameState(GameState.COUNTDOWN, settings.getInt("Countdown"));
     }
 
     public void startInvincibility() {
-        setGameState(GameState.INVINCIBILITY, Settings.getInstance().getInt("Invincibility"));
+        setGameState(GameState.INVINCIBILITY, settings.getInt("Invincibility"));
         Bukkit.broadcastMessage(Util.color1 + "Iniciando a invencibilidade");
         GameStateHelper.preparePlayerToStart();
     }

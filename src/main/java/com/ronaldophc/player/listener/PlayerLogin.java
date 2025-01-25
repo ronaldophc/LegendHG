@@ -3,7 +3,6 @@ package com.ronaldophc.player.listener;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
 import com.ronaldophc.player.account.AccountManager;
-import com.ronaldophc.setting.Settings;
 import com.ronaldophc.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +19,7 @@ public class PlayerLogin implements Listener {
         String permLogin = "legendhg.login.started";
         String permSpec = "legendhg.login.spectator";
         String permMax = "legendhg.login.maxplayers";
-        int maxPlayers = Settings.getInstance().getInt("MaxPlayers");
+        int maxPlayers = LegendHG.settings.getInt("MaxPlayers");
         int playersOn = AccountManager.getInstance().getPlayersAlive().size();
         switch (gameState) {
             case COUNTDOWN:

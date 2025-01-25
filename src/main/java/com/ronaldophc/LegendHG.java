@@ -17,11 +17,11 @@ import com.ronaldophc.player.account.AccountManager;
 import com.ronaldophc.register.RegisterCommands;
 import com.ronaldophc.register.RegisterEvents;
 import com.ronaldophc.register.RegisterKitsEvents;
-import com.ronaldophc.setting.Debug;
-import com.ronaldophc.setting.Settings;
 import com.ronaldophc.task.FastTask;
 import com.ronaldophc.task.NormalTask;
 import com.ronaldophc.util.Helper;
+import com.ronaldophc.yaml.Yaml;
+import com.ronaldophc.yaml.YamlService;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,14 +35,25 @@ public class LegendHG extends JavaPlugin {
     public static Logger logger;
     public GameStateManager gameStateManager;
     public KitManager kitManager;
-    private BukkitTask fastTask;
-    private BukkitTask normalTask;
     private MySQLManager mySQLManager;
     private GladiatorController gladiatorController;
+
+    private BukkitTask fastTask;
+//    private BukkitTask normalTask;
+    PunishManager punishManager;
+    NormalTask normalTask;
+
+
     public FeastManager feast;
     private Board board;
+
+    public static Yaml settings;
+    public static Yaml debug;
+    public static Yaml messages;
+
     public boolean started = false;
     public boolean devMode = false;
+
     @Getter
     private static int gameId;
 
@@ -56,10 +67,11 @@ public class LegendHG extends JavaPlugin {
     public void onEnable() {
         logger.info("LegendHG enabling");
 
-        Settings.getInstance().load();
-        Debug.getInstance().load();
+        settings = YamlService.loadYamlConfiguration("settings");
+        debug = YamlService.loadYamlConfiguration("debug");
+        messages = YamlService.loadYamlConfiguration("messages");
 
-        if (Settings.getInstance().getString("Environment").equalsIgnoreCase("dev")) {
+        if (settings.getString("Environment").equalsIgnoreCase("dev")) {
             devMode = true;
         }
 
@@ -95,14 +107,16 @@ public class LegendHG extends JavaPlugin {
         gameStateManager = new GameStateManager();
         board = new Board();
         fastTask = getServer().getScheduler().runTaskTimer(this, FastTask.getInstance(), 0, 10);
-        normalTask = getServer().getScheduler().runTaskTimer(this, NormalTask.getInstance(), 0, 20);
         feast = new FeastManager();
         gladiatorController = new GladiatorController();
 
         BorderAPI.setWorldBorder();
         SummitManager.getInstance().initialize();
 
-        PunishManager punishManager = new PunishManager();
+        normalTask = new NormalTask();
+        normalTask.startTask();
+
+        punishManager = new PunishManager();
         punishManager.startUnbanTask();
 
         started = true;
@@ -111,12 +125,9 @@ public class LegendHG extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        PunishManager banIPManager = new PunishManager();
-        Runtime.getRuntime().addShutdownHook(new Thread(banIPManager::stopPunishTask));
+        Runtime.getRuntime().addShutdownHook(new Thread(punishManager::stopPunishTask));
+        Runtime.getRuntime().addShutdownHook(new Thread(normalTask::stopTask));
 
-        if (normalTask != null) {
-            normalTask.cancel();
-        }
         if (fastTask != null) {
             fastTask.cancel();
         }

@@ -1,11 +1,8 @@
 package com.ronaldophc.database;
 
-import com.ronaldophc.feature.punish.banip.BanIP;
 import com.ronaldophc.feature.punish.mute.Mute;
 import com.ronaldophc.util.Logger;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

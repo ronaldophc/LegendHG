@@ -1,7 +1,6 @@
 package com.ronaldophc.command.admin;
 
 import com.ronaldophc.feature.punish.ban.BanService;
-import com.ronaldophc.feature.punish.mute.MuteService;
 import com.ronaldophc.player.PlayerService;
 import com.ronaldophc.util.Util;
 import org.bukkit.command.Command;

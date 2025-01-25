@@ -55,6 +55,7 @@ public class RegisterEvents extends LegendHG {
         pm.registerEvents(CountDown.getInstance(), getInstance());
         pm.registerEvents(new AdminListener(), getInstance());
         pm.registerEvents(new PlayerPreLogin(), getInstance());
+        pm.registerEvents(new NormalTaskListener(), getInstance());
     }
 
     public static void registerRecipes() {

@@ -5,7 +5,6 @@ import com.ronaldophc.feature.punish.PunishHelper;
 import com.ronaldophc.feature.punish.ban.Ban;
 import com.ronaldophc.feature.punish.ban.BanService;
 import com.ronaldophc.player.PlayerService;
-import com.ronaldophc.setting.Settings;
 import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -117,7 +116,7 @@ public class BanCommand implements CommandExecutor {
     private static String getKickMessage(Ban ban) {
         String expireAt = "§aBanido até: " + Util.color3 + ban.getExpire_atFormated();
         String reason = "§aMotivo: " + Util.color3 + ban.getReason();
-        String linkDiscord = Settings.getInstance().getString("Discord");
+        String linkDiscord = LegendHG.settings.getString("Discord");
 
         return Util.title + "\n\n"
                 + "§a§lVocê foi banido!\n"

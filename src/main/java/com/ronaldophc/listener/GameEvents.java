@@ -3,7 +3,6 @@ package com.ronaldophc.listener;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
 import com.ronaldophc.player.account.AccountManager;
-import com.ronaldophc.setting.Settings;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,7 +42,7 @@ public class GameEvents implements Listener {
                         return;
                     }
                 }
-                if (Settings.getInstance().getString("Environment").equalsIgnoreCase("dev")) {
+                if (LegendHG.settings.getString("Environment").equalsIgnoreCase("dev")) {
                     event.getPlayer().sendMessage("§c§l[!] Dev mode on: §cVocê não pode abrir este inventário agora.");
                 }
                 event.setCancelled(true);

@@ -1,7 +1,7 @@
 package com.ronaldophc.listener;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.setting.Settings;
+import com.ronaldophc.yaml.Yaml;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,13 +15,14 @@ public class Motd implements Listener {
     @EventHandler
     public void onMotd(ServerListPingEvent event) {
         List<String> motd = new ArrayList<>();
-        motd.add(Settings.getInstance().getString("Line1"));
-        motd.add(Settings.getInstance().getString("Line2"));
+        Yaml settings = LegendHG.settings;
+        motd.add(settings.getString("Line1"));
+        motd.add(settings.getString("Line2"));
         StringBuilder message = new StringBuilder();
         for (String line : motd)
             message.append(centerText(line)).append("\n");
         if (!LegendHG.getInstance().started) {
-            message = new StringBuilder(centerText(Settings.getInstance().getString("Line1")) + "\n" + centerText("§cServidor iniciando"));
+            message = new StringBuilder(centerText(settings.getString("Line1")) + "\n" + centerText("§cServidor iniciando"));
         }
         event.setMotd(message.toString());
     }

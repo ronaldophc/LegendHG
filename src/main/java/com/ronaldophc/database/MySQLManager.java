@@ -1,8 +1,8 @@
 package com.ronaldophc.database;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.setting.Settings;
 import com.ronaldophc.util.Logger;
+import com.ronaldophc.yaml.Yaml;
 import lombok.Getter;
 
 import java.sql.*;
@@ -20,16 +20,17 @@ public class MySQLManager {
     public static boolean isActive = true;
 
     public MySQLManager() {
-        if (!Settings.getInstance().exist("Database.Host") || !Settings.getInstance().exist("Database.Database") || !Settings.getInstance().exist("Database.User") || !Settings.getInstance().exist("Database.Password") || !Settings.getInstance().exist("Database.Port")) {
+        Yaml settings = LegendHG.settings;
+        if (!settings.exist("Database.Host") || !settings.exist("Database.Database") || !settings.exist("Database.User") || !settings.exist("Database.Password") || !settings.exist("Database.Port")) {
             isActive = false;
             return;
         }
 
-        host = Settings.getInstance().getString("Database.Host");
-        database = Settings.getInstance().getString("Database.Database");
-        username = Settings.getInstance().getString("Database.User");
-        password = Settings.getInstance().getString("Database.Password");
-        port = Settings.getInstance().getInt("Database.Port");
+        host = settings.getString("Database.Host");
+        database = settings.getString("Database.Database");
+        username = settings.getString("Database.User");
+        password = settings.getString("Database.Password");
+        port = settings.getInt("Database.Port");
     }
 
     public static Connection getConnection() throws SQLException {

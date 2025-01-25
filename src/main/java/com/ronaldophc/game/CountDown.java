@@ -5,7 +5,6 @@ import com.ronaldophc.feature.MiniFeastManager;
 import com.ronaldophc.feature.battleonthesummit.SummitManager;
 import com.ronaldophc.player.PlayerHelper;
 import com.ronaldophc.player.account.AccountManager;
-import com.ronaldophc.setting.Settings;
 import com.ronaldophc.task.NormalServerTickEvent;
 import com.ronaldophc.util.Util;
 import org.bukkit.Bukkit;
@@ -23,8 +22,8 @@ public class CountDown implements Listener {
 
     private CountDown() {
         this.plugin = LegendHG.getInstance();
-        this.countdownRemaining = Settings.getInstance().getInt("Countdown");
-        this.feast = Settings.getInstance().getInt("Feast");
+        this.countdownRemaining = LegendHG.settings.getInt("Countdown");
+        this.feast = LegendHG.settings.getInt("Feast");
     }
 
     @EventHandler

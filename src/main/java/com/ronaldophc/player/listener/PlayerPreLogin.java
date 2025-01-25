@@ -5,7 +5,6 @@ import com.ronaldophc.feature.punish.ban.Ban;
 import com.ronaldophc.feature.punish.ban.BanService;
 import com.ronaldophc.feature.punish.banip.BanIP;
 import com.ronaldophc.feature.punish.banip.BanIPService;
-import com.ronaldophc.setting.Settings;
 import com.ronaldophc.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -48,7 +47,7 @@ public class PlayerPreLogin implements Listener {
         }
     }
 
-    public static String linkDiscord = Settings.getInstance().getString("Discord");
+    public static String linkDiscord = LegendHG.settings.getString("Discord");
 
     private static String getMessage(Ban ban) {
         String expireAt = "§aBanido até: " + Util.color3 + ban.getExpire_atFormated();
