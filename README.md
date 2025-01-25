@@ -35,7 +35,7 @@
 - [ ] Testar plugins de AntiCheat e AntiBot.
 - [ ] Criar Prefs de admin e colocar opção de ver specs ou nao.
 - [ ] Sistema de manutenção.
-- [ ] Auto Broadcast de mensagens via yml.
+- [X] Auto Broadcast de mensagens via yml.
 - [ ] Sistema de customização de som das coisas como kill, morte, xp...
 - [ ] Sistema de pré-login para verificar se é original ou não.
 - [ ] Criar uma table com skins de jogadores para não precisar baixar toda vez.
