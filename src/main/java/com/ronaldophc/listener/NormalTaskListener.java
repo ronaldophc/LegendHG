@@ -14,7 +14,7 @@ public class NormalTaskListener implements Listener {
     @EventHandler
     public void onTick(NormalServerTickEvent event) {
         int seconds = event.getSecondsOnline();
-        int interval = 30;
+        int interval = LegendHG.messages.getInt("interval");
         if (seconds % interval == 0) {
             String message = LegendHG.messages.getAutoMessage(id);
 

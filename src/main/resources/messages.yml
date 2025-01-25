@@ -1,2 +1,5 @@
+# Intervalo entre as mensagens(segundos)
+Interval: 180
+# Mensagens enviadas automaticamente
 Messages:
   0: "Hello, World!"
