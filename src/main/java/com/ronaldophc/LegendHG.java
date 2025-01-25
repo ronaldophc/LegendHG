@@ -39,10 +39,8 @@ public class LegendHG extends JavaPlugin {
     private GladiatorController gladiatorController;
 
     private BukkitTask fastTask;
-//    private BukkitTask normalTask;
+    private BukkitTask normalTask;
     PunishManager punishManager;
-    NormalTask normalTask;
-
 
     public FeastManager feast;
     private Board board;
@@ -113,8 +111,7 @@ public class LegendHG extends JavaPlugin {
         BorderAPI.setWorldBorder();
         SummitManager.getInstance().initialize();
 
-        normalTask = new NormalTask();
-        normalTask.startTask();
+        normalTask = getServer().getScheduler().runTaskTimer(this, NormalTask.getInstance(), 0, 20);
 
         punishManager = new PunishManager();
         punishManager.startUnbanTask();
@@ -126,7 +123,10 @@ public class LegendHG extends JavaPlugin {
     @Override
     public void onDisable() {
         Runtime.getRuntime().addShutdownHook(new Thread(punishManager::stopPunishTask));
-        Runtime.getRuntime().addShutdownHook(new Thread(normalTask::stopTask));
+
+        if (normalTask != null) {
+            normalTask.cancel();
+        }
 
         if (fastTask != null) {
             fastTask.cancel();

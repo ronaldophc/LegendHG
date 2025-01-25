@@ -27,9 +27,9 @@ public class Logger {
              PrintWriter pw = new PrintWriter(fw)) {
             String timestamp = dtf.format(LocalDateTime.now());
             pw.println(timestamp + " - ERROR: " + message + " (File: " + fileName + ", Line: " + lineNumber + ")");
+            LegendHG.logger.severe("An error occurred, check the error log.");
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (player.isOp()) {
-                    LegendHG.logger.info("An error occurred, check the error log.");
                     player.sendMessage(Util.errorServer + "Ocorreu um erro, verifique o log error.");
                 }
             }

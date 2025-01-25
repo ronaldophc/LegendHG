@@ -4,6 +4,7 @@ import com.ronaldophc.LegendHG;
 import com.ronaldophc.util.Logger;
 import com.ronaldophc.yaml.Yaml;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 
 import java.sql.*;
 import java.util.Objects;
@@ -23,6 +24,9 @@ public class MySQLManager {
         Yaml settings = LegendHG.settings;
         if (!settings.exist("Database.Host") || !settings.exist("Database.Database") || !settings.exist("Database.User") || !settings.exist("Database.Password") || !settings.exist("Database.Port")) {
             isActive = false;
+            Logger.logError("Database settings not found in settings.yml, shutting down server!");
+
+            Bukkit.shutdown();
             return;
         }
 
