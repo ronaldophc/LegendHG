@@ -1,7 +1,7 @@
 package com.ronaldophc.util;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.yaml.Yaml;
+import com.ronaldophc.feature.CustomYaml;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -49,7 +49,7 @@ public class Logger {
     }
 
     public static void debugMySql(String message) {
-        Yaml debug = LegendHG.debug;
+        CustomYaml debug = LegendHG.debug;
         if (debug.getString("MySQL").equalsIgnoreCase("off")) return;
         try (FileWriter fw = new FileWriter(LOG_FILE_DEBUG, true);
              PrintWriter pw = new PrintWriter(fw)) {

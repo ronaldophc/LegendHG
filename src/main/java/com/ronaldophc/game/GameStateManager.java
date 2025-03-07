@@ -3,7 +3,7 @@ package com.ronaldophc.game;
 import com.ronaldophc.LegendHG;
 import com.ronaldophc.constant.GameState;
 import com.ronaldophc.util.Util;
-import com.ronaldophc.yaml.Yaml;
+import com.ronaldophc.feature.CustomYaml;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 @Getter
 public class GameStateManager {
     private GameState gameState;
-    private final Yaml settings = LegendHG.settings;
+    private final CustomYaml settings = LegendHG.settings;
 
     public GameStateManager() {
         startCountdown();

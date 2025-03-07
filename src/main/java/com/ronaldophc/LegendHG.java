@@ -4,6 +4,7 @@ import com.ronaldophc.api.border.BorderAPI;
 import com.ronaldophc.api.scoreboard.Board;
 import com.ronaldophc.database.GameRepository;
 import com.ronaldophc.database.MySQLManager;
+import com.ronaldophc.feature.CustomYaml;
 import com.ronaldophc.feature.FeastManager;
 import com.ronaldophc.feature.battleonthesummit.SummitManager;
 import com.ronaldophc.feature.punish.PunishManager;
@@ -20,8 +21,6 @@ import com.ronaldophc.register.RegisterKitsEvents;
 import com.ronaldophc.task.FastTask;
 import com.ronaldophc.task.NormalTask;
 import com.ronaldophc.util.Helper;
-import com.ronaldophc.yaml.Yaml;
-import com.ronaldophc.yaml.YamlService;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,9 +44,9 @@ public class LegendHG extends JavaPlugin {
     public FeastManager feast;
     private Board board;
 
-    public static Yaml settings;
-    public static Yaml debug;
-    public static Yaml messages;
+    public static CustomYaml settings;
+    public static CustomYaml debug;
+    public static CustomYaml messages;
 
     public boolean started = false;
     public boolean devMode = false;
@@ -65,9 +64,9 @@ public class LegendHG extends JavaPlugin {
     public void onEnable() {
         logger.info("LegendHG enabling");
 
-        settings = YamlService.loadYamlConfiguration("settings");
-        debug = YamlService.loadYamlConfiguration("debug");
-        messages = YamlService.loadYamlConfiguration("messages");
+        settings = new CustomYaml("settings");
+        debug = new CustomYaml("debug");
+        messages = new CustomYaml("messages");
 
         if (settings.getString("Environment").equalsIgnoreCase("dev")) {
             devMode = true;

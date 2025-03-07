@@ -17,6 +17,10 @@ public class PlayerPreLogin implements Listener {
 
     @EventHandler
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
+        if (LegendHG.settings.getBoolean("Maintenance")) {
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Util.title + "\n\n" + Util.errorServer + Util.bold + "O servidor está em manutenção.");
+            return;
+        }
         BanIPService banIPService = new BanIPService();
         InetAddress address = event.getAddress();
         if (banIPService.isIPBanned(address)) {

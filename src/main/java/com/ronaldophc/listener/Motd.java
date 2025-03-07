@@ -1,7 +1,7 @@
 package com.ronaldophc.listener;
 
 import com.ronaldophc.LegendHG;
-import com.ronaldophc.yaml.Yaml;
+import com.ronaldophc.feature.CustomYaml;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +15,7 @@ public class Motd implements Listener {
     @EventHandler
     public void onMotd(ServerListPingEvent event) {
         List<String> motd = new ArrayList<>();
-        Yaml settings = LegendHG.settings;
+        CustomYaml settings = LegendHG.settings;
         motd.add(settings.getString("Line1"));
         motd.add(settings.getString("Line2"));
         StringBuilder message = new StringBuilder();
@@ -23,6 +23,9 @@ public class Motd implements Listener {
             message.append(centerText(line)).append("\n");
         if (!LegendHG.getInstance().started) {
             message = new StringBuilder(centerText(settings.getString("Line1")) + "\n" + centerText("§cServidor iniciando"));
+        }
+        if (LegendHG.settings.getBoolean("Maintenance")) {
+            message = new StringBuilder(centerText(settings.getString("Line1")) + "\n" + centerText("§c§lServidor em manutenção"));
         }
         event.setMotd(message.toString());
     }

@@ -1,39 +1,43 @@
 # LegendHG
-# Ambiente de desenvolvimento(dev ou prod).
+# Enviroment: Ambiente de desenvolvimento(dev ou prod).
 # No Dev desabilita o pré-load das chunks e gera alguns debugs.
+# ----------------------------------------
+# Maintenance: Modo manutenção do servidor.
+# ----------------------------------------
+# Countdown: Tempo para iniciar o HG após iniciar o servidor em segundos.
+# ----------------------------------------
+# Invincibility: Tempo de invencibilidade em segundos.
+# ----------------------------------------
+# Feast: Tempo de jogo para spawnar o Feast em segungos.
+# ----------------------------------------
+# MinPlayers: Minimo de jogadores para iniciar o HG.
+# ----------------------------------------
+# MaxPlayers: Maximo de players no servidor.
+# ----------------------------------------
+# Database: Configuração do banco de dados.
+# Host: 'mysql' se for local(nome do container do MYSQL)
+# ----------------------------------------
+# Kits: Modo de jogo - 1 = 1 Kit, 2 = 2 Kits, 3 = aleatório para cada partida.
+# ----------------------------------------
+# Line1: Mensagem da lista de servidores.
+# Line2: Mensagem da lista de servidores.
+# ----------------------------------------
+# Discord: Link de convite do Discord.
+# ----------------------------------------
 Environment: dev
-#
-# Tempo para iniciar o HG após iniciar o servidor em segundos
+Maintenance: true
 Countdown: 120
-#
-# Tempo de invencibilidade em segundos
 Invincibility: 120
-#
-# Tempo de jogo para spawnar o Feast em segungos
 Feast: 120
-#
-# Minimo de jogadores para iniciar o HG
 MinPlayers: 1
-#
-# Maximo de players no servidor
 MaxPlayers: 50
-#
-#
-# Database
 Database:
-  # Host: 'mysql' se for local(nome do container do MYSQL)
   Host: mysql
   Port: 3306
   User: sqluser
   Password: root
   Database: legendhg
-#
-# Modo de jogo - 1 = 1 Kit, 2 = 2 Kits, 3 = aleatório para cada partida.
 Kits: 2
-#
-# Mensagens da lista de servidores
 Line1: "§b§lLegendMC §f§l» §f§l1.7x 1.8x"
 Line2: "§a§lEm desenvolvimento!"
-#
-# Link de convite do Discord
 Discord: "https://discord.gg/f4FWwA33BQ"

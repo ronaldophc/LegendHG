@@ -55,6 +55,7 @@ public class RegisterCommands extends LegendHG {
         instance.getCommand("unmute").setExecutor(new UnMuteCommand());
         instance.getCommand("ban").setExecutor(new BanCommand());
         instance.getCommand("unban").setExecutor(new UnBanCommand());
+        instance.getCommand("maintenance").setExecutor(new MaintenanceCommand());
     }
 
 }

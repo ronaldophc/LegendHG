@@ -1,8 +1,8 @@
 package com.ronaldophc.database;
 
 import com.ronaldophc.LegendHG;
+import com.ronaldophc.feature.CustomYaml;
 import com.ronaldophc.util.Logger;
-import com.ronaldophc.yaml.Yaml;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 
@@ -21,7 +21,7 @@ public class MySQLManager {
     public static boolean isActive = true;
 
     public MySQLManager() {
-        Yaml settings = LegendHG.settings;
+        CustomYaml settings = LegendHG.settings;
         if (!settings.exist("Database.Host") || !settings.exist("Database.Database") || !settings.exist("Database.User") || !settings.exist("Database.Password") || !settings.exist("Database.Port")) {
             isActive = false;
             Logger.logError("Database settings not found in settings.yml, shutting down server!");
